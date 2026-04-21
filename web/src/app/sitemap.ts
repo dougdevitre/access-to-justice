@@ -8,6 +8,7 @@ const PATHS = [
   "/intake",
   "/privacy",
   "/terms",
+  "/accessibility",
 ] as const;
 
 export default function sitemap(): MetadataRoute.Sitemap {

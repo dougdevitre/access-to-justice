@@ -113,10 +113,50 @@
     "cta": "Go home"
   },
   "Footer": {
-    "legal": "Legal",
+    "siteLinks": "Site links",
     "privacy": "Privacy",
     "terms": "Terms",
+    "accessibility": "Accessibility",
     "notLegalAdvice": "This site is not legal advice. Using it does not create an attorney–client relationship."
+  },
+  "Accessibility": {
+    "title": "Accessibility",
+    "lastUpdated": "Last updated: TBD — update after each accessibility review.",
+    "intro": "We want this site to be usable by everyone who needs legal help, including people who use screen readers, keyboards only, magnification, voice control, or other assistive technology.",
+    "sections": {
+      "standard": {
+        "heading": "Conformance target",
+        "paragraphs": [
+          "We aim to meet Web Content Accessibility Guidelines (WCAG) 2.1 at the AA level. This site has not yet been audited by a third party; the items below list what we have and have not verified.",
+          "If anything here blocks you from getting help, please contact us using the information at the bottom of this page and we will work to resolve it quickly."
+        ]
+      },
+      "scope": {
+        "heading": "What we have checked",
+        "paragraphs": [
+          "Static code analysis for common accessibility issues (eslint-plugin-jsx-a11y).",
+          "Semantic HTML landmarks (header, main, footer, nav) and one top-level heading per page.",
+          "Keyboard-operable navigation with a visible focus indicator on every interactive element.",
+          "Labels and error messages are programmatically associated with their form fields.",
+          "Color contrast for body text and buttons meets WCAG AA."
+        ]
+      },
+      "knownLimitations": {
+        "heading": "Known limitations",
+        "paragraphs": [
+          "We have not yet completed a formal third-party accessibility audit (no VPAT).",
+          "Screen-reader testing has been done informally, not systematically with every major reader.",
+          "The Spanish translation has not been reviewed by a legal-aid translator yet; terminology may be imprecise in places."
+        ]
+      },
+      "feedback": {
+        "heading": "Contact and feedback",
+        "paragraphs": [
+          "If you encounter an accessibility barrier or have a suggestion, contact us at: TBD — set a monitored inbox before launch.",
+          "We treat accessibility issues as high-priority bugs and aim to respond within a few business days."
+        ]
+      }
+    }
   },
   "LegalReview": {
     "title": "LEGAL REVIEW REQUIRED",

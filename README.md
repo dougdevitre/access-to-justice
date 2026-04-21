@@ -47,6 +47,10 @@ switcher.
   for the Privacy / Terms punch list a lawyer must sign off on before
   launch. The live site shows a yellow banner on those pages until the
   placeholder copy is replaced.
+- **Accessibility**: see [`web/docs/ACCESSIBILITY.md`](web/docs/ACCESSIBILITY.md)
+  for the WCAG 2.1 AA baseline, the contrast sign-off table, and the
+  manual test matrix (keyboard-only, screen reader, zoom, forced
+  colors) that must be walked before launch.
 
 ## MCP server (`mcp-server/`)
 

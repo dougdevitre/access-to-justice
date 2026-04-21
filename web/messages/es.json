@@ -113,10 +113,50 @@
     "cta": "Ir al inicio"
   },
   "Footer": {
-    "legal": "Legal",
+    "siteLinks": "Enlaces del sitio",
     "privacy": "Privacidad",
     "terms": "Términos",
+    "accessibility": "Accesibilidad",
     "notLegalAdvice": "Este sitio no es asesoría legal. Usarlo no crea una relación abogado–cliente."
+  },
+  "Accessibility": {
+    "title": "Accesibilidad",
+    "lastUpdated": "Última actualización: por definir — actualiza tras cada revisión de accesibilidad.",
+    "intro": "Queremos que este sitio sea utilizable por todas las personas que necesiten ayuda legal, incluidas quienes usan lectores de pantalla, solo teclado, magnificación, control por voz u otras tecnologías de asistencia.",
+    "sections": {
+      "standard": {
+        "heading": "Estándar de conformidad",
+        "paragraphs": [
+          "Nuestro objetivo es cumplir con las Pautas de Accesibilidad para el Contenido Web (WCAG) 2.1 nivel AA. Este sitio aún no ha sido auditado por un tercero; los puntos a continuación describen lo que hemos verificado y lo que no.",
+          "Si algo aquí te impide obtener ayuda, contáctanos con la información al final de esta página y trabajaremos para resolverlo cuanto antes."
+        ]
+      },
+      "scope": {
+        "heading": "Qué hemos verificado",
+        "paragraphs": [
+          "Análisis estático del código para problemas comunes de accesibilidad (eslint-plugin-jsx-a11y).",
+          "Marcas semánticas HTML (header, main, footer, nav) y un encabezado principal por página.",
+          "Navegación operable con teclado y un indicador de foco visible en cada elemento interactivo.",
+          "Las etiquetas y mensajes de error están asociados programáticamente con sus campos.",
+          "El contraste de color del texto y los botones cumple con WCAG AA."
+        ]
+      },
+      "knownLimitations": {
+        "heading": "Limitaciones conocidas",
+        "paragraphs": [
+          "Aún no hemos completado una auditoría formal de accesibilidad por un tercero (sin VPAT).",
+          "Las pruebas con lectores de pantalla se han hecho de manera informal, no sistemática con todos los principales lectores.",
+          "La traducción al español aún no ha sido revisada por un traductor de ayuda legal; la terminología puede ser imprecisa en algunos casos."
+        ]
+      },
+      "feedback": {
+        "heading": "Contacto y comentarios",
+        "paragraphs": [
+          "Si encuentras una barrera de accesibilidad o tienes una sugerencia, contáctanos en: por definir — establece una bandeja de entrada monitoreada antes del lanzamiento.",
+          "Tratamos los problemas de accesibilidad como errores de alta prioridad y buscamos responder en unos días hábiles."
+        ]
+      }
+    }
   },
   "LegalReview": {
     "title": "REVISIÓN LEGAL REQUERIDA",

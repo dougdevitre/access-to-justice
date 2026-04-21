@@ -41,6 +41,8 @@ blocks launch.
 | `Privacy.sections.contact.paragraphs` | Monitored inbox (e.g. `privacy@yourdomain.org`). |
 | `Terms.sections.governingLaw.paragraphs` | Governing state + dispute-resolution forum. |
 | `Terms.sections.contact.paragraphs` | Monitored inbox. |
+| `Accessibility.lastUpdated` | Date the accessibility page was last reviewed. |
+| `Accessibility.sections.feedback.paragraphs` | Monitored accessibility inbox (e.g. `accessibility@yourdomain.org`). |
 
 ## Items counsel should specifically review
 

@@ -10,7 +10,7 @@
 // Cache key is versioned. Bump CACHE_V on every deploy that ships new
 // precached assets; stale caches get purged in `activate`.
 
-const CACHE_V = "a2j-v3";
+const CACHE_V = "a2j-v4";
 const PRECACHE = [
   "/en",
   "/en/find-help",
@@ -19,6 +19,7 @@ const PRECACHE = [
   "/en/offline",
   "/en/privacy",
   "/en/terms",
+  "/en/accessibility",
   "/es",
   "/es/find-help",
   "/es/resources",
@@ -26,6 +27,7 @@ const PRECACHE = [
   "/es/offline",
   "/es/privacy",
   "/es/terms",
+  "/es/accessibility",
   "/manifest.webmanifest",
   "/favicon.svg",
   "/icon-192.svg",
