@@ -1,0 +1,80 @@
+This repository uses a dual-license model.
+
+===============================================================================
+CODE (everything in scripts/ and platform/)
+===============================================================================
+
+MIT License
+
+Copyright (c) 2026 Doug Devitre / CoTrackPro
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+===============================================================================
+DOCUMENTATION (everything in docs/ and specs/)
+===============================================================================
+
+Creative Commons Attribution 4.0 International (CC-BY-4.0)
+
+Copyright (c) 2026 Doug Devitre / CoTrackPro and contributors.
+
+You are free to:
+
+- Share — copy and redistribute the material in any medium or format.
+- Adapt — remix, transform, and build upon the material for any purpose, even
+  commercially.
+
+Under the following terms:
+
+- Attribution — You must give appropriate credit, provide a link to the
+  license, and indicate if changes were made. You may do so in any reasonable
+  manner, but not in any way that suggests the licensor endorses you or your
+  use.
+
+No additional restrictions — You may not apply legal terms or technological
+measures that legally restrict others from doing anything the license permits.
+
+Full license text: https://creativecommons.org/licenses/by/4.0/legalcode
+
+Required attribution format:
+
+    Family Court Metric Catalog, v0.3 (2026), Document XX.
+    https://github.com/[org]/family-court-metric-catalog
+
+===============================================================================
+SPECIAL NOTES
+===============================================================================
+
+1. **Legal templates** (MOU draft, RSMo draft, DUA draft, Methodology Board
+   Charter, Data Ethics Review Charter): these are published under CC-BY-4.0
+   as educational framing material. They are NOT legal advice. Use by any
+   jurisdiction requires review and revision by jurisdiction-licensed counsel.
+   Neither Doug Devitre nor CoTrackPro practices law in any jurisdiction.
+
+2. **Coercive-control mini-binder** (docs/07-coercive-control/): published
+   under CC-BY-4.0 BUT labeled draft-for-expert-review. Republishing or adapting
+   coercive-control content prior to expert review is permitted by license but
+   not recommended. Please read the caveats in docs/07-coercive-control/cc-00-index.docx
+   before adapting.
+
+3. **Brand assets** (assets/): rights reserved. Not included in the CC-BY
+   grant. Contact the maintainer for use.
+
+4. **Contributions** to this repository grant the same rights as the above
+   licenses (inbound equals outbound). See CONTRIBUTING.md.

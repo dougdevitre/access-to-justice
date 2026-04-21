@@ -1,0 +1,40 @@
+{
+  "name": "family-court-metric-catalog",
+  "version": "0.3.0",
+  "description": "Civic transparency infrastructure for Missouri family courts — framework, governance, proposed statute, pilot budget, adoption roadmap, and coercive-control mini-binder.",
+  "private": true,
+  "license": "SEE LICENSE IN LICENSE",
+  "author": "Doug Devitre",
+  "homepage": "https://github.com/dougdevitre/family-court-metric-catalog",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dougdevitre/family-court-metric-catalog.git"
+  },
+  "bugs": {
+    "url": "https://github.com/dougdevitre/family-court-metric-catalog/issues"
+  },
+  "keywords": [
+    "family-court",
+    "civic-tech",
+    "access-to-justice",
+    "metrics",
+    "transparency",
+    "missouri",
+    "coercive-control",
+    "osca"
+  ],
+  "scripts": {
+    "install-deps": "cd scripts/build && npm install && pip install openpyxl --break-system-packages",
+    "build": "make build",
+    "build:main": "make build-main",
+    "build:cc": "make build-cc",
+    "build:specs": "make build-specs",
+    "build:budget": "make build-budget",
+    "validate": "make validate",
+    "metrics-json": "make metrics-json",
+    "clean": "make clean"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

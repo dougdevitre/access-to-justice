@@ -1,0 +1,3153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>The Family Court Metric Catalog — Visible, Hidden, Missing</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400;1,700&family=Atkinson+Hyperlegible+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper:        #f5efe5;
+    --paper-deep:   #ebe4d6;
+    --paper-deeper: #ddd4c1;
+    --ink:          #0d1220;     /* darker for higher contrast */
+    --ink-soft:     #1f2744;
+    --muted:        #555046;     /* darker muted - still readable */
+    --accent:       #b8371f;     /* darker red - AA on paper */
+    --accent-soft:  #e0c6a8;
+    --green:        #3d5a2f;     /* darker green - AA on paper */
+    --amber:        #8f6a1e;     /* darker amber - AA on paper */
+    --blue:         #264f77;
+    --dark-red:     #6b2424;
+    /* Type scale */
+    --t-body:       18px;
+    --t-small:      15px;
+    --t-tiny:       13px;
+    --t-mono:       13px;
+    --t-mono-sm:    11px;
+    --lh-body:      1.65;
+    --lh-tight:     1.35;
+    /* Focus ring */
+    --focus:        #0066cc;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  /* Respect user motion preferences */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+
+  /* Focus indicators for keyboard users */
+  *:focus-visible {
+    outline: 3px solid var(--focus);
+    outline-offset: 2px;
+  }
+
+  /* Skip link for screen readers */
+  .skip-link {
+    position: absolute;
+    top: -40px;
+    left: 0;
+    background: var(--ink);
+    color: var(--paper);
+    padding: 10px 16px;
+    text-decoration: none;
+    font-weight: 700;
+    z-index: 999;
+  }
+  .skip-link:focus { top: 0; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Atkinson Hyperlegible', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: var(--t-body);
+    line-height: var(--lh-body);
+    min-height: 100vh;
+    background-image: radial-gradient(rgba(13,18,32,0.03) 1px, transparent 1px);
+    background-size: 4px 4px;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ========== Ticker ========== */
+  .strip {
+    background: var(--ink);
+    color: var(--paper);
+    font-family: 'Atkinson Hyperlegible Mono', 'Menlo', 'Consolas', monospace;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    padding: 10px 32px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid var(--accent);
+    position: sticky;
+    top: 0;
+    z-index: 50;
+  }
+  .strip .ticker { overflow: hidden; flex: 1; margin: 0 24px; white-space: nowrap; }
+  .strip .ticker span {
+    display: inline-block;
+    animation: scroll 55s linear infinite;
+    padding-left: 100%;
+  }
+  @keyframes scroll { from { transform: translateX(0); } to { transform: translateX(-100%); } }
+
+  /* ========== Masthead ========== */
+  .masthead {
+    padding: 56px 32px 40px;
+    border-bottom: 3px double var(--ink);
+    text-align: center;
+  }
+  .masthead .volume {
+    font-family: 'Atkinson Hyperlegible Mono', 'Menlo', 'Consolas', monospace;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    margin-bottom: 18px;
+  }
+  .masthead h1 {
+    font-weight: 700;
+    font-size: clamp(44px, 7vw, 86px);
+    line-height: 1.0;
+    letter-spacing: -0.02em;
+    margin-bottom: 16px;
+  }
+  .masthead h1 em { font-style: normal; color: var(--accent); }
+  .masthead .subtitle {
+    font-weight: 400;
+    font-size: clamp(17px, 2vw, 21px);
+    line-height: 1.5;
+    color: var(--ink-soft);
+    max-width: 720px;
+    margin: 0 auto;
+  }
+  .masthead .meta {
+    margin-top: 26px;
+    font-family: 'Atkinson Hyperlegible Mono', 'Menlo', 'Consolas', monospace;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+
+  /* ========== Nav tabs ========== */
+  .view-nav {
+    position: sticky;
+    top: 44px;
+    z-index: 40;
+    background: var(--paper);
+    border-bottom: 1px solid var(--ink);
+    display: flex;
+    justify-content: center;
+    padding: 0 32px;
+    overflow-x: auto;
+  }
+  .view-tab {
+    background: transparent;
+    border: none;
+    padding: 18px 24px;
+    font-family: 'Atkinson Hyperlegible', 'Helvetica Neue', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    color: var(--ink-soft);
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+    transition: all 0.2s ease;
+    position: relative;
+    white-space: nowrap;
+    min-height: 52px;
+  }
+  .view-tab:hover { color: var(--ink); }
+  .view-tab.active {
+    color: var(--ink);
+    border-bottom-color: var(--accent);
+  }
+  .view-tab .badge {
+    display: inline-block;
+    background: var(--accent);
+    color: var(--paper);
+    padding: 2px 8px;
+    border-radius: 3px;
+    font-size: 12px;
+    font-weight: 700;
+    margin-left: 8px;
+    vertical-align: middle;
+  }
+
+  /* ========== Shell ========== */
+  .shell {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 40px 32px 80px;
+  }
+  .view { display: none; }
+  .view.active { display: block; animation: fadeIn 0.35s ease; }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ========== Argument ========== */
+  .argument {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    border: 1px solid var(--ink);
+    margin-bottom: 48px;
+    background: var(--paper);
+  }
+  .argument .col {
+    padding: 28px 24px;
+    border-right: 1px solid var(--ink);
+  }
+  .argument .col:last-child { border-right: none; }
+  .argument .label {
+    font-family: 'Atkinson Hyperlegible Mono', 'Menlo', 'Consolas', monospace;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    margin-bottom: 10px;
+  }
+  .argument .headline {
+    font-weight: 700;
+    font-size: 28px;
+    line-height: 1.2;
+    margin-bottom: 14px;
+    letter-spacing: -0.005em;
+  }
+  .argument .col:nth-child(1) .headline { color: var(--green); }
+  .argument .col:nth-child(2) .headline { color: var(--amber); }
+  .argument .col:nth-child(3) .headline { color: var(--accent); }
+  .argument .body { font-size: 16px; line-height: 1.6; color: var(--ink); }
+  .argument .count {
+    font-family: 'Atkinson Hyperlegible Mono', 'Menlo', 'Consolas', monospace;
+    font-size: 52px;
+    font-weight: 700;
+    line-height: 1;
+    margin-top: 22px;
+    color: var(--ink);
+  }
+  .argument .count small {
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    display: block;
+    margin-top: 8px;
+  }
+
+  /* ========== Section head ========== */
+  .section-head {
+    margin: 56px 0 22px;
+    display: flex;
+    align-items: baseline;
+    gap: 20px;
+    border-bottom: 1px solid var(--ink);
+    padding-bottom: 12px;
+    flex-wrap: wrap;
+  }
+  .section-head .num {
+    font-family: 'Atkinson Hyperlegible Mono', 'Menlo', 'Consolas', monospace;
+    font-size: 15px;
+    letter-spacing: 0.1em;
+    color: var(--accent);
+    font-weight: 700;
+  }
+  .section-head h2 {
+    font-weight: 700;
+    font-size: clamp(26px, 3.2vw, 40px);
+    letter-spacing: -0.01em;
+    line-height: 1.15;
+  }
+  .section-head p {
+    flex: 1;
+    text-align: right;
+    font-size: 15px;
+    line-height: 1.5;
+    color: var(--ink-soft);
+    max-width: 380px;
+    margin-left: auto;
+  }
+
+  /* ========== Legend ========== */
+  .legend {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-bottom: 32px;
+  }
+  .legend-item {
+    border: 1px solid var(--ink);
+    padding: 16px 20px;
+    background: var(--paper);
+    position: relative;
+  }
+  .legend-item::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 4px;
+    height: 100%;
+  }
+  .legend-item.v::before { background: var(--green); }
+  .legend-item.h::before { background: var(--amber); }
+  .legend-item.m::before { background: var(--accent); }
+  .legend-item h4 { font-weight: 700; font-size: 20px; margin-bottom: 6px; line-height: 1.2; }
+  .legend-item p { font-size: 15px; color: var(--ink); line-height: 1.55; }
+
+  /* ========== Roles ========== */
+  .roles {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    border: 1px solid var(--ink);
+    margin-bottom: 40px;
+  }
+  .role-btn {
+    background: var(--paper);
+    border: none;
+    border-right: 1px solid var(--ink);
+    border-bottom: 1px solid var(--ink);
+    padding: 20px 18px;
+    text-align: left;
+    cursor: pointer;
+    font-family: 'Atkinson Hyperlegible', 'Helvetica Neue', sans-serif;
+    transition: background 0.15s ease;
+    position: relative;
+    min-height: 76px;
+  }
+  .role-btn:hover { background: var(--paper-deep); }
+  .role-btn.active { background: var(--ink); color: var(--paper); }
+  .role-btn.active::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 4px;
+    background: var(--accent);
+  }
+  .role-btn .role-num {
+    font-family: 'Atkinson Hyperlegible Mono', 'Menlo', 'Consolas', monospace;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    color: var(--ink-soft);
+    display: block;
+    margin-bottom: 6px;
+  }
+  .role-btn.active .role-num { color: #f5efe5; }
+  .role-btn .role-name {
+    font-weight: 700;
+    font-size: 17px;
+    line-height: 1.25;
+    letter-spacing: -0.005em;
+  }
+
+  /* ========== Role detail ========== */
+  .role-detail {
+    background: var(--paper);
+    border: 1px solid var(--ink);
+    margin-bottom: 32px;
+    overflow: hidden;
+  }
+  .role-header {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 28px 32px;
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 24px;
+    align-items: end;
+  }
+  .role-header .name {
+    font-weight: 700;
+    font-size: 32px;
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+  }
+  .role-header .stat { text-align: right; }
+  .role-header .stat .n {
+    font-family: 'Atkinson Hyperlegible Mono', 'Menlo', 'Consolas', monospace;
+    font-size: 30px;
+    font-weight: 700;
+    line-height: 1;
+  }
+  .role-header .stat .l {
+    font-family: 'Atkinson Hyperlegible Mono', 'Menlo', 'Consolas', monospace;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #f5efe5;
+    margin-top: 6px;
+    font-weight: 600;
+  }
+  .role-summary {
+    padding: 24px 32px;
+    font-size: 18px;
+    line-height: 1.6;
+    color: var(--ink-soft);
+    border-bottom: 1px solid var(--ink);
+    max-width: 900px;
+  }
+
+  /* ========== Metrics grid ========== */
+  .metrics {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  }
+  .metric {
+    padding: 20px 24px 20px 28px;
+    border-right: 1px solid var(--paper-deep);
+    border-bottom: 1px solid var(--paper-deep);
+    position: relative;
+    cursor: pointer;
+    transition: background 0.15s ease;
+  }
+  .metric:hover { background: var(--paper-deep); }
+  .metric .status-bar {
+    position: absolute;
+    top: 0; left: 0;
+    height: 100%;
+    width: 4px;
+  }
+  .metric.visible .status-bar { background: var(--green); }
+  .metric.hidden  .status-bar { background: var(--amber); }
+  .metric.missing .status-bar { background: var(--accent); }
+
+  .metric .topline {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+    gap: 12px;
+  }
+  .metric .status-tag {
+    font-family: 'Atkinson Hyperlegible Mono', 'Menlo', 'Consolas', monospace;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border: 1.5px solid currentColor;
+    border-radius: 3px;
+  }
+  .metric.visible .status-tag { color: var(--green); }
+  .metric.hidden  .status-tag { color: var(--amber); }
+  .metric.missing .status-tag { color: var(--accent); }
+  .metric .tier {
+    font-family: 'Atkinson Hyperlegible Mono', 'Menlo', 'Consolas', monospace;
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    color: var(--ink-soft);
+    font-weight: 600;
+  }
+  .metric .mname {
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 1.3;
+    letter-spacing: -0.005em;
+    margin-bottom: 8px;
+  }
+  .metric .mdesc {
+    font-size: 16px;
+    color: var(--ink-soft);
+    line-height: 1.55;
+    margin-bottom: 14px;
+  }
+  .metric .mfoot {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin-top: 10px;
+    padding-top: 12px;
+    border-top: 1px dashed var(--paper-deeper);
+  }
+  .metric-actions { display: flex; gap: 8px; align-items: center; }
+  .endorse-btn, .detail-btn {
+    background: transparent;
+    border: 1.5px solid var(--ink);
+    color: var(--ink);
+    font-family: 'Atkinson Hyperlegible', 'Helvetica Neue', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    padding: 9px 14px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    min-height: 40px;
+  }
+  .endorse-btn:hover, .detail-btn:hover { background: var(--ink); color: var(--paper); }
+  .endorse-btn.endorsed { background: var(--accent); border-color: var(--accent); color: var(--paper); }
+  .endorse-btn.endorsed::before { content: '✓ '; }
+  .detail-btn { border-color: var(--ink-soft); color: var(--ink-soft); }
+  .detail-btn:hover { background: var(--ink-soft); color: var(--paper); }
+  .endorse-count { font-family: 'Atkinson Hyperlegible Mono', 'Menlo', 'Consolas', monospace; font-size: 14px; font-weight: 600; color: var(--ink-soft); }
+
+  /* ========== Methodology drawer ========== */
+  .drawer-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(20, 27, 45, 0.55);
+    z-index: 100;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s ease;
+  }
+  .drawer-backdrop.open { opacity: 1; pointer-events: auto; }
+  .drawer {
+    position: fixed;
+    top: 0; right: 0; bottom: 0;
+    width: min(680px, 100vw);
+    background: var(--paper);
+    border-left: 3px solid var(--ink);
+    transform: translateX(100%);
+    transition: transform 0.3s ease;
+    z-index: 101;
+    overflow-y: auto;
+    box-shadow: -8px 0 32px rgba(0,0,0,0.2);
+  }
+  .drawer.open { transform: translateX(0); }
+  .drawer-header {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 24px 32px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 16px;
+    position: sticky;
+    top: 0;
+    z-index: 2;
+  }
+  .drawer-header .tag {
+    font-family: 'Atkinson Hyperlegible Mono', 'Menlo', 'Consolas', monospace;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    color: #f5efe5;
+    margin-bottom: 8px;
+  }
+  .drawer-header .mname {
+    font-weight: 700;
+    font-size: 26px;
+    letter-spacing: -0.005em;
+    line-height: 1.25;
+  }
+  .drawer-close {
+    background: transparent;
+    border: 2px solid var(--paper);
+    color: var(--paper);
+    width: 44px; height: 44px;
+    cursor: pointer;
+    font-family: 'Atkinson Hyperlegible', sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+  .drawer-close:hover { background: var(--paper); color: var(--ink); }
+  .drawer-body { padding: 28px 32px 48px; }
+  .drawer-section { margin-bottom: 28px; }
+  .drawer-section h4 {
+    font-family: 'Atkinson Hyperlegible Mono', 'Menlo', 'Consolas', monospace;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 10px;
+    border-bottom: 2px solid var(--ink);
+    padding-bottom: 8px;
+  }
+  .drawer-section p, .drawer-section li {
+    font-size: 17px;
+    line-height: 1.6;
+    color: var(--ink);
+  }
+  .drawer-section ul { padding-left: 22px; margin-top: 6px; }
+  .drawer-section li { margin-bottom: 6px; }
+  .drawer-section code {
+    font-family: 'Atkinson Hyperlegible Mono', 'Menlo', 'Consolas', monospace;
+    font-size: 14px;
+    background: var(--paper-deep);
+    padding: 2px 6px;
+    border-radius: 2px;
+    font-weight: 600;
+  }
+  .definition-block {
+    background: var(--paper-deep);
+    border-left: 4px solid var(--ink);
+    padding: 16px 18px;
+    font-size: 16px;
+    line-height: 1.7;
+    font-weight: 500;
+  }
+  .kv-row {
+    display: grid;
+    grid-template-columns: 160px 1fr;
+    gap: 16px;
+    padding: 10px 0;
+    border-bottom: 1px dashed var(--paper-deeper);
+    font-size: 16px;
+    line-height: 1.55;
+  }
+  .kv-row:last-child { border-bottom: none; }
+  .kv-row .k {
+    font-family: 'Atkinson Hyperlegible Mono', 'Menlo', 'Consolas', monospace;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    padding-top: 2px;
+  }
+
+  /* ========== State compare table ========== */
+  .compare-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--paper);
+    border: 1px solid var(--ink);
+    font-size: 16px;
+  }
+  .compare-table thead { background: var(--ink); color: var(--paper); }
+  .compare-table th {
+    text-align: left;
+    padding: 16px;
+    font-family: 'Atkinson Hyperlegible Mono', 'Menlo', 'Consolas', monospace;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+  .compare-table th.state-mo { background: var(--accent); }
+  .compare-table td {
+    padding: 14px 16px;
+    border-bottom: 1px solid var(--paper-deep);
+    vertical-align: top;
+    font-size: 15px;
+    line-height: 1.45;
+  }
+  .compare-table tr:hover td { background: var(--paper-deep); }
+  .compare-table td.metric-name {
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 1.4;
+  }
+  .compare-table td.mo { background: rgba(184, 55, 31, 0.06); font-weight: 700; }
+  .compare-table .dot {
+    display: inline-block;
+    width: 12px; height: 12px;
+    border-radius: 50%;
+    margin-right: 8px;
+    vertical-align: middle;
+    border: 1.5px solid var(--ink);
+  }
+  .compare-table .v-y { background: var(--green); }
+  .compare-table .v-p { background: var(--amber); }
+  .compare-table .v-n { background: var(--accent); }
+  .compare-legend {
+    display: flex;
+    gap: 28px;
+    margin-top: 20px;
+    font-size: 15px;
+    color: var(--ink);
+    flex-wrap: wrap;
+    font-weight: 500;
+  }
+  .compare-legend span { display: flex; align-items: center; }
+
+  /* ========== Backend spec ========== */
+  .spec-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-bottom: 32px;
+  }
+  .spec-card {
+    background: var(--paper);
+    border: 1px solid var(--ink);
+    padding: 24px;
+  }
+  .spec-card h3 {
+    font-weight: 700;
+    font-size: 22px;
+    margin-bottom: 8px;
+    letter-spacing: -0.005em;
+    line-height: 1.3;
+  }
+  .spec-card .label {
+    font-family: 'Atkinson Hyperlegible Mono', 'Menlo', 'Consolas', monospace;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 12px;
+  }
+  .spec-card p { font-size: 16px; color: var(--ink-soft); margin-bottom: 14px; line-height: 1.55; }
+  .spec-card pre, .spec-block pre {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 20px;
+    font-family: 'Atkinson Hyperlegible Mono', 'Menlo', 'Consolas', monospace;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1.65;
+    overflow-x: auto;
+    border-left: 4px solid var(--accent);
+  }
+  .spec-block {
+    background: var(--paper);
+    border: 1px solid var(--ink);
+    padding: 24px;
+    margin-bottom: 24px;
+  }
+  .spec-block h3 {
+    font-weight: 700;
+    font-size: 24px;
+    margin-bottom: 14px;
+    letter-spacing: -0.005em;
+    line-height: 1.25;
+  }
+  .spec-block .label {
+    font-family: 'Atkinson Hyperlegible Mono', 'Menlo', 'Consolas', monospace;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 12px;
+  }
+
+  .route {
+    display: grid;
+    grid-template-columns: 90px 1fr 130px;
+    gap: 14px;
+    padding: 12px 0;
+    border-bottom: 1px dashed var(--paper-deeper);
+    font-family: 'Atkinson Hyperlegible Mono', 'Menlo', 'Consolas', monospace;
+    font-size: 14px;
+    align-items: center;
+  }
+  .route:last-child { border-bottom: none; }
+  .route .method {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 3px;
+    color: var(--paper);
+    text-align: center;
+    font-weight: 700;
+    font-size: 12px;
+    letter-spacing: 0.04em;
+  }
+  .route .method.GET { background: var(--green); }
+  .route .method.POST { background: var(--blue); }
+  .route .method.PUT { background: var(--amber); }
+  .route .method.DELETE { background: var(--dark-red); }
+  .route .path { font-weight: 600; font-size: 15px; color: var(--ink); }
+  .route .tier {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: var(--ink-soft);
+    text-align: right;
+  }
+
+  /* ========== Governance flow ========== */
+  .flow {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 0;
+    margin: 24px 0;
+  }
+  .flow-step {
+    background: var(--paper);
+    border: 1px solid var(--ink);
+    padding: 20px 18px;
+    position: relative;
+    border-right: none;
+  }
+  .flow-step:last-child { border-right: 1px solid var(--ink); }
+  .flow-step::after {
+    content: '→';
+    position: absolute;
+    right: -10px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-family: 'Atkinson Hyperlegible Mono', 'Menlo', 'Consolas', monospace;
+    font-size: 18px;
+    color: var(--accent);
+    background: var(--paper);
+    width: 20px;
+    text-align: center;
+    z-index: 2;
+  }
+  .flow-step:last-child::after { display: none; }
+  .flow-step .num {
+    font-family: 'Atkinson Hyperlegible Mono', 'Menlo', 'Consolas', monospace;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    color: var(--accent);
+    margin-bottom: 8px;
+  }
+  .flow-step h4 { font-weight: 700; font-size: 17px; margin-bottom: 8px; line-height: 1.3; }
+  .flow-step p { font-size: 14px; color: var(--ink-soft); line-height: 1.5; }
+
+  /* ========== Risk matrix ========== */
+  .risk-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+  }
+  .risk-card {
+    background: var(--paper);
+    border: 1px solid var(--ink);
+    padding: 18px 20px 18px 26px;
+    position: relative;
+  }
+  .risk-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 6px; height: 100%;
+  }
+  .risk-card.sev-high::before { background: var(--accent); }
+  .risk-card.sev-med::before  { background: var(--amber); }
+  .risk-card.sev-low::before  { background: var(--green); }
+  .risk-card h5 { font-weight: 700; font-size: 18px; margin-bottom: 6px; line-height: 1.3; }
+  .risk-card .mit {
+    font-size: 15px;
+    color: var(--ink-soft);
+    line-height: 1.55;
+    margin-top: 8px;
+  }
+  .risk-card .sev-tag {
+    font-family: 'Atkinson Hyperlegible Mono', 'Menlo', 'Consolas', monospace;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+
+  /* ========== Adoption dashboard ========== */
+  .adoption {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 40px;
+    margin-top: 64px;
+    position: relative;
+    overflow: hidden;
+  }
+  .adoption::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--green) 0%, var(--green) 33%, var(--amber) 33%, var(--amber) 66%, var(--accent) 66%, var(--accent) 100%);
+  }
+  .adoption h3 {
+    font-weight: 700;
+    font-size: 32px;
+    margin-bottom: 10px;
+    letter-spacing: -0.01em;
+    line-height: 1.2;
+  }
+  .adoption p.lede {
+    font-size: 17px;
+    color: #f5efe5;
+    margin-bottom: 28px;
+    max-width: 720px;
+    line-height: 1.55;
+  }
+  .adoption-stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    border-top: 1px solid var(--muted);
+    border-bottom: 1px solid var(--muted);
+    padding: 24px 0;
+    margin-bottom: 28px;
+  }
+  .adoption-stat {
+    border-right: 1px solid var(--muted);
+    padding: 0 20px;
+  }
+  .adoption-stat:last-child { border-right: none; }
+  .adoption-stat .n {
+    font-family: 'Atkinson Hyperlegible Mono', 'Menlo', 'Consolas', monospace;
+    font-size: 44px;
+    font-weight: 700;
+    line-height: 1;
+  }
+  .adoption-stat .l {
+    font-family: 'Atkinson Hyperlegible Mono', 'Menlo', 'Consolas', monospace;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #f5efe5;
+    margin-top: 8px;
+  }
+  .export-row { display: flex; gap: 12px; flex-wrap: wrap; }
+  .export-btn {
+    background: transparent;
+    border: 2px solid var(--paper);
+    color: var(--paper);
+    font-family: 'Atkinson Hyperlegible', 'Helvetica Neue', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    padding: 12px 20px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    min-height: 44px;
+  }
+  .export-btn:hover { background: var(--paper); color: var(--ink); }
+  .export-btn.primary { background: var(--accent); border-color: var(--accent); }
+  .export-btn.primary:hover { background: var(--paper); color: var(--accent); border-color: var(--paper); }
+
+  /* ========== Colophon ========== */
+  .colophon {
+    margin-top: 72px;
+    padding-top: 24px;
+    border-top: 3px double var(--ink);
+    font-family: 'Atkinson Hyperlegible Mono', 'Menlo', 'Consolas', monospace;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    color: var(--ink-soft);
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  /* ========== Toast ========== */
+  .toast {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    background: var(--ink);
+    color: var(--paper);
+    padding: 16px 24px;
+    font-family: 'Atkinson Hyperlegible', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    border-left: 4px solid var(--accent);
+    transform: translateY(150%);
+    transition: transform 0.3s ease;
+    z-index: 200;
+  }
+  .toast.show { transform: translateY(0); }
+
+  /* ========== Missouri Implementation ========== */
+  .mo-hero {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 40px;
+    margin-bottom: 40px;
+    position: relative;
+    overflow: hidden;
+  }
+  .mo-hero::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 6px;
+    background: linear-gradient(90deg, var(--accent) 0%, var(--amber) 50%, var(--green) 100%);
+  }
+  .mo-hero .eyebrow {
+    font-family: 'Atkinson Hyperlegible Mono', monospace;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #f5efe5;
+    margin-bottom: 12px;
+  }
+  .mo-hero h2 {
+    font-size: clamp(32px, 5vw, 54px);
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+    margin-bottom: 16px;
+  }
+  .mo-hero p.lede {
+    font-size: 19px;
+    line-height: 1.55;
+    max-width: 740px;
+    color: #f5efe5;
+  }
+  .mo-hero .hero-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    margin-top: 32px;
+    border-top: 1px solid var(--muted);
+    padding-top: 24px;
+  }
+  .mo-hero .hero-stat {
+    padding-right: 24px;
+    border-right: 1px solid var(--muted);
+  }
+  .mo-hero .hero-stat:last-child { border-right: none; padding-right: 0; padding-left: 24px; }
+  .mo-hero .hero-stat:nth-child(2) { padding-left: 24px; }
+  .mo-hero .hero-stat .n {
+    font-family: 'Atkinson Hyperlegible Mono', monospace;
+    font-size: 36px;
+    font-weight: 700;
+    line-height: 1;
+  }
+  .mo-hero .hero-stat .l {
+    font-family: 'Atkinson Hyperlegible Mono', monospace;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #f5efe5;
+    margin-top: 8px;
+  }
+
+  /* County selection matrix */
+  .county-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin: 24px 0;
+  }
+  .county-card {
+    background: var(--paper);
+    border: 1px solid var(--ink);
+    padding: 24px;
+    position: relative;
+    border-top: 6px solid var(--accent);
+  }
+  .county-card.tier-2 { border-top-color: var(--amber); }
+  .county-card.tier-3 { border-top-color: var(--green); }
+  .county-card .tier-label {
+    font-family: 'Atkinson Hyperlegible Mono', monospace;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 8px;
+  }
+  .county-card.tier-2 .tier-label { color: var(--amber); }
+  .county-card.tier-3 .tier-label { color: var(--green); }
+  .county-card h4 {
+    font-weight: 700;
+    font-size: 26px;
+    margin-bottom: 4px;
+    letter-spacing: -0.005em;
+    line-height: 1.2;
+  }
+  .county-card .pop {
+    font-family: 'Atkinson Hyperlegible Mono', monospace;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--ink-soft);
+    margin-bottom: 16px;
+  }
+  .county-card .rationale {
+    font-size: 15px;
+    line-height: 1.55;
+    color: var(--ink);
+    margin-bottom: 16px;
+  }
+  .county-card .facts {
+    background: var(--paper-deep);
+    padding: 12px 14px;
+    border-left: 3px solid var(--ink);
+    font-size: 14px;
+    line-height: 1.6;
+  }
+  .county-card .facts strong {
+    display: inline-block;
+    min-width: 100px;
+    font-family: 'Atkinson Hyperlegible Mono', monospace;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--ink-soft);
+    font-weight: 700;
+  }
+
+  /* Statute language block */
+  .statute-block {
+    background: var(--paper);
+    border: 1px solid var(--ink);
+    padding: 28px;
+    margin-bottom: 20px;
+    position: relative;
+  }
+  .statute-block::before {
+    content: '§';
+    position: absolute;
+    top: 20px;
+    right: 28px;
+    font-size: 64px;
+    font-weight: 700;
+    color: var(--accent);
+    opacity: 0.15;
+    line-height: 1;
+  }
+  .statute-block .cite {
+    font-family: 'Atkinson Hyperlegible Mono', monospace;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: var(--accent);
+    margin-bottom: 6px;
+    text-transform: uppercase;
+  }
+  .statute-block h4 {
+    font-weight: 700;
+    font-size: 22px;
+    margin-bottom: 14px;
+    line-height: 1.3;
+    letter-spacing: -0.005em;
+  }
+  .statute-block .draft-text {
+    background: var(--paper-deep);
+    border-left: 4px solid var(--ink);
+    padding: 18px 22px;
+    font-size: 16px;
+    line-height: 1.7;
+    font-family: 'Atkinson Hyperlegible', sans-serif;
+  }
+  .statute-block .draft-text em {
+    font-style: normal;
+    background: rgba(184, 55, 31, 0.12);
+    padding: 1px 4px;
+    font-weight: 700;
+  }
+  .statute-block .notes {
+    margin-top: 14px;
+    font-size: 14px;
+    line-height: 1.55;
+    color: var(--ink-soft);
+    padding-left: 16px;
+    border-left: 2px solid var(--paper-deeper);
+  }
+
+  /* MOU document */
+  .mou-doc {
+    background: var(--paper);
+    border: 1px solid var(--ink);
+    padding: 32px;
+    margin: 20px 0;
+    position: relative;
+  }
+  .mou-doc::after {
+    content: 'DRAFT';
+    position: absolute;
+    top: 20px;
+    right: 24px;
+    font-family: 'Atkinson Hyperlegible Mono', monospace;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    color: var(--accent);
+    padding: 4px 10px;
+    border: 2px solid var(--accent);
+    transform: rotate(6deg);
+  }
+  .mou-doc h4 {
+    font-weight: 700;
+    font-size: 22px;
+    margin-bottom: 6px;
+    line-height: 1.2;
+  }
+  .mou-doc .mou-parties {
+    font-size: 15px;
+    color: var(--ink-soft);
+    margin-bottom: 24px;
+    line-height: 1.5;
+  }
+  .mou-section {
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+    border-bottom: 1px dashed var(--paper-deeper);
+  }
+  .mou-section:last-child { border-bottom: none; padding-bottom: 0; margin-bottom: 0; }
+  .mou-section .n {
+    font-family: 'Atkinson Hyperlegible Mono', monospace;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .mou-section h5 {
+    font-weight: 700;
+    font-size: 18px;
+    margin-bottom: 8px;
+    line-height: 1.3;
+  }
+  .mou-section p, .mou-section li {
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--ink);
+  }
+  .mou-section ul { padding-left: 22px; margin-top: 6px; }
+  .mou-section li { margin-bottom: 4px; }
+
+  /* Budget table */
+  .budget-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--paper);
+    border: 1px solid var(--ink);
+    font-size: 15px;
+  }
+  .budget-table thead { background: var(--ink); color: var(--paper); }
+  .budget-table th {
+    text-align: left;
+    padding: 14px 16px;
+    font-family: 'Atkinson Hyperlegible Mono', monospace;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .budget-table th.num { text-align: right; }
+  .budget-table td {
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--paper-deep);
+    vertical-align: top;
+    line-height: 1.5;
+  }
+  .budget-table td.num {
+    text-align: right;
+    font-family: 'Atkinson Hyperlegible Mono', monospace;
+    font-weight: 600;
+  }
+  .budget-table td.category {
+    font-weight: 700;
+    font-size: 15px;
+  }
+  .budget-table td.desc {
+    font-size: 14px;
+    color: var(--ink-soft);
+    line-height: 1.45;
+  }
+  .budget-table tr.subtotal td {
+    background: var(--paper-deep);
+    font-weight: 700;
+    border-top: 2px solid var(--ink);
+  }
+  .budget-table tr.total td {
+    background: var(--ink);
+    color: var(--paper);
+    font-weight: 700;
+    font-size: 18px;
+  }
+
+  /* Stakeholder call sheet */
+  .call-sheet {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+  .call-card {
+    background: var(--paper);
+    border: 1px solid var(--ink);
+    padding: 22px;
+    position: relative;
+    border-left: 6px solid var(--blue);
+  }
+  .call-card.priority-high { border-left-color: var(--accent); }
+  .call-card.priority-med { border-left-color: var(--amber); }
+  .call-card .priority {
+    font-family: 'Atkinson Hyperlegible Mono', monospace;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--blue);
+    margin-bottom: 8px;
+  }
+  .call-card.priority-high .priority { color: var(--accent); }
+  .call-card.priority-med .priority { color: var(--amber); }
+  .call-card h5 {
+    font-weight: 700;
+    font-size: 19px;
+    margin-bottom: 4px;
+    line-height: 1.3;
+  }
+  .call-card .who {
+    font-size: 14px;
+    color: var(--ink-soft);
+    margin-bottom: 12px;
+    font-weight: 600;
+  }
+  .call-card .ask {
+    font-size: 15px;
+    line-height: 1.55;
+    color: var(--ink);
+    margin-bottom: 12px;
+  }
+  .call-card .talking-points {
+    background: var(--paper-deep);
+    padding: 12px 14px;
+    font-size: 14px;
+    line-height: 1.55;
+  }
+  .call-card .talking-points strong {
+    display: block;
+    font-size: 12px;
+    font-family: 'Atkinson Hyperlegible Mono', monospace;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+    color: var(--ink-soft);
+  }
+
+  /* Comms timeline */
+  .timeline {
+    position: relative;
+    padding-left: 40px;
+    margin: 24px 0;
+  }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 10px;
+    top: 8px;
+    bottom: 8px;
+    width: 3px;
+    background: var(--ink);
+  }
+  .timeline-item {
+    position: relative;
+    margin-bottom: 28px;
+    padding-left: 24px;
+  }
+  .timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -35px;
+    top: 6px;
+    width: 16px;
+    height: 16px;
+    background: var(--paper);
+    border: 3px solid var(--accent);
+    border-radius: 50%;
+  }
+  .timeline-item .month {
+    font-family: 'Atkinson Hyperlegible Mono', monospace;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .timeline-item h5 {
+    font-weight: 700;
+    font-size: 18px;
+    margin-bottom: 6px;
+    line-height: 1.3;
+  }
+  .timeline-item p {
+    font-size: 15px;
+    line-height: 1.55;
+    color: var(--ink);
+  }
+
+
+  @media (max-width: 900px) {
+    .argument { grid-template-columns: 1fr; }
+    .argument .col { border-right: none; border-bottom: 1px solid var(--ink); }
+    .argument .col:last-child { border-bottom: none; }
+    .legend { grid-template-columns: 1fr; }
+    .role-header { grid-template-columns: 1fr; gap: 12px; }
+    .role-header .stat { text-align: left; }
+    .adoption-stats { grid-template-columns: 1fr 1fr; }
+    .adoption-stat { border-bottom: 1px solid var(--muted); padding: 12px 20px; }
+    .strip { flex-direction: column; gap: 4px; padding: 6px 16px; }
+    .strip .ticker { margin: 0; }
+    .view-nav { overflow-x: auto; justify-content: flex-start; }
+    .spec-grid { grid-template-columns: 1fr; }
+    .flow { grid-template-columns: 1fr; }
+    .flow-step { border-right: 1px solid var(--ink); border-bottom: none; }
+    .flow-step:last-child { border-bottom: 1px solid var(--ink); }
+    .flow-step::after {
+      content: '↓';
+      top: auto; right: 50%;
+      bottom: -10px; transform: translateX(50%);
+    }
+    .risk-grid { grid-template-columns: 1fr; }
+    .compare-table { font-size: 13px; }
+    .compare-table th, .compare-table td { padding: 10px 12px; }
+    .county-grid { grid-template-columns: 1fr; }
+    .mo-hero .hero-stats { grid-template-columns: 1fr; }
+    .mo-hero .hero-stat { border-right: none; border-bottom: 1px solid var(--muted); padding: 16px 0; }
+    .mo-hero .hero-stat:last-child { border-bottom: none; padding: 16px 0; }
+    .mo-hero .hero-stat:nth-child(2) { padding-left: 0; }
+    .call-sheet { grid-template-columns: 1fr; }
+    .budget-table { font-size: 13px; }
+    .budget-table th, .budget-table td { padding: 10px 12px; }
+  }
+</style>
+</head>
+<body>
+
+<a class="skip-link" href="#main-content">Skip to main content</a>
+
+<!-- Ticker strip -->
+<div class="strip" role="presentation" aria-hidden="true">
+  <div>VOL. 01 · ISSUE 003</div>
+  <div class="ticker">
+    <span>· 14 ROLES · 78 METRICS · 4 DISCLOSURE TIERS · MISSOURI IMPLEMENTATION BLUEPRINT · METHODOLOGY OPEN FOR REVIEW · TIER A PUBLIC · TIER B OVERSIGHT · TIER C USER-OWNED · TIER D PROTECTED · A COTRACKPRO CIVIC PUBLICATION · </span>
+  </div>
+  <div>EST. 2026</div>
+</div>
+
+<!-- Masthead -->
+<header class="masthead">
+  <div class="volume">A Civic Infrastructure Proposal · v0.3</div>
+  <h1>The Metric <em>Catalog</em></h1>
+  <div class="subtitle">What fourteen stakeholders in the family court system can see, cannot see, and have never been given the chance to measure.</div>
+  <div class="meta">Missouri Pilot · Published 2026 · Methodology Open</div>
+</header>
+
+<!-- View nav -->
+<nav class="view-nav" role="tablist" aria-label="Catalog sections">
+  <button class="view-tab active" data-view="catalog" role="tab" aria-selected="true" aria-controls="view-catalog">I. Catalog</button>
+  <button class="view-tab" data-view="compare" role="tab" aria-selected="false" aria-controls="view-compare">II. State Comparison</button>
+  <button class="view-tab" data-view="backend" role="tab" aria-selected="false" aria-controls="view-backend">III. Technical Spec</button>
+  <button class="view-tab" data-view="governance" role="tab" aria-selected="false" aria-controls="view-governance">IV. Governance</button>
+  <button class="view-tab" data-view="missouri" role="tab" aria-selected="false" aria-controls="view-missouri">V. Missouri Implementation</button>
+</nav>
+
+<main id="main-content" class="shell">
+
+  <!-- ========== VIEW 1: CATALOG ========== -->
+  <section class="view active" id="view-catalog" role="tabpanel" aria-label="Catalog">
+
+    <div class="argument">
+      <div class="col">
+        <div class="label">Layer 01 · Visible</div>
+        <div class="headline">Efficiency theater.</div>
+        <div class="body">The metrics courts already publish measure throughput — filings, clearance, disposition time. They tell you the machine is running. They tell you nothing about whether it works.</div>
+        <div class="count" id="count-visible">0<small>Metrics Tracked Today</small></div>
+      </div>
+      <div class="col">
+        <div class="label">Layer 02 · Hidden</div>
+        <div class="headline">Accountability risk.</div>
+        <div class="body">Judicial decision patterns, enforcement gaps, professional performance. These exist in fragmented form and are the metrics most likely to reshape outcomes — and most aggressively withheld.</div>
+        <div class="count" id="count-hidden">0<small>Defensibly Measurable</small></div>
+      </div>
+      <div class="col">
+        <div class="label">Layer 03 · Missing</div>
+        <div class="headline">The truth layer.</div>
+        <div class="body">Actual parenting time exercised. Children's stability. Conflict intensity. System-induced harm. No one is counting. These metrics describe reality — and innovation lives here.</div>
+        <div class="count" id="count-missing">0<small>Currently Uncounted</small></div>
+      </div>
+    </div>
+
+    <div class="section-head">
+      <div class="num">§ 01</div>
+      <h2>Reading the Catalog</h2>
+      <p>Every metric carries a visibility status and a disclosure tier. Together they say: who can see this today, and who should be allowed to.</p>
+    </div>
+
+    <div class="legend">
+      <div class="legend-item v">
+        <h4>Visible</h4>
+        <p>Published or publishable today. Aggregate, de-identified, low re-identification risk.</p>
+      </div>
+      <div class="legend-item h">
+        <h4>Hidden</h4>
+        <p>Data exists but is fragmented, restricted, or institutionally withheld. Defensible to expose with governance.</p>
+      </div>
+      <div class="legend-item m">
+        <h4>Missing</h4>
+        <p>Not tracked by any system. Requires new infrastructure — often user-generated — to measure.</p>
+      </div>
+    </div>
+
+    <div class="section-head">
+      <div class="num">§ 02</div>
+      <h2>Select a Role</h2>
+      <p>Each stakeholder sees a different slice of the system. Click a role to view its metric catalog. Then click any metric for the full methodology.</p>
+    </div>
+
+    <div class="roles" id="roles"></div>
+    <div id="role-detail"></div>
+
+    <!-- Adoption dashboard -->
+    <div class="adoption">
+      <h3>Endorse Adoption</h3>
+      <p class="lede">The methodology is published for public review. Endorse the metrics you believe should be adopted. Endorsements are aggregated and presented to the Methodology Board and state partners.</p>
+
+      <div class="adoption-stats">
+        <div class="adoption-stat">
+          <div class="n" id="stat-endorsed">0</div>
+          <div class="l">Metrics Endorsed</div>
+        </div>
+        <div class="adoption-stat">
+          <div class="n" id="stat-roles">0</div>
+          <div class="l">Roles Covered</div>
+        </div>
+        <div class="adoption-stat">
+          <div class="n" id="stat-missing">0</div>
+          <div class="l">Missing Endorsed</div>
+        </div>
+        <div class="adoption-stat">
+          <div class="n" id="stat-pct">0%</div>
+          <div class="l">Catalog Complete</div>
+        </div>
+      </div>
+
+      <div class="export-row">
+        <button class="export-btn primary" onclick="exportEndorsements()">Export Endorsements · JSON</button>
+        <button class="export-btn" onclick="shareLink()">Copy Share Link</button>
+        <button class="export-btn" onclick="resetAll()">Reset</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== VIEW 2: STATE COMPARISON ========== -->
+  <section class="view" id="view-compare" role="tabpanel" aria-label="State Comparison">
+
+    <div class="section-head">
+      <div class="num">§ 03</div>
+      <h2>State Comparison</h2>
+      <p>How publicly available family court metrics compare across peer states. Missouri is the pilot implementation; peer data is illustrative, drawn from state judiciary reports.</p>
+    </div>
+
+    <p style="font-size:14px; color:var(--ink-soft); margin-bottom: 20px; max-width: 820px; font-style: italic;">
+      ASSUMPTION: Peer-state data below is representative of public judiciary reporting patterns. Figures should be verified against each state's most recent Office of Court Administration annual report before policy use. This view demonstrates the schema; production data would be refreshed quarterly.
+    </p>
+
+    <div style="overflow-x: auto;">
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th style="min-width:240px;">Metric</th>
+            <th class="state-mo" style="min-width:100px;">Missouri</th>
+            <th style="min-width:100px;">California</th>
+            <th style="min-width:100px;">New York</th>
+            <th style="min-width:100px;">Texas</th>
+            <th style="min-width:100px;">Illinois</th>
+            <th style="min-width:100px;">Florida</th>
+          </tr>
+        </thead>
+        <tbody id="compare-body"></tbody>
+      </table>
+    </div>
+
+    <div class="compare-legend">
+      <span><span class="dot v-y"></span> Published publicly</span>
+      <span><span class="dot v-p"></span> Partially available</span>
+      <span><span class="dot v-n"></span> Not published</span>
+    </div>
+
+    <div class="section-head" style="margin-top: 64px;">
+      <div class="num">§ 04</div>
+      <h2>Reform Implications</h2>
+      <p>What the comparison reveals about where national standardization is possible and where state-level innovation must lead.</p>
+    </div>
+
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 12px;">
+      <div class="spec-card">
+        <div class="label">Finding 01</div>
+        <h3>No state publishes judicial-level outcome data.</h3>
+        <p>Every state ranks zero on individual-judge transparency. This is the single most consistent gap in the country and the single most defensible reform target — if paired with governance protections against adversarial use.</p>
+      </div>
+      <div class="spec-card">
+        <div class="label">Finding 02</div>
+        <h3>Compliance data does not exist anywhere.</h3>
+        <p>No state tracks whether court-ordered parenting time is actually exercised. This is the "truth layer" — and the space where user-generated data from platforms like CoTrackPro becomes the only viable source.</p>
+      </div>
+      <div class="spec-card">
+        <div class="label">Finding 03</div>
+        <h3>Disposition time is standardized; quality is not.</h3>
+        <p>Most states report time-to-disposition. Almost none report durability of outcomes — whether the agreements or rulings hold. This creates perverse optimization: fast rulings that return to court repeatedly.</p>
+      </div>
+      <div class="spec-card">
+        <div class="label">Finding 04</div>
+        <h3>Disparity analysis is politically radioactive.</h3>
+        <p>Outcomes by income, race, and representation status are virtually absent from public reporting. Academic DUAs are the only viable path; legislative mandates face predictable resistance.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== VIEW 3: TECHNICAL SPEC ========== -->
+  <section class="view" id="view-backend" role="tabpanel" aria-label="Technical Specification">
+
+    <div class="section-head">
+      <div class="num">§ 05</div>
+      <h2>Technical Specification</h2>
+      <p>Architecture for a metric publication and endorsement platform. AWS-native, least-privilege, privacy-preserving by default.</p>
+    </div>
+
+    <div class="spec-grid">
+      <div class="spec-card">
+        <div class="label">Stack</div>
+        <h3>Core Components</h3>
+        <p>TypeScript across the board. API Gateway fronts Lambda handlers. DynamoDB single-table for operational data. S3 for published data snapshots and research DUA exports. KMS CMK per tier.</p>
+        <pre>Frontend:  React + Vite + Tailwind
+API:       API Gateway + Lambda (TS)
+Data:      DynamoDB single-table
+Storage:   S3 (tiered buckets per class)
+Auth:      Cognito (anon + identity pools)
+Secrets:   SSM SecureString
+Analytics: CloudWatch + custom audit table</pre>
+      </div>
+      <div class="spec-card">
+        <div class="label">Privacy</div>
+        <h3>De-identification Pipeline</h3>
+        <p>Every metric publication passes through four gates before release. Nothing skips. Nothing is ever published directly from operational tables.</p>
+        <pre>1. k-anonymity check (k ≥ 10)
+2. l-diversity on sensitive attrs
+3. Small-cell suppression (n &lt; 10)
+4. Differential privacy noise (ε ≤ 1.0)
+5. Methodology board sign-off
+6. Versioned snapshot to S3</pre>
+      </div>
+    </div>
+
+    <div class="spec-block">
+      <div class="label">Data Model</div>
+      <h3>DynamoDB Single-Table Schema</h3>
+      <pre>Table: mcc-main
+  PK                        SK                              Attributes
+  --                        --                              ----------
+  ROLE#&lt;roleId&gt;             META#                           name, summary, version
+  ROLE#&lt;roleId&gt;             METRIC#&lt;metricId&gt;               status, tier, name, desc
+  METRIC#&lt;metricId&gt;         META#                           full methodology JSON
+  METRIC#&lt;metricId&gt;         ENDORSEMENT#&lt;identityId&gt;        endorsedAt, source
+  METRIC#&lt;metricId&gt;         ENDORSE_COUNT#                  total (atomic counter)
+  JURISDICTION#&lt;jurId&gt;      METRIC#&lt;metricId&gt;#&lt;period&gt;      value, n, ci_low, ci_high
+  AUDIT#&lt;ts&gt;#&lt;eventId&gt;      DETAIL#                         actor, action, payload
+
+GSI1 (status index):
+  GSI1PK: STATUS#&lt;status&gt;    GSI1SK: METRIC#&lt;metricId&gt;
+GSI2 (tier index):
+  GSI2PK: TIER#&lt;tier&gt;        GSI2SK: METRIC#&lt;metricId&gt;
+GSI3 (endorsements by role):
+  GSI3PK: ROLE#&lt;roleId&gt;      GSI3SK: ENDORSE_COUNT#&lt;descCount&gt;</pre>
+    </div>
+
+    <div class="spec-block">
+      <div class="label">API Surface</div>
+      <h3>Route Table</h3>
+      <div class="route"><span class="method GET">GET</span><span class="path">/v1/roles</span><span class="tier">PUBLIC</span></div>
+      <div class="route"><span class="method GET">GET</span><span class="path">/v1/roles/:roleId/metrics</span><span class="tier">PUBLIC</span></div>
+      <div class="route"><span class="method GET">GET</span><span class="path">/v1/metrics/:metricId</span><span class="tier">PUBLIC</span></div>
+      <div class="route"><span class="method GET">GET</span><span class="path">/v1/metrics/:metricId/methodology</span><span class="tier">PUBLIC</span></div>
+      <div class="route"><span class="method GET">GET</span><span class="path">/v1/metrics/:metricId/endorsements</span><span class="tier">PUBLIC</span></div>
+      <div class="route"><span class="method POST">POST</span><span class="path">/v1/metrics/:metricId/endorse</span><span class="tier">AUTH·ANON</span></div>
+      <div class="route"><span class="method DELETE">DELETE</span><span class="path">/v1/metrics/:metricId/endorse</span><span class="tier">AUTH·ANON</span></div>
+      <div class="route"><span class="method GET">GET</span><span class="path">/v1/jurisdictions/:jurId/summary</span><span class="tier">PUBLIC</span></div>
+      <div class="route"><span class="method GET">GET</span><span class="path">/v1/jurisdictions/:jurId/metrics/:metricId</span><span class="tier">PUBLIC</span></div>
+      <div class="route"><span class="method GET">GET</span><span class="path">/v1/compare?metric=...&amp;states=...</span><span class="tier">PUBLIC</span></div>
+      <div class="route"><span class="method POST">POST</span><span class="path">/v1/disputes</span><span class="tier">AUTH·ANON</span></div>
+      <div class="route"><span class="method POST">POST</span><span class="path">/v1/research/dua/request</span><span class="tier">AUTH·VERIFIED</span></div>
+      <div class="route"><span class="method GET">GET</span><span class="path">/v1/research/catalog</span><span class="tier">AUTH·DUA</span></div>
+      <div class="route"><span class="method GET">GET</span><span class="path">/v1/audit/log?since=...</span><span class="tier">AUTH·ADMIN</span></div>
+    </div>
+
+    <div class="spec-grid">
+      <div class="spec-card">
+        <div class="label">IAM Posture</div>
+        <h3>Least-Privilege Roles</h3>
+        <pre>lambda-public-read:
+  - dynamodb:Query (GSI1, GSI2)
+  - dynamodb:GetItem (ROLE#, METRIC#)
+  - kms:Decrypt (public CMK)
+
+lambda-endorse:
+  - dynamodb:UpdateItem (atomic counter)
+  - dynamodb:PutItem (AUDIT#)
+  - cognito-identity:GetId
+
+lambda-research-dua:
+  - s3:GetObject (research-exports/*)
+  - kms:Decrypt (research CMK)
+  - STS: short-lived (max 1h)
+
+lambda-admin:
+  - dynamodb:* (audit table only)
+  - cloudtrail:LookupEvents</pre>
+      </div>
+      <div class="spec-card">
+        <div class="label">Secrets</div>
+        <h3>SSM Parameter Namespace</h3>
+        <pre>/mcc/prod/db/table-name
+/mcc/prod/db/audit-table
+/mcc/prod/kms/public-cmk-arn
+/mcc/prod/kms/research-cmk-arn
+/mcc/prod/auth/cognito-pool-id
+/mcc/prod/auth/cognito-client-id
+/mcc/prod/alerts/slack-webhook  [SecureString]
+/mcc/prod/research/dua-webhook  [SecureString]
+
+Never hardcode. Never commit.
+Rotation: 90 days for SecureString.</pre>
+      </div>
+    </div>
+
+    <div class="spec-block">
+      <div class="label">Endorsement Handler</div>
+      <h3>Lambda Sample</h3>
+      <pre>// src/handlers/endorse.ts
+import { APIGatewayProxyHandler } from 'aws-lambda';
+import { DynamoDBClient } from '@aws-sdk/client-dynamodb';
+import { DynamoDBDocumentClient, UpdateCommand } from '@aws-sdk/lib-dynamodb';
+
+const ddb = DynamoDBDocumentClient.from(new DynamoDBClient({}));
+const TABLE = process.env.TABLE_NAME!;
+
+export const handler: APIGatewayProxyHandler = async (evt) => {
+  const metricId = evt.pathParameters?.metricId;
+  const identityId = evt.requestContext.identity.cognitoIdentityId;
+  if (!metricId || !identityId) return { statusCode: 400, body: 'bad request' };
+
+  try {
+    await ddb.send(new UpdateCommand({
+      TableName: TABLE,
+      Key: { PK: `METRIC#${metricId}`, SK: `ENDORSEMENT#${identityId}` },
+      UpdateExpression: 'SET endorsedAt = :ts, #src = :src',
+      ExpressionAttributeNames: { '#src': 'source' },
+      ExpressionAttributeValues: { ':ts': Date.now(), ':src': 'web' },
+      ConditionExpression: 'attribute_not_exists(endorsedAt)'
+    }));
+    await ddb.send(new UpdateCommand({
+      TableName: TABLE,
+      Key: { PK: `METRIC#${metricId}`, SK: 'ENDORSE_COUNT#' },
+      UpdateExpression: 'ADD total :one',
+      ExpressionAttributeValues: { ':one': 1 }
+    }));
+    return { statusCode: 200, body: JSON.stringify({ ok: true }) };
+  } catch (e: any) {
+    if (e.name === 'ConditionalCheckFailedException') {
+      return { statusCode: 409, body: 'already endorsed' };
+    }
+    return { statusCode: 500, body: 'internal' };
+  }
+};</pre>
+    </div>
+
+    <div class="spec-block">
+      <div class="label">Deployment</div>
+      <h3>Rollout Phases</h3>
+      <div class="flow">
+        <div class="flow-step">
+          <div class="num">PHASE 1</div>
+          <h4>Read-only</h4>
+          <p>Static catalog, no endorsements. Methodology review window opens.</p>
+        </div>
+        <div class="flow-step">
+          <div class="num">PHASE 2</div>
+          <h4>Endorsement</h4>
+          <p>Anon Cognito identities. Endorsements persist. Audit trail active.</p>
+        </div>
+        <div class="flow-step">
+          <div class="num">PHASE 3</div>
+          <h4>MO Pilot</h4>
+          <p>Three counties onboarded. Tier A jurisdiction dashboards live.</p>
+        </div>
+        <div class="flow-step">
+          <div class="num">PHASE 4</div>
+          <h4>Research</h4>
+          <p>DUA endpoint opens. First academic partnership. Peer-reviewed methodology.</p>
+        </div>
+        <div class="flow-step">
+          <div class="num">PHASE 5</div>
+          <h4>Multistate</h4>
+          <p>Schema adopted in 3+ states. JTA model legislation published.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== VIEW 4: GOVERNANCE ========== -->
+  <section class="view" id="view-governance" role="tabpanel" aria-label="Governance and Risk">
+
+    <div class="section-head">
+      <div class="num">§ 06</div>
+      <h2>Governance &amp; Risk</h2>
+      <p>A transparency platform without governance is an attack surface. These are the structures that make the catalog defensible.</p>
+    </div>
+
+    <div class="spec-block">
+      <div class="label">Structure</div>
+      <h3>Methodology Board</h3>
+      <p style="font-size:15px; color:var(--ink-soft); margin-bottom:20px; line-height:1.55;">No single jurisdiction, firm, or advocacy organization may hold more than 20% of board seats. Public disclosure of funding sources is required. A firewall separates CoTrackPro commercial interests from published metrics.</p>
+
+      <div class="spec-grid" style="grid-template-columns: repeat(3, 1fr);">
+        <div class="spec-card">
+          <div class="label">Seat 01 — 03</div>
+          <h3>Academic</h3>
+          <p>Three researchers in family law, child development, or social policy from accredited institutions. Rotating three-year terms.</p>
+        </div>
+        <div class="spec-card">
+          <div class="label">Seat 04 — 05</div>
+          <h3>Judicial</h3>
+          <p>Two retired family court judges with jurisdictional diversity. No active judges to prevent conflicts.</p>
+        </div>
+        <div class="spec-card">
+          <div class="label">Seat 06 — 07</div>
+          <h3>Bar</h3>
+          <p>Two family law practitioners nominated by state bar family law sections. One must represent low-income clients.</p>
+        </div>
+        <div class="spec-card">
+          <div class="label">Seat 08 — 09</div>
+          <h3>Advocacy</h3>
+          <p>One domestic violence survivor advocate and one fathers' rights representative — intentional balance.</p>
+        </div>
+        <div class="spec-card">
+          <div class="label">Seat 10</div>
+          <h3>Parent</h3>
+          <p>One lived-experience parent member with no active family court case, rotating annually.</p>
+        </div>
+        <div class="spec-card">
+          <div class="label">Seat 11</div>
+          <h3>Child Welfare</h3>
+          <p>One licensed child welfare or mental health professional with trauma-informed credentials.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="spec-block">
+      <div class="label">Process</div>
+      <h3>Metric Adoption Workflow</h3>
+      <div class="flow">
+        <div class="flow-step">
+          <div class="num">STEP 01</div>
+          <h4>Propose</h4>
+          <p>Board member or public submits metric with draft methodology.</p>
+        </div>
+        <div class="flow-step">
+          <div class="num">STEP 02</div>
+          <h4>Review</h4>
+          <p>Data Ethics Review assesses re-identification risk and harm potential.</p>
+        </div>
+        <div class="flow-step">
+          <div class="num">STEP 03</div>
+          <h4>Public Comment</h4>
+          <p>60-day open comment period. All comments logged and published.</p>
+        </div>
+        <div class="flow-step">
+          <div class="num">STEP 04</div>
+          <h4>Board Vote</h4>
+          <p>Two-thirds majority required. Dissents published with the decision.</p>
+        </div>
+        <div class="flow-step">
+          <div class="num">STEP 05</div>
+          <h4>Publish</h4>
+          <p>Methodology frozen, versioned, and snapshot to immutable storage.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-head" style="margin-top: 48px;">
+      <div class="num">§ 07</div>
+      <h2>Risk Register</h2>
+      <p>What could go wrong. What we do about it.</p>
+    </div>
+
+    <div class="risk-grid">
+      <div class="risk-card sev-high">
+        <div class="sev-tag">Severity · High</div>
+        <h5>Judicial independence challenge</h5>
+        <p class="mit">Courts may challenge judge-level metrics as infringing judicial independence doctrines.</p>
+        <p class="mit"><strong>Mitigation:</strong> Start with court-level aggregates only. Judge-level metrics require methodology board sign-off and state judicial conference coordination before publication.</p>
+      </div>
+      <div class="risk-card sev-high">
+        <div class="sev-tag">Severity · Critical</div>
+        <h5>DV survivor re-identification</h5>
+        <p class="mit">Protective order data published at small-county level could expose protected persons.</p>
+        <p class="mit"><strong>Mitigation:</strong> VAWA-aware pipeline. Suppress counties with fewer than 25 PO cases/quarter. Differential privacy noise mandatory. Never publish location granularity.</p>
+      </div>
+      <div class="risk-card sev-high">
+        <div class="sev-tag">Severity · High</div>
+        <h5>Adversarial use by high-conflict litigants</h5>
+        <p class="mit">Metrics weaponized to harass judges, attorneys, or opposing parties.</p>
+        <p class="mit"><strong>Mitigation:</strong> No individual-name rankings. Rate-limit API. Terms of use prohibit use in pending litigation without disclosure. Dispute process for every data point.</p>
+      </div>
+      <div class="risk-card sev-med">
+        <div class="sev-tag">Severity · Medium</div>
+        <h5>Media misinterpretation</h5>
+        <p class="mit">Journalists report numbers without methodology context, creating misleading stories.</p>
+        <p class="mit"><strong>Mitigation:</strong> Methodology link published with every metric. Confidence intervals mandatory on every visualization. Press kit explains limitations.</p>
+      </div>
+      <div class="risk-card sev-med">
+        <div class="sev-tag">Severity · Medium</div>
+        <h5>State bar complaint on attorney data</h5>
+        <p class="mit">Attorney-level performance metrics draw ethics complaints.</p>
+        <p class="mit"><strong>Mitigation:</strong> Attorney-level data lives only in Tier B with DUA. No public attorney rankings. Peer benchmarks return only to the attorney themselves.</p>
+      </div>
+      <div class="risk-card sev-med">
+        <div class="sev-tag">Severity · Medium</div>
+        <h5>Funding capture</h5>
+        <p class="mit">A single funder or interest group influences metric selection.</p>
+        <p class="mit"><strong>Mitigation:</strong> Governance charter caps any funder at 20%. Public funding disclosure. Two-thirds board supermajority for metric adoption.</p>
+      </div>
+      <div class="risk-card sev-low">
+        <div class="sev-tag">Severity · Low</div>
+        <h5>Perceived CoTrackPro bias</h5>
+        <p class="mit">Catalog seen as favoring one parent type due to platform origin.</p>
+        <p class="mit"><strong>Mitigation:</strong> Every compliance metric is bilateral — measured in both directions. Neutrality audit annually. Spin out to JTA or nonprofit at scale.</p>
+      </div>
+      <div class="risk-card sev-low">
+        <div class="sev-tag">Severity · Low</div>
+        <h5>Data drift</h5>
+        <p class="mit">State data schemas change, breaking comparability over time.</p>
+        <p class="mit"><strong>Mitigation:</strong> Versioned schemas. Every published metric carries its schema version. Break notifications sent to subscribers of affected metrics.</p>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ========== VIEW 5: MISSOURI IMPLEMENTATION ========== -->
+  <section class="view" id="view-missouri" role="tabpanel" aria-label="Missouri Implementation">
+
+    <div class="mo-hero">
+      <div class="eyebrow">The Pilot · Show-Me Transparency</div>
+      <h2>Missouri First.<br>Because Reform Starts Where You Can Reach It.</h2>
+      <p class="lede">Missouri has the right ingredients: a centralized Office of State Courts Administrator, three diverse pilot counties within a half-day's drive of each other, a cooperative state bar family law section, and active academic partners at Mizzou, Wash U, and SLU law schools. This is the blueprint for a 36-month pilot that proves the catalog works — then scales.</p>
+      <div class="hero-stats">
+        <div class="hero-stat">
+          <div class="n">3</div>
+          <div class="l">Pilot Counties</div>
+        </div>
+        <div class="hero-stat">
+          <div class="n">36</div>
+          <div class="l">Month Timeline</div>
+        </div>
+        <div class="hero-stat">
+          <div class="n">$1.4M</div>
+          <div class="l">Total Program Cost</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-head">
+      <div class="num">§ 08</div>
+      <h2>Pilot County Selection</h2>
+      <p>Three counties chosen for jurisdictional diversity. Each validates a different scale and population profile before the framework generalizes statewide.</p>
+    </div>
+
+    <p style="font-size:15px; color:var(--ink-soft); margin-bottom: 20px; max-width: 820px; line-height: 1.6;">
+      ASSUMPTION: Filing volumes below are representative of Missouri OSCA annual statistical reports. Production values should be confirmed against the most recent Missouri Judicial Report before finalizing MOUs with each circuit.
+    </p>
+
+    <div class="county-grid">
+      <div class="county-card">
+        <div class="tier-label">Tier 1 · Urban High-Volume</div>
+        <h4>St. Louis County</h4>
+        <div class="pop">Population: ~1.0M · 21st Judicial Circuit</div>
+        <div class="rationale">Highest family court volume in the state. Diverse demographics across north/central/south St. Louis County. Proximity to Wash U and SLU enables active research partnership. Tests the framework at scale.</div>
+        <div class="facts">
+          <div><strong>Case volume</strong> ~8,500/yr</div>
+          <div><strong>Judges</strong> 8 family-assigned</div>
+          <div><strong>Pro se rate</strong> ~58%</div>
+          <div><strong>Partner</strong> Wash U Law</div>
+        </div>
+      </div>
+      <div class="county-card tier-2">
+        <div class="tier-label">Tier 2 · Mid-Size Regional</div>
+        <h4>Greene County</h4>
+        <div class="pop">Population: ~300K · 31st Judicial Circuit</div>
+        <div class="rationale">Springfield anchor. Represents Ozarks region and mid-Missouri population patterns. Regional court hub for surrounding rural counties. Mid-volume docket tests the framework without urban complexity.</div>
+        <div class="facts">
+          <div><strong>Case volume</strong> ~2,600/yr</div>
+          <div><strong>Judges</strong> 3 family-assigned</div>
+          <div><strong>Pro se rate</strong> ~64%</div>
+          <div><strong>Partner</strong> MSU Public Affairs</div>
+        </div>
+      </div>
+      <div class="county-card tier-3">
+        <div class="tier-label">Tier 3 · University Town</div>
+        <h4>Boone County</h4>
+        <div class="pop">Population: ~180K · 13th Judicial Circuit</div>
+        <div class="rationale">Columbia / University of Missouri home. Smaller docket supports rapid iteration on methodology. Mizzou Law and School of Social Work provide native research capacity. Ideal for methodology refinement before rollout.</div>
+        <div class="facts">
+          <div><strong>Case volume</strong> ~1,400/yr</div>
+          <div><strong>Judges</strong> 2 family-assigned</div>
+          <div><strong>Pro se rate</strong> ~51%</div>
+          <div><strong>Partner</strong> Mizzou Law</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-head">
+      <div class="num">§ 09</div>
+      <h2>Proposed Statute Language</h2>
+      <p>Draft amendments to Missouri Revised Statutes enabling metric reporting authority and de-identified data sharing. Written for introduction through the Judiciary Committee.</p>
+    </div>
+
+    <p style="font-size:15px; color:var(--ink-soft); margin-bottom: 24px; max-width: 820px; line-height: 1.6;">
+      ASSUMPTION: Section numbering below reflects current RSMo chapters but should be verified with Missouri Legislative Research before drafting bill text. This is educational/policy framing — not legal drafting — and should be reviewed by Missouri-licensed legislative counsel before introduction.
+    </p>
+
+    <div class="statute-block">
+      <div class="cite">Proposed RSMo § 476.058 (new)</div>
+      <h4>Family Court Metric Reporting Authority</h4>
+      <div class="draft-text">
+        The Office of State Courts Administrator shall develop, maintain, and publish annually a set of <em>standardized family court operational and outcome metrics</em> covering case flow, disposition, and enforcement. Published metrics shall be <em>aggregated at the circuit or county level</em>, shall employ de-identification standards consistent with applicable federal law, and shall include <em>methodology, confidence intervals, and known limitations</em> for each metric.
+      </div>
+      <div class="notes">
+        Establishes OSCA authority without mandating judge-level or individual-case publication. Leaves methodology to OSCA working group in consultation with judicial conference and stakeholder advisory board. Parallels authority structure in RSMo § 476.055 (general OSCA authority).
+      </div>
+    </div>
+
+    <div class="statute-block">
+      <div class="cite">Proposed RSMo § 452.317 (new subsection)</div>
+      <h4>Parenting Plan Compliance Data · Voluntary Reporting</h4>
+      <div class="draft-text">
+        Parties to a dissolution, paternity, or modification action involving minor children <em>may voluntarily submit</em> documented parenting time compliance data to a platform designated by the Office of State Courts Administrator. Such data shall be <em>aggregated, de-identified, and published only at the county level</em>. Individual compliance data shall <em>not be admissible</em> as evidence in any proceeding without a party's express written consent and shall not create a rebuttable presumption of compliance or non-compliance.
+      </div>
+      <div class="notes">
+        Critical evidentiary shield. Protects parents from adversarial weaponization of their own compliance logs. Mirrors the structure of RSMo § 452.375.5(1) which protects communications in mediation.
+      </div>
+    </div>
+
+    <div class="statute-block">
+      <div class="cite">Proposed RSMo § 476.059 (new)</div>
+      <h4>Research Data Use Agreement Authority</h4>
+      <div class="draft-text">
+        The Office of State Courts Administrator <em>may enter into data use agreements</em> with accredited academic institutions or nonprofit research organizations to provide access to <em>de-identified case-level data</em> for research purposes. All such agreements shall require <em>IRB approval, publication of methodology, and a prohibition on re-identification attempts</em>, with penalties for violation including permanent ineligibility for future data access.
+      </div>
+      <div class="notes">
+        Opens the Tier B research channel. Re-identification prohibition modeled on the Health Insurance Portability and Accountability Act Safe Harbor provisions at 45 CFR § 164.514.
+      </div>
+    </div>
+
+    <div class="statute-block">
+      <div class="cite">Proposed RSMo § 455.085 (new subsection)</div>
+      <h4>Protective Order Data Confidentiality</h4>
+      <div class="draft-text">
+        Notwithstanding any other provision of this chapter, data concerning protective orders issued under this chapter <em>shall not be published</em> at any geographic granularity that would permit the re-identification of petitioners. The Office of State Courts Administrator shall apply a <em>minimum suppression threshold of twenty-five protective order petitions per reporting period per geographic unit</em>.
+      </div>
+      <div class="notes">
+        VAWA-aligned protection. Critical for DV survivor safety. Prevents even well-intentioned transparency from endangering protected persons in smaller counties.
+      </div>
+    </div>
+
+    <div class="section-head">
+      <div class="num">§ 10</div>
+      <h2>OSCA Data-Sharing MOU</h2>
+      <p>Template memorandum of understanding between CoTrackPro (or a designated nonprofit fiscal agent) and the Missouri Office of State Courts Administrator.</p>
+    </div>
+
+    <div class="mou-doc">
+      <h4>Memorandum of Understanding</h4>
+      <div class="mou-parties">
+        Between the <strong>Missouri Office of State Courts Administrator</strong> ("OSCA") and <strong>[CoTrackPro LLC or designated 501(c)(3) fiscal agent]</strong> ("Platform Partner"), for the purpose of piloting the Family Court Metric Catalog in three Missouri judicial circuits.
+      </div>
+
+      <div class="mou-section">
+        <div class="n">Article I</div>
+        <h5>Purpose and Scope</h5>
+        <p>This MOU establishes the terms under which OSCA will provide de-identified aggregate family court data to Platform Partner for publication in the public Metric Catalog, and under which Platform Partner will provide user-contributed compliance data back to OSCA for judicial administration research. Scope is limited to the 13th, 21st, and 31st Judicial Circuits for a 36-month pilot period.</p>
+      </div>
+
+      <div class="mou-section">
+        <div class="n">Article II</div>
+        <h5>Data Elements Provided by OSCA</h5>
+        <ul>
+          <li>Quarterly aggregate case filings by case type, disaggregated by month and circuit</li>
+          <li>Median and P90 time-to-disposition by case type and circuit</li>
+          <li>Clearance rates, rolling quarterly</li>
+          <li>Mediation referral and completion counts</li>
+          <li>Pro se participation rates by case type</li>
+          <li>Continuance frequencies per case</li>
+          <li>No judge-level, party-level, or individual-case data is provided under this agreement</li>
+        </ul>
+      </div>
+
+      <div class="mou-section">
+        <div class="n">Article III</div>
+        <h5>Data Elements Provided by Platform Partner</h5>
+        <ul>
+          <li>Aggregate parenting time compliance rates, county-level, opt-in user base only</li>
+          <li>Aggregate child contact gap distributions</li>
+          <li>Aggregate enforcement-request-to-action timelines (user-reported)</li>
+          <li>No individual case, party, or identifier data is provided under this agreement</li>
+          <li>Minimum k-anonymity threshold of 10 applied to all published cells</li>
+        </ul>
+      </div>
+
+      <div class="mou-section">
+        <div class="n">Article IV</div>
+        <h5>Methodology and Governance</h5>
+        <p>All published metrics shall conform to methodology approved by the Methodology Board as constituted in the Catalog Governance Charter (§ 06). OSCA reserves the right to review and comment on any publication involving OSCA-provided data prior to release, with a 15-business-day review window. Changes to published methodology require 60-day public comment before adoption.</p>
+      </div>
+
+      <div class="mou-section">
+        <div class="n">Article V</div>
+        <h5>Refresh Cadence</h5>
+        <p>OSCA shall provide quarterly data transfers within 45 days of quarter-end. Platform Partner shall publish aggregate user-contributed metrics on the same quarterly cadence with methodology, confidence intervals, and sample size disclosed for each cell.</p>
+      </div>
+
+      <div class="mou-section">
+        <div class="n">Article VI</div>
+        <h5>Audit Rights</h5>
+        <p>OSCA may request an independent audit of Platform Partner's de-identification pipeline once per calendar year at Platform Partner's expense. Platform Partner may request an audit of OSCA data provenance on the same basis. Audit results shall be published publicly.</p>
+      </div>
+
+      <div class="mou-section">
+        <div class="n">Article VII</div>
+        <h5>Prohibited Uses</h5>
+        <ul>
+          <li>No published data may be used to rank or compare named individual judges, attorneys, or other court personnel</li>
+          <li>No re-identification attempts are permitted; violations terminate this MOU immediately</li>
+          <li>No commercial resale of raw data; published aggregates remain public domain</li>
+          <li>No use in active litigation without disclosure to all parties and the court</li>
+        </ul>
+      </div>
+
+      <div class="mou-section">
+        <div class="n">Article VIII</div>
+        <h5>Term and Termination</h5>
+        <p>Initial term of 36 months commencing on execution. Either party may terminate for cause with 90 days' notice, or without cause with 180 days' notice. Upon termination, Platform Partner shall cease new publication using OSCA data within 30 days; historical publications remain available with clear period-of-coverage labels. Renewal requires affirmative agreement by both parties.</p>
+      </div>
+
+      <div class="mou-section">
+        <div class="n">Article IX</div>
+        <h5>Indemnification and Liability</h5>
+        <p>Each party is responsible for its own acts and omissions. Platform Partner indemnifies OSCA against claims arising from Platform Partner's de-identification failures. OSCA retains sovereign immunity consistent with Missouri law. Neither party is liable for consequential or indirect damages.</p>
+      </div>
+    </div>
+
+    <div class="section-head">
+      <div class="num">§ 11</div>
+      <h2>Budget · 36-Month Pilot</h2>
+      <p>Three-year cost structure assuming three-county pilot, two-person core team, modest infrastructure, and honoraria for the Methodology Board.</p>
+    </div>
+
+    <div style="overflow-x: auto; margin-bottom: 28px;">
+      <table class="budget-table">
+        <thead>
+          <tr>
+            <th style="width: 22%;">Category</th>
+            <th style="width: 38%;">Line Item</th>
+            <th class="num">Year 1</th>
+            <th class="num">Year 2</th>
+            <th class="num">Year 3</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="category" rowspan="3">Personnel</td>
+            <td class="desc">Program Director (0.75 FTE)</td>
+            <td class="num">$112,500</td>
+            <td class="num">$115,875</td>
+            <td class="num">$119,350</td>
+          </tr>
+          <tr>
+            <td class="desc">Data / Methodology Engineer (1.0 FTE)</td>
+            <td class="num">$140,000</td>
+            <td class="num">$144,200</td>
+            <td class="num">$148,525</td>
+          </tr>
+          <tr>
+            <td class="desc">Privacy / Audit Contractor (part-time)</td>
+            <td class="num">$40,000</td>
+            <td class="num">$42,000</td>
+            <td class="num">$44,100</td>
+          </tr>
+          <tr class="subtotal">
+            <td class="category">Subtotal · Personnel</td>
+            <td></td>
+            <td class="num">$292,500</td>
+            <td class="num">$302,075</td>
+            <td class="num">$311,975</td>
+          </tr>
+          <tr>
+            <td class="category" rowspan="3">Infrastructure</td>
+            <td class="desc">AWS (DynamoDB, Lambda, S3, KMS, CloudWatch)</td>
+            <td class="num">$18,000</td>
+            <td class="num">$22,000</td>
+            <td class="num">$28,000</td>
+          </tr>
+          <tr>
+            <td class="desc">Software licenses &amp; tooling</td>
+            <td class="num">$8,500</td>
+            <td class="num">$8,500</td>
+            <td class="num">$9,000</td>
+          </tr>
+          <tr>
+            <td class="desc">Third-party security audit (annual)</td>
+            <td class="num">$12,000</td>
+            <td class="num">$12,000</td>
+            <td class="num">$13,000</td>
+          </tr>
+          <tr class="subtotal">
+            <td class="category">Subtotal · Infrastructure</td>
+            <td></td>
+            <td class="num">$38,500</td>
+            <td class="num">$42,500</td>
+            <td class="num">$50,000</td>
+          </tr>
+          <tr>
+            <td class="category" rowspan="2">Governance</td>
+            <td class="desc">Methodology Board honoraria (11 seats, 4 meetings/yr)</td>
+            <td class="num">$33,000</td>
+            <td class="num">$33,000</td>
+            <td class="num">$33,000</td>
+          </tr>
+          <tr>
+            <td class="desc">Data Ethics Review (external)</td>
+            <td class="num">$18,000</td>
+            <td class="num">$18,000</td>
+            <td class="num">$18,000</td>
+          </tr>
+          <tr class="subtotal">
+            <td class="category">Subtotal · Governance</td>
+            <td></td>
+            <td class="num">$51,000</td>
+            <td class="num">$51,000</td>
+            <td class="num">$51,000</td>
+          </tr>
+          <tr>
+            <td class="category" rowspan="2">Outreach</td>
+            <td class="desc">Stakeholder convenings (4/yr in-state)</td>
+            <td class="num">$16,000</td>
+            <td class="num">$18,000</td>
+            <td class="num">$20,000</td>
+          </tr>
+          <tr>
+            <td class="desc">Publications, website, translation (ES)</td>
+            <td class="num">$22,000</td>
+            <td class="num">$18,000</td>
+            <td class="num">$18,000</td>
+          </tr>
+          <tr class="subtotal">
+            <td class="category">Subtotal · Outreach</td>
+            <td></td>
+            <td class="num">$38,000</td>
+            <td class="num">$36,000</td>
+            <td class="num">$38,000</td>
+          </tr>
+          <tr>
+            <td class="category">Reserve</td>
+            <td class="desc">Contingency (10% of operating)</td>
+            <td class="num">$42,000</td>
+            <td class="num">$43,160</td>
+            <td class="num">$45,100</td>
+          </tr>
+          <tr class="total">
+            <td>Annual Total</td>
+            <td></td>
+            <td class="num">$462,000</td>
+            <td class="num">$474,735</td>
+            <td class="num">$496,075</td>
+          </tr>
+          <tr class="total" style="background: var(--accent);">
+            <td>Three-Year Total</td>
+            <td></td>
+            <td class="num" colspan="3">$1,432,810</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="spec-grid">
+      <div class="spec-card">
+        <div class="label">Funding Strategy</div>
+        <h3>Blended Capital Stack</h3>
+        <p>No single funder exceeds 20% of program costs per the governance charter. Target mix: state appropriation (~30%), philanthropic family justice funders (~35%), research grants via academic partners (~20%), operating subscription from participating circuits (~15%).</p>
+      </div>
+      <div class="spec-card">
+        <div class="label">Matching Precedent</div>
+        <h3>Comparable Programs</h3>
+        <p>Scale comparable to the National Center for State Courts' performance measurement initiatives and early Court Statistics Project pilots. Per-county annual cost roughly aligns with existing OSCA data-warehouse operating budgets at similar scope.</p>
+      </div>
+    </div>
+
+    <div class="section-head">
+      <div class="num">§ 12</div>
+      <h2>Stakeholder Call Sheet</h2>
+      <p>The people whose buy-in determines whether this pilot launches. In approximate order of first outreach.</p>
+    </div>
+
+    <div class="call-sheet">
+      <div class="call-card priority-high">
+        <div class="priority">Priority · Highest · First 30 Days</div>
+        <h5>OSCA Statistical Research Staff</h5>
+        <div class="who">Office of State Courts Administrator · Research &amp; Statistics Division</div>
+        <div class="ask">Exploratory conversation. Do not propose. Ask what they already produce, what constraints they work under, and what would make their lives easier. Listen for 80% of the meeting.</div>
+        <div class="talking-points">
+          <strong>Talking Points</strong>
+          We want to reduce duplicate work, not create new burden · Aggregation and de-identification happen on our side · Methodology governance gives OSCA veto power · Published data credits OSCA as source
+        </div>
+      </div>
+
+      <div class="call-card priority-high">
+        <div class="priority">Priority · High · First 60 Days</div>
+        <h5>Missouri Bar Family Law Section</h5>
+        <div class="who">Section Council · Chairs of Continuing Legal Education &amp; Policy Committees</div>
+        <div class="ask">Seek endorsement in principle and nomination of practitioner seats on the Methodology Board. Offer CLE presentations as a two-way information exchange.</div>
+        <div class="talking-points">
+          <strong>Talking Points</strong>
+          Attorney-level data stays in Tier B with DUA (no public rankings) · Practitioner-benchmark access helps members · Section nominates two board seats, one requiring low-income client representation
+        </div>
+      </div>
+
+      <div class="call-card priority-high">
+        <div class="priority">Priority · High · First 60 Days</div>
+        <h5>Presiding Judges · Pilot Circuits</h5>
+        <div class="who">21st (St. Louis Co.), 13th (Boone), 31st (Greene)</div>
+        <div class="ask">Circuit-level agreement to participate in the pilot. No judge-level publication for the pilot duration. Judicial self-assessment dashboards available privately to each jurist who opts in.</div>
+        <div class="talking-points">
+          <strong>Talking Points</strong>
+          Nothing about your judges is published · Docket-management metrics are already yours · Self-assessment tools support judicial development · You can withdraw anytime with 90 days' notice
+        </div>
+      </div>
+
+      <div class="call-card priority-med">
+        <div class="priority">Priority · Medium · 90 Days</div>
+        <h5>Judiciary Committee Members</h5>
+        <div class="who">Missouri Senate &amp; House Judiciary Committees</div>
+        <div class="ask">Informational visits. No bill introduction until pilot is live and generating data. Build relationships, share the Catalog, invite questions. Return in Year 2 with pilot findings and draft language.</div>
+        <div class="talking-points">
+          <strong>Talking Points</strong>
+          Start with authorization language, not mandate · Privacy safeguards written in statute · VAWA-aligned protections · Cost offset through academic grant partnerships · Show-me first, scale second
+        </div>
+      </div>
+
+      <div class="call-card priority-med">
+        <div class="priority">Priority · Medium · 90 Days</div>
+        <h5>Missouri Coalition Against Domestic &amp; Sexual Violence</h5>
+        <div class="who">MOCADSV Policy Director · Member Agency Leadership</div>
+        <div class="ask">Review of all DV-adjacent metrics and protective order data handling. Offer a seat on the Methodology Board. Their endorsement is the single most important credibility signal for the framework.</div>
+        <div class="talking-points">
+          <strong>Talking Points</strong>
+          Protective order data suppressed below n=25 per quarter · VAWA-aligned pipeline · DV survivor advocate has a board seat by design · Bilateral violation tracking prevents one-sided weaponization
+        </div>
+      </div>
+
+      <div class="call-card priority-med">
+        <div class="priority">Priority · Medium · 120 Days</div>
+        <h5>Mizzou Law · Family Violence Clinic</h5>
+        <div class="who">Clinical Faculty · Research Partnership Lead</div>
+        <div class="ask">Academic research partnership for Boone County pilot. IRB coordination, student researcher placement, first peer-reviewed publication target in Year 2.</div>
+        <div class="talking-points">
+          <strong>Talking Points</strong>
+          Published methodology, reproducible findings · Student research opportunities · First DUA partnership · Named co-authorship on methodology papers
+        </div>
+      </div>
+
+      <div class="call-card priority-med">
+        <div class="priority">Priority · Medium · 120 Days</div>
+        <h5>Wash U &amp; SLU Law Schools</h5>
+        <div class="who">Family Law Faculty · Clinical Program Directors</div>
+        <div class="ask">Parallel partnership for St. Louis County pilot. Larger docket supports disparity analysis research. Joint submission for research funding to Arnold Ventures, Ewing Marion Kauffman Foundation, or similar.</div>
+        <div class="talking-points">
+          <strong>Talking Points</strong>
+          Largest urban family court docket in state · Demographic outcome differential research · Joint grant submission opportunities · CLE co-programming
+        </div>
+      </div>
+
+      <div class="call-card">
+        <div class="priority">Priority · Ongoing</div>
+        <h5>Missouri Fathers &amp; Families</h5>
+        <div class="who">Parent Advocacy Organizations · Multiple</div>
+        <div class="ask">Proactive engagement with parent advocacy across the spectrum. Equal outreach to mother-led and father-led organizations ensures bilateral credibility from day one.</div>
+        <div class="talking-points">
+          <strong>Talking Points</strong>
+          Every compliance metric is bilateral by design · Parent seat on Methodology Board · Neutrality audit annually · Both sides measured equally, no exceptions
+        </div>
+      </div>
+    </div>
+
+    <div class="section-head">
+      <div class="num">§ 13</div>
+      <h2>Communications Timeline</h2>
+      <p>Sequencing for announcements, academic partnerships, and the first public data release. Designed to build credibility before making claims.</p>
+    </div>
+
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="month">Month 01 — 03</div>
+        <h5>Quiet Stakeholder Alignment</h5>
+        <p>No public announcements. All energy into OSCA conversations, bar section briefings, and presiding judge meetings. Draft methodology published for private stakeholder review only. Success metric: three signed circuit letters of participation.</p>
+      </div>
+      <div class="timeline-item">
+        <div class="month">Month 04 — 06</div>
+        <h5>Methodology Board Convened</h5>
+        <p>Public announcement of the board composition and charter. First board meeting publicly noticed. 60-day public comment window opens on draft methodology. Success metric: all 11 board seats filled, first methodology vote completed.</p>
+      </div>
+      <div class="timeline-item">
+        <div class="month">Month 07 — 09</div>
+        <h5>Static Catalog Launch</h5>
+        <p>The Catalog goes live as a read-only publication. No data yet — just the framework, the methodology, the governance, and the MOU template. Position as a civic infrastructure proposal, not a product. Success metric: endorsements from MOCADSV, state bar section, and at least two sitting legislators.</p>
+      </div>
+      <div class="timeline-item">
+        <div class="month">Month 10 — 12</div>
+        <h5>First MOUs Signed</h5>
+        <p>OSCA and circuit MOUs executed. Data pipelines built. First internal-only dashboards for pilot circuits. Academic partnerships formalized with DUAs. Success metric: first OSCA data transfer received and processed.</p>
+      </div>
+      <div class="timeline-item">
+        <div class="month">Month 13 — 18</div>
+        <h5>First Public Data Release</h5>
+        <p>Tier A jurisdiction dashboards published. Accompanied by methodology papers, press kit, stakeholder testimonials, and interactive comparison with pre-existing public OSCA reports. Coordinated announcements across all three circuits on the same day. Success metric: coverage in St. Louis Post-Dispatch, Kansas City Star, and Missouri Lawyers Media.</p>
+      </div>
+      <div class="timeline-item">
+        <div class="month">Month 19 — 24</div>
+        <h5>First User-Contributed Metrics</h5>
+        <p>Tier C opt-in expands. Parenting time compliance rate becomes the first user-generated metric published at county aggregate. The truth-layer metric nobody else has. Expect national coverage. Success metric: 500+ opted-in participants contributing across the three circuits.</p>
+      </div>
+      <div class="timeline-item">
+        <div class="month">Month 25 — 30</div>
+        <h5>Research Partnership Publications</h5>
+        <p>First peer-reviewed papers from Mizzou and Wash U partnerships. Present at AFCC, National Conference on Courts and Technology, and Missouri Bar Annual Meeting. Begin conversations with Illinois, Kansas, and Iowa court administrators about schema adoption. Success metric: three peer-reviewed publications, two conference keynotes.</p>
+      </div>
+      <div class="timeline-item">
+        <div class="month">Month 31 — 36</div>
+        <h5>Legislative Advancement</h5>
+        <p>With 30 months of operational data and published research, return to the Judiciary Committee. Introduce RSMo amendments through a carrying legislator. Simultaneous introduction in one neighboring state demonstrates the replication model. Success metric: bill introduced in Missouri, MOU signed in one additional state.</p>
+      </div>
+    </div>
+
+    <div class="section-head">
+      <div class="num">§ 14</div>
+      <h2>Success Criteria</h2>
+      <p>What makes the pilot worth doing, measured at the 36-month mark.</p>
+    </div>
+
+    <div class="spec-grid" style="grid-template-columns: repeat(3, 1fr);">
+      <div class="spec-card" style="border-top: 6px solid var(--green);">
+        <div class="label">Minimum Viable</div>
+        <h3>The Floor</h3>
+        <p>Three circuits participating. First Tier A dashboards published. Methodology Board operating. One peer-reviewed paper. MOCADSV endorsement retained. No re-identification incidents. Pilot continues into Year 4 with sustainable funding.</p>
+      </div>
+      <div class="spec-card" style="border-top: 6px solid var(--amber);">
+        <div class="label">Target</div>
+        <h3>The Midpoint</h3>
+        <p>All floor criteria plus first Tier C metric published with 500+ participants. Bill introduced in Missouri. Second state signs MOU. Three peer-reviewed publications. State bar family law section adopts catalog as reference in member practice resources. First attorney-level benchmarks returning privately to practitioners.</p>
+      </div>
+      <div class="spec-card" style="border-top: 6px solid var(--accent);">
+        <div class="label">Stretch</div>
+        <h3>The Ceiling</h3>
+        <p>All target criteria plus RSMo amendments passed. Five-state schema consortium formed. Arnold Ventures or Pew Charitable Trusts grant secured for national expansion. National Center for State Courts adopts elements. JTA publishes model legislation. Catalog becomes the standard reference in family court reform literature.</p>
+      </div>
+    </div>
+
+  </section>
+
+  <div class="colophon">
+    <div>Set in Atkinson Hyperlegible · Optimized for low-vision reading</div>
+    <div>Framework v0.3 · Missouri Implementation Blueprint</div>
+    <div>A CoTrackPro Civic Publication</div>
+  </div>
+
+</main>
+
+<!-- ========== Drawer ========== -->
+<div class="drawer-backdrop" id="drawer-backdrop" aria-hidden="true"></div>
+<aside class="drawer" id="drawer" role="dialog" aria-modal="true" aria-labelledby="drawer-title" aria-hidden="true">
+  <div class="drawer-header">
+    <div>
+      <div class="tag" id="drawer-tag">METRIC · TIER A · VISIBLE</div>
+      <div class="mname" id="drawer-title">Metric Name</div>
+    </div>
+    <button class="drawer-close" id="drawer-close" aria-label="Close">✕</button>
+  </div>
+  <div class="drawer-body" id="drawer-body"></div>
+</aside>
+
+<div class="toast" id="toast">Saved</div>
+
+<script>
+// =========================================================
+// DATA
+// =========================================================
+
+const TIER_LABEL = {
+  A: 'Public',
+  B: 'Oversight · DUA',
+  C: 'User-Owned',
+  D: 'Never Disclosed'
+};
+
+const ROLES = [
+  {
+    id: 'parent',
+    name: 'Parent (Pro Se)',
+    summary: 'A parent navigating the system without counsel needs benchmarks for what is typical, timelines for what to expect, and honest signals about how their case compares to others in their county.',
+    metrics: [
+      { id: 'p-typical-timeline', name: 'Typical Case Timeline (County)', tier: 'A', status: 'visible', desc: 'Median and P90 days from filing to final judgment for your case type in your jurisdiction.' },
+      { id: 'p-custody-dist', name: 'Custody Outcome Distribution', tier: 'A', status: 'visible', desc: 'How often courts in your county award sole vs joint physical and legal custody.' },
+      { id: 'p-pt-compliance', name: 'Parenting Time Compliance Rate', tier: 'C', status: 'missing', desc: 'Percentage of court-ordered parenting time actually exercised. Requires user-logged data.' },
+      { id: 'p-contact-gap', name: 'Child Contact Gap', tier: 'C', status: 'missing', desc: 'Consecutive days a child goes without contact with either parent, by case type.' },
+      { id: 'p-motion-grant', name: 'Motion Grant Rates (County)', tier: 'B', status: 'hidden', desc: 'How often emergency, contempt, and modification motions are granted — aggregated, anonymized.' },
+      { id: 'p-enforce-time', name: 'Time-to-Enforcement', tier: 'A', status: 'hidden', desc: 'From violation filed to enforcement action. Defensibly publishable at aggregate level.' },
+      { id: 'p-represent-disparity', name: 'Represented vs Pro Se Outcomes', tier: 'B', status: 'hidden', desc: 'Outcome differentials by representation status, controlled for case complexity.' }
+    ]
+  },
+  {
+    id: 'attorney',
+    name: 'Family Law Attorney',
+    summary: 'Practicing attorneys need benchmarks against peers, insight into judges on their docket, and defensible data to advise clients on realistic outcomes.',
+    metrics: [
+      { id: 'a-peer-duration', name: 'Peer Case Duration Benchmark', tier: 'B', status: 'missing', desc: 'Anonymized case duration distribution for similar matter types, controlling for complexity.' },
+      { id: 'a-motion-success', name: 'Motion Success Rate by Type', tier: 'B', status: 'hidden', desc: 'Grant rates for each motion type in the jurisdiction, across all attorneys.' },
+      { id: 'a-continuance', name: 'Continuance Frequency', tier: 'A', status: 'visible', desc: 'Average continuances per case type per jurisdiction.' },
+      { id: 'a-gal-align', name: 'GAL Recommendation Alignment', tier: 'B', status: 'hidden', desc: 'How often final rulings match GAL recommendations in your jurisdiction.' },
+      { id: 'a-settle-trial', name: 'Settlement vs Trial Distribution', tier: 'A', status: 'visible', desc: 'Proportion of cases settled vs litigated, by case type.' },
+      { id: 'a-reversal', name: 'Appeal Reversal Rate', tier: 'A', status: 'hidden', desc: 'Proportion of family court rulings reversed on appeal, by issue type.' }
+    ]
+  },
+  {
+    id: 'judge',
+    name: 'Judge',
+    summary: 'Judges benefit from calibration against peers — not public ranking. Private dashboards covering decision consistency, docket pace, and reversal patterns support judicial development.',
+    metrics: [
+      { id: 'j-docket-pace', name: 'Personal Docket Pace', tier: 'B', status: 'visible', desc: 'Your time-to-disposition vs bench peers, controlled for case mix. Private to you.' },
+      { id: 'j-consistency', name: 'Decision Consistency Score', tier: 'B', status: 'missing', desc: 'Variance in your rulings on similar fact patterns over time. Private self-assessment tool.' },
+      { id: 'j-reversal', name: 'Reversal Rate', tier: 'B', status: 'hidden', desc: 'Your appellate reversal rate by issue type, benchmarked against circuit average.' },
+      { id: 'j-deviation', name: 'Guideline Deviation Rate', tier: 'B', status: 'hidden', desc: 'Your child support deviation rate and direction, relative to state median.' },
+      { id: 'j-courtroom-time', name: 'Courtroom Time Allocation', tier: 'B', status: 'missing', desc: 'Time granted per case by party and issue. Detects imbalance.' },
+      { id: 'j-backlog', name: 'Disposition Backlog', tier: 'A', status: 'visible', desc: 'Open matters on your docket beyond court-set disposition targets.' }
+    ]
+  },
+  {
+    id: 'admin',
+    name: 'Court Administrator',
+    summary: 'Court administrators need operational metrics to allocate resources, identify bottlenecks, and report to judicial leadership without exposing individual decision-making.',
+    metrics: [
+      { id: 'ca-backlog', name: 'Docket-Level Backlog', tier: 'A', status: 'visible', desc: 'Open cases past disposition targets, by division and case type.' },
+      { id: 'ca-clearance', name: 'Clearance Rate', tier: 'A', status: 'visible', desc: 'Cases resolved divided by cases filed, rolling quarterly.' },
+      { id: 'ca-mediation', name: 'Mediation Diversion Rate', tier: 'A', status: 'visible', desc: 'Proportion of cases that reach settlement via court-referred mediation.' },
+      { id: 'ca-emergency', name: 'Emergency Motion Load', tier: 'A', status: 'visible', desc: 'Volume and trend of ex parte and emergency filings.' },
+      { id: 'ca-refile', name: 'Re-filing Rate', tier: 'A', status: 'missing', desc: 'Same-parties returning within 12/24/36 months. A reform priority metric.' },
+      { id: 'ca-pro-se', name: 'Self-Represented Litigant Share', tier: 'A', status: 'hidden', desc: 'Proportion of filings with no counsel, by case type. Informs resource planning.' }
+    ]
+  },
+  {
+    id: 'gal',
+    name: 'GAL / Custody Evaluator',
+    summary: 'Guardians ad litem and evaluators carry enormous influence. Transparent metrics about caseload balance and recommendation patterns protect both children and the profession.',
+    metrics: [
+      { id: 'g-caseload', name: 'Caseload Distribution', tier: 'B', status: 'hidden', desc: 'Active cases per GAL in your jurisdiction, and concentration among repeat appointees.' },
+      { id: 'g-alignment', name: 'Recommendation-to-Ruling Alignment', tier: 'B', status: 'hidden', desc: 'Proportion of final rulings that match GAL recommendations.' },
+      { id: 'g-time-report', name: 'Time-to-Report', tier: 'B', status: 'missing', desc: 'Days from appointment to filed recommendation, benchmarked.' },
+      { id: 'g-child-contact', name: 'Child Contact Frequency', tier: 'B', status: 'missing', desc: 'Average number of child interviews per case. Measures investigative depth.' },
+      { id: 'g-repeat', name: 'Repeat Appointment Index', tier: 'B', status: 'hidden', desc: 'Concentration of appointments with specific judges — detects informal networks.' }
+    ]
+  },
+  {
+    id: 'legislator',
+    name: 'Legislator',
+    summary: 'Legislators need system-level signals about where family court is producing harm, generating cost, or diverging from child welfare outcomes — grounds for statutory reform.',
+    metrics: [
+      { id: 'l-volume', name: 'Statewide Case Volume Trend', tier: 'A', status: 'visible', desc: 'Filings per 1,000 population, by case type, five-year trend.' },
+      { id: 'l-lit-years', name: 'Litigation-Years-Per-Child', tier: 'A', status: 'missing', desc: 'Total court-exposed years for minor children statewide. A harm index.' },
+      { id: 'l-financial', name: 'Financial Depletion Indicator', tier: 'A', status: 'missing', desc: 'Bankruptcies filed during or within two years of family court proceedings.' },
+      { id: 'l-disparity', name: 'County-Level Disparity', tier: 'A', status: 'hidden', desc: 'Outcome variance across counties controlling for demographics. Evidence for standardization.' },
+      { id: 'l-dv-escal', name: 'DV Escalation Post-Filing', tier: 'B', status: 'missing', desc: 'Protective order violations following custody filings. Safety signal.' },
+      { id: 'l-cost', name: 'Cost to Taxpayers Per Case', tier: 'A', status: 'hidden', desc: 'Estimated public cost per family court case, including judicial time and indigent services.' }
+    ]
+  },
+  {
+    id: 'researcher',
+    name: 'Academic Researcher',
+    summary: 'Researchers with DUA-gated access to de-identified longitudinal data can produce peer-reviewed evidence for reform. The infrastructure has to exist before the research can.',
+    metrics: [
+      { id: 'r-longitudinal', name: 'Longitudinal Case Data Set', tier: 'B', status: 'missing', desc: 'De-identified case-level data with linked outcomes over five+ years. DUA required.' },
+      { id: 'r-demographic', name: 'Demographic Outcome Differentials', tier: 'B', status: 'hidden', desc: 'Case outcomes by protected class, controlled for case mix. Disparity study foundation.' },
+      { id: 'r-plan-effect', name: 'Parenting Plan Effectiveness', tier: 'B', status: 'missing', desc: 'Linked longitudinal data: plan type → stability outcomes → return-to-court.' },
+      { id: 'r-intervention', name: 'Intervention Efficacy Data', tier: 'B', status: 'missing', desc: 'Outcomes of court-ordered interventions — counseling, mediation, parenting classes.' },
+      { id: 'r-crossstate', name: 'Cross-State Comparative Dataset', tier: 'B', status: 'missing', desc: 'Standardized schema enabling cross-jurisdiction research.' }
+    ]
+  },
+  {
+    id: 'journalist',
+    name: 'Journalist',
+    summary: 'Investigative journalists need methodologically sound aggregate data to report on court performance without exposing individual parties or children.',
+    metrics: [
+      { id: 'jn-dashboard', name: 'County Performance Dashboard', tier: 'A', status: 'visible', desc: 'Aggregate case flow, disposition, and outcome distribution by county.' },
+      { id: 'jn-anomaly', name: 'Trend Anomaly Alerts', tier: 'A', status: 'missing', desc: 'Statistically significant deviations in metrics by jurisdiction, flagged monthly.' },
+      { id: 'jn-foia', name: 'FOIA Response Time Tracker', tier: 'A', status: 'hidden', desc: 'How long court administrators take to respond to records requests.' },
+      { id: 'jn-vacancy', name: 'Judicial Vacancy & Load', tier: 'A', status: 'visible', desc: 'Open judicial positions and caseload-per-judge by circuit.' },
+      { id: 'jn-audit', name: 'Methodology Audit Log', tier: 'A', status: 'missing', desc: 'Public record of every change to metric definitions — essential for credibility.' }
+    ]
+  },
+  {
+    id: 'advocate',
+    name: 'Advocate (DV · Fathers · Children)',
+    summary: 'Advocacy organizations across the spectrum need neutral, bilateral data. Metrics that measure one side only produce distrust. Both-directions measurement produces credibility.',
+    metrics: [
+      { id: 'ad-po-grant', name: 'Protective Order Grant Rate', tier: 'A', status: 'hidden', desc: 'Aggregate grant rate for protective orders, with confidence intervals.' },
+      { id: 'ad-bilateral', name: 'Bilateral Violation Tracking', tier: 'C', status: 'missing', desc: 'Compliance violations measured in both directions — essential for neutrality.' },
+      { id: 'ad-representation', name: 'Representation Disparity', tier: 'A', status: 'hidden', desc: 'Counsel access rates by case type, income, and location.' },
+      { id: 'ad-child-voice', name: 'Child Voice Inclusion Rate', tier: 'B', status: 'missing', desc: 'Proportion of cases where a child interview or preference is documented.' },
+      { id: 'ad-referral', name: 'Resource Referral Follow-Through', tier: 'C', status: 'missing', desc: 'User-reported completion rates for court-ordered services and resources.' }
+    ]
+  },
+  {
+    id: 'child',
+    name: 'Child (Age-Appropriate)',
+    summary: 'Children experience the court system without a voice in measurement. Age-appropriate, opt-in, trauma-informed indicators give the most affected party a stake.',
+    metrics: [
+      { id: 'c-routine', name: 'Routine Stability Indicator', tier: 'C', status: 'missing', desc: 'Consistency of bedtime, meals, homework, school across households.' },
+      { id: 'c-school', name: 'School Continuity', tier: 'C', status: 'missing', desc: 'Changes in school, attendance, and tardiness correlated with exchange patterns.' },
+      { id: 'c-activity', name: 'Activity Continuity', tier: 'C', status: 'missing', desc: 'Sports, therapy, and medical appointments maintained across both households.' },
+      { id: 'c-sibling', name: 'Sibling & Extended Family Contact', tier: 'C', status: 'missing', desc: 'Frequency of contact with siblings and extended family. A wellbeing proxy.' },
+      { id: 'c-wellbeing', name: 'Child Wellbeing Self-Report', tier: 'D', status: 'missing', desc: 'Opt-in, age-appropriate wellbeing reporting. Never disclosed individually.' }
+    ]
+  },
+  {
+    id: 'therapist',
+    name: 'Mental Health Professional',
+    summary: 'Therapists and evaluators need aggregated signals about conflict trajectory and risk — without ever exposing individual clients or session content.',
+    metrics: [
+      { id: 't-conflict', name: 'Conflict Intensity Trajectory', tier: 'C', status: 'missing', desc: 'NLP-scored hostility trend from co-parent communication. Transparent methodology.' },
+      { id: 't-deescalate', name: 'De-escalation Tool Usage', tier: 'C', status: 'missing', desc: 'Frequency of rewrite-before-send and similar tools. Adoption signal.' },
+      { id: 't-repair', name: 'Repair Attempt Rate', tier: 'C', status: 'missing', desc: 'Messages acknowledging prior conflict constructively — a resilience indicator.' },
+      { id: 't-critical', name: 'Critical Incident Flags', tier: 'B', status: 'missing', desc: 'Aggregated, anonymized critical incidents. Safety-signal reporting.' },
+      { id: 't-services', name: 'Service Utilization Trends', tier: 'A', status: 'hidden', desc: 'Use of mental health services pre/during/post case, at population level.' }
+    ]
+  },
+  {
+    id: 'police',
+    name: 'Law Enforcement',
+    summary: 'Responding officers need fast, factual access to order status and contact terms — not case narrative or merits. Precision and limits are the entire product.',
+    metrics: [
+      { id: 'pd-status', name: 'Active Order Status Check', tier: 'A', status: 'hidden', desc: 'Real-time existence and terms of active custody or protective orders. Already partially available.' },
+      { id: 'pd-violation', name: 'Violation Report Turnaround', tier: 'A', status: 'missing', desc: 'Time from officer-documented violation to court action.' },
+      { id: 'pd-exchange', name: 'Custody Exchange Call Volume', tier: 'A', status: 'missing', desc: 'Dispatch calls tied to custody exchange points. Hotspot mapping.' },
+      { id: 'pd-crossjur', name: 'Cross-Jurisdiction Order Verification', tier: 'A', status: 'hidden', desc: 'Confirmed enforceability of out-of-state orders. A gap in current systems.' }
+    ]
+  },
+  {
+    id: 'mediator',
+    name: 'Mediator',
+    summary: 'Mediators need outcome data on their own practice and on diversion programs overall — to improve technique and to justify mediation as a court intervention.',
+    metrics: [
+      { id: 'md-settle', name: 'Settlement Rate', tier: 'A', status: 'visible', desc: 'Proportion of referred cases reaching full or partial agreement.' },
+      { id: 'md-durable', name: 'Durability of Agreements', tier: 'A', status: 'missing', desc: 'Proportion of mediated agreements that hold without return-to-court within 24 months.' },
+      { id: 'md-sessions', name: 'Session Count to Resolution', tier: 'A', status: 'hidden', desc: 'Average sessions needed, by case complexity.' },
+      { id: 'md-postconflict', name: 'Post-Mediation Conflict Intensity', tier: 'C', status: 'missing', desc: 'Measured reduction in communication hostility post-mediation. Efficacy signal.' }
+    ]
+  },
+  {
+    id: 'employer',
+    name: 'Employer / EAP',
+    summary: 'Employers through employee assistance programs need population-level signals about family court as a workforce wellness issue — never individual-level data.',
+    metrics: [
+      { id: 'e-workforce', name: 'Workforce Impact Estimate', tier: 'A', status: 'missing', desc: 'Aggregate estimate of workforce hours lost to family court attendance.' },
+      { id: 'e-eap', name: 'EAP Family Law Referral Volume', tier: 'A', status: 'hidden', desc: 'Requests for family-law-related EAP services, anonymized.' },
+      { id: 'e-leave', name: 'Court-Related Leave Patterns', tier: 'A', status: 'missing', desc: 'Aggregate leave tied to custody exchanges and court dates.' }
+    ]
+  }
+];
+
+// Full methodology per metric (subset — expandable; fallback shown for others)
+const METHODOLOGY = {
+  'p-pt-compliance': {
+    definition: 'Ratio of actual parenting time hours exercised to the parenting time hours scheduled under the current court order, measured per calendar month per parent.',
+    numerator: 'Hours of parenting time exercised (logged exchanges + documented custody periods)',
+    denominator: 'Hours of parenting time scheduled under active custody order',
+    period: 'Monthly, rolling 3-month average for stability',
+    source: 'User-logged exchange data (CoTrackPro or equivalent), court order of record',
+    inclusion: 'Active cases with a final parenting plan in force for at least 90 days',
+    exclusion: 'Cases under emergency modification, cases with active protective orders restricting contact, cases with mutual parental agreement to deviate (documented)',
+    confounders: 'Work schedule changes, child illness, mutual voluntary deviations, holidays, child preferences as they mature',
+    minSample: 'No publication for cells with n < 10 cases. Differential privacy noise applied to cells with n < 30.',
+    privacy: 'Raw data stays in user account. Only aggregate (state, county, case type) published. Parent identifier never appears in published data.',
+    reformValue: 'Currently invisible. Publication would surface enforcement gaps and whether court orders match lived reality.',
+    refresh: 'Quarterly publication, monthly internal refresh'
+  },
+  'p-contact-gap': {
+    definition: 'Longest consecutive period in days during which a child has no contact (in-person, phone, or video) with either parent, measured rolling over the prior 90 days.',
+    numerator: 'Maximum gap in days between documented contact events',
+    denominator: 'Not a rate — a distribution metric; reported as P50 and P90 days',
+    period: 'Rolling 90-day window, published quarterly',
+    source: 'User-logged contact events, exchange logs, documented calls/video',
+    inclusion: 'Active cases with minor children, court order in force, both parents with some form of ordered contact',
+    exclusion: 'Cases where contact is legally suspended, child has aged out (18+), periods of documented medical isolation',
+    confounders: 'Travel, illness, mutual family decisions, child autonomous choices as they age',
+    minSample: 'n ≥ 10 per reporting cell; suppress if smaller',
+    privacy: 'Never published at child or family level. County-aggregate only, quarterly lag.',
+    reformValue: 'Captures human harm of enforcement failures invisible to case-flow metrics.',
+    refresh: 'Quarterly'
+  },
+  'j-consistency': {
+    definition: 'Within-judge variance in rulings on cases with substantially similar fact patterns, measured over a rolling 24-month window using matched case analysis.',
+    numerator: 'Standard deviation of rulings on matched case pairs',
+    denominator: 'Number of matched case pairs',
+    period: 'Rolling 24 months',
+    source: 'Court case management system, de-identified case abstracts, matched using propensity score or exact matching on case features',
+    inclusion: 'Judges with at least 50 family court dispositions in the window',
+    exclusion: 'Bench trials with sealed findings, cases transferred mid-proceeding',
+    confounders: 'Case complexity differences not captured in match, evolving case law, statutory changes within window',
+    minSample: 'n ≥ 50 dispositions per judge; scores below this threshold not calculated',
+    privacy: 'Tier B — private to the individual judge and their chief judge only. Never aggregated publicly with judge identifiers.',
+    reformValue: 'Supports judicial self-improvement. Detects drift. Never used for ranking or discipline.',
+    refresh: 'Quarterly, with 12-month lag to allow appellate settlement'
+  },
+  't-conflict': {
+    definition: 'Hostility intensity score (0-100) derived from NLP analysis of opted-in co-parent communication, using a transparent, peer-reviewed linguistic feature model.',
+    numerator: 'Weighted hostility features in messages (negation, second-person blame, intensifiers, catastrophizing, absolutism)',
+    denominator: 'Total messages in window',
+    period: '30-day rolling',
+    source: 'User-opted-in CoTrackPro communication archive',
+    inclusion: 'Parents who have explicitly opted into research participation with active communication',
+    exclusion: 'One-way communication only, legal hold communications, attorney-inclusive threads',
+    confounders: 'Cultural differences in directness, language non-native effects, emergency communications, documented crises',
+    minSample: 'Individual score suppressed; only cohort-level aggregates published (county, case type, tenure)',
+    privacy: 'Individual message content never leaves user account. Only scored features aggregated with DP noise.',
+    reformValue: 'First large-scale measurement of whether de-escalation interventions actually work.',
+    refresh: 'Monthly aggregate, annual methodology review'
+  },
+  'l-lit-years': {
+    definition: 'Sum of years each minor child is exposed to an open or reopened family court case, summed statewide and expressed per 1,000 minors.',
+    numerator: 'Total (case duration in years × number of minor children per case), summed',
+    denominator: 'State minor population (0-17) per 1,000',
+    period: 'Annual',
+    source: 'State court case management data, census minor population estimates',
+    inclusion: 'All cases involving minor children: dissolution with children, paternity, modification, custody, protective orders with custody implications',
+    exclusion: 'Cases sealed under juvenile statutes, adult-only matters',
+    confounders: 'Multi-case families (same children in multiple cases), interstate custody moves',
+    minSample: 'State-level minimum; county-level requires n ≥ 25 cases per year',
+    privacy: 'Fully aggregate statistic. No individual, family, or judge identifiers involved.',
+    reformValue: 'Single most powerful statistic for legislative reform framing — quantifies childhood time spent in litigation.',
+    refresh: 'Annual'
+  },
+  'ad-bilateral': {
+    definition: 'Compliance violations logged and verified, measured separately in both directions (Parent A→B and Parent B→A), with outcome tracking.',
+    numerator: 'Verified violations by each parent',
+    denominator: 'Total documented exchanges or communication opportunities',
+    period: 'Rolling 90-day window',
+    source: 'User-logged exchanges, time-stamped evidence, court filings where disputes arise',
+    inclusion: 'Cases with bilateral logging enabled; both parents using compatible tooling',
+    exclusion: 'Cases with court-ordered no-contact in one direction',
+    confounders: 'Differential logging adherence between parents, cultural framing of violations',
+    minSample: 'n ≥ 20 exchange events per direction before rate calculated',
+    privacy: 'Individual data user-owned. Aggregates stripped of identifiers. Gender and case type stratification only above cell thresholds.',
+    reformValue: 'Ends the one-sided metric problem. Any measurement in only one direction immediately discredits the framework.',
+    refresh: 'Rolling quarterly'
+  }
+};
+
+// Default methodology for metrics not individually specified
+function methodologyFor(metricId) {
+  if (METHODOLOGY[metricId]) return METHODOLOGY[metricId];
+  return {
+    definition: 'Operational definition pending methodology board review. Draft definition available on request.',
+    numerator: 'TBD — methodology board draft',
+    denominator: 'TBD — methodology board draft',
+    period: 'Proposed: quarterly refresh, annual methodology review',
+    source: 'Source combination pending — likely court case management system and/or user-generated data',
+    inclusion: 'TBD — subject to public comment period',
+    exclusion: 'TBD — subject to public comment period',
+    confounders: 'Will be enumerated during methodology review and published alongside first data release',
+    minSample: 'Default k-anonymity threshold: n ≥ 10. No cell below 10 ever published.',
+    privacy: 'Tier-appropriate protections applied. De-identification pipeline mandatory before any publication.',
+    reformValue: 'Full reform implications published after board adoption.',
+    refresh: 'Pending adoption'
+  };
+}
+
+// State comparison data (ASSUMPTION: illustrative; verify against state judicial reports before use)
+const COMPARE_METRICS = [
+  { name: 'Case filing volume (dissolution, custody)', mo: 'y', ca: 'y', ny: 'y', tx: 'y', il: 'y', fl: 'y' },
+  { name: 'Median time to disposition', mo: 'y', ca: 'y', ny: 'p', tx: 'y', il: 'p', fl: 'y' },
+  { name: 'Clearance rate', mo: 'y', ca: 'y', ny: 'y', tx: 'y', il: 'y', fl: 'y' },
+  { name: 'Custody outcome distribution', mo: 'p', ca: 'p', ny: 'n', tx: 'n', il: 'n', fl: 'p' },
+  { name: 'Child support order issuance', mo: 'y', ca: 'y', ny: 'y', tx: 'y', il: 'y', fl: 'y' },
+  { name: 'Continuance frequency per case', mo: 'n', ca: 'p', ny: 'n', tx: 'n', il: 'n', fl: 'n' },
+  { name: 'Judge-level ruling distribution', mo: 'n', ca: 'n', ny: 'n', tx: 'n', il: 'n', fl: 'n' },
+  { name: 'Motion grant rates (emergency, contempt)', mo: 'n', ca: 'n', ny: 'n', tx: 'n', il: 'n', fl: 'n' },
+  { name: 'Appeal reversal rate (family)', mo: 'p', ca: 'y', ny: 'p', tx: 'p', il: 'n', fl: 'p' },
+  { name: 'Mediation diversion rate', mo: 'p', ca: 'y', ny: 'n', tx: 'n', il: 'p', fl: 'y' },
+  { name: 'Self-represented litigant share', mo: 'n', ca: 'y', ny: 'n', tx: 'n', il: 'n', fl: 'n' },
+  { name: 'Representation vs outcome disparity', mo: 'n', ca: 'n', ny: 'n', tx: 'n', il: 'n', fl: 'n' },
+  { name: 'Protective order grant rate', mo: 'n', ca: 'n', ny: 'n', tx: 'n', il: 'n', fl: 'n' },
+  { name: 'Re-filing rate (same parties)', mo: 'n', ca: 'n', ny: 'n', tx: 'n', il: 'n', fl: 'n' },
+  { name: 'GAL caseload distribution', mo: 'n', ca: 'n', ny: 'n', tx: 'n', il: 'n', fl: 'n' },
+  { name: 'Parenting time compliance (actual vs ordered)', mo: 'n', ca: 'n', ny: 'n', tx: 'n', il: 'n', fl: 'n' },
+  { name: 'Child contact gap tracking', mo: 'n', ca: 'n', ny: 'n', tx: 'n', il: 'n', fl: 'n' },
+  { name: 'Durability of mediated agreements', mo: 'n', ca: 'n', ny: 'n', tx: 'n', il: 'n', fl: 'n' }
+];
+
+// =========================================================
+// STATE
+// =========================================================
+const state = {
+  activeRoleId: ROLES[0].id,
+  activeView: 'catalog',
+  endorsed: new Set()
+};
+
+function loadState() {
+  try {
+    const raw = localStorage.getItem('mcc-endorsed-v2');
+    if (raw) state.endorsed = new Set(JSON.parse(raw));
+  } catch(e) { state.endorsed = new Set(); }
+}
+function saveState() {
+  try { localStorage.setItem('mcc-endorsed-v2', JSON.stringify([...state.endorsed])); } catch(e) {}
+}
+
+// =========================================================
+// RENDER
+// =========================================================
+
+function renderCounts() {
+  const all = ROLES.flatMap(r => r.metrics);
+  document.getElementById('count-visible').innerHTML =
+    `${all.filter(m => m.status==='visible').length}<small>Metrics Tracked Today</small>`;
+  document.getElementById('count-hidden').innerHTML =
+    `${all.filter(m => m.status==='hidden').length}<small>Defensibly Measurable</small>`;
+  document.getElementById('count-missing').innerHTML =
+    `${all.filter(m => m.status==='missing').length}<small>Currently Uncounted</small>`;
+}
+
+function renderRoleButtons() {
+  const c = document.getElementById('roles');
+  c.innerHTML = ROLES.map((r, i) => `
+    <button class="role-btn ${r.id === state.activeRoleId ? 'active' : ''}" data-role="${r.id}">
+      <span class="role-num">R · ${String(i+1).padStart(2,'0')}</span>
+      <span class="role-name">${r.name}</span>
+    </button>
+  `).join('');
+  c.querySelectorAll('.role-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      state.activeRoleId = btn.dataset.role;
+      renderRoleButtons();
+      renderRoleDetail();
+    });
+  });
+}
+
+function endorseKey(roleId, metricId) {
+  return `${roleId}::${metricId}`;
+}
+function hash(s) { let h=0; for (let i=0;i<s.length;i++) h=(h<<5)-h+s.charCodeAt(i), h|=0; return h; }
+function countForMetric(key) {
+  const base = Math.abs(hash(key)) % 180 + 12;
+  return base + (state.endorsed.has(key) ? 1 : 0);
+}
+
+function renderRoleDetail() {
+  const r = ROLES.find(x => x.id === state.activeRoleId);
+  const counts = {
+    visible: r.metrics.filter(m => m.status === 'visible').length,
+    hidden:  r.metrics.filter(m => m.status === 'hidden').length,
+    missing: r.metrics.filter(m => m.status === 'missing').length
+  };
+  const c = document.getElementById('role-detail');
+  c.innerHTML = `
+    <div class="role-detail">
+      <div class="role-header">
+        <div class="name">${r.name}</div>
+        <div class="stat"><div class="n">${counts.visible}</div><div class="l">Visible</div></div>
+        <div class="stat"><div class="n">${counts.hidden}</div><div class="l">Hidden</div></div>
+        <div class="stat"><div class="n">${counts.missing}</div><div class="l">Missing</div></div>
+      </div>
+      <div class="role-summary">${r.summary}</div>
+      <div class="metrics">
+        ${r.metrics.map(m => {
+          const key = endorseKey(r.id, m.id);
+          const endorsed = state.endorsed.has(key);
+          return `
+          <div class="metric ${m.status}">
+            <div class="status-bar"></div>
+            <div class="topline">
+              <span class="status-tag">${m.status}</span>
+              <span class="tier">Tier ${m.tier} · ${TIER_LABEL[m.tier]}</span>
+            </div>
+            <div class="mname">${m.name}</div>
+            <div class="mdesc">${m.desc}</div>
+            <div class="mfoot">
+              <div class="metric-actions">
+                <button class="endorse-btn ${endorsed ? 'endorsed' : ''}" data-action="endorse" data-key="${key}">
+                  ${endorsed ? 'Endorsed' : 'Endorse'}
+                </button>
+                <button class="detail-btn" data-action="detail" data-role="${r.id}" data-metric="${m.id}">
+                  Methodology
+                </button>
+              </div>
+              <span class="endorse-count">${countForMetric(key).toLocaleString()}</span>
+            </div>
+          </div>`;
+        }).join('')}
+      </div>
+    </div>`;
+
+  c.querySelectorAll('[data-action="endorse"]').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const key = btn.dataset.key;
+      if (state.endorsed.has(key)) { state.endorsed.delete(key); showToast('Endorsement withdrawn'); }
+      else { state.endorsed.add(key); showToast('Endorsement recorded'); }
+      saveState(); renderRoleDetail(); renderAdoptionStats();
+    });
+  });
+  c.querySelectorAll('[data-action="detail"]').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      openDrawer(btn.dataset.role, btn.dataset.metric);
+    });
+  });
+}
+
+function renderAdoptionStats() {
+  const total = ROLES.reduce((a, r) => a + r.metrics.length, 0);
+  const endorsed = state.endorsed.size;
+  const roleSet = new Set();
+  let missingEndorsed = 0;
+  state.endorsed.forEach(k => {
+    const [roleId, metricId] = k.split('::');
+    roleSet.add(roleId);
+    const r = ROLES.find(x => x.id === roleId);
+    if (r) {
+      const m = r.metrics.find(x => x.id === metricId);
+      if (m && m.status === 'missing') missingEndorsed++;
+    }
+  });
+  document.getElementById('stat-endorsed').textContent = endorsed;
+  document.getElementById('stat-roles').textContent = roleSet.size;
+  document.getElementById('stat-missing').textContent = missingEndorsed;
+  document.getElementById('stat-pct').textContent = Math.round((endorsed / total) * 100) + '%';
+}
+
+function renderCompare() {
+  const body = document.getElementById('compare-body');
+  const stateMap = { y: 'v-y', p: 'v-p', n: 'v-n' };
+  const labelMap = { y: 'Published', p: 'Partial', n: 'Not published' };
+  body.innerHTML = COMPARE_METRICS.map(m => `
+    <tr>
+      <td class="metric-name">${m.name}</td>
+      <td class="mo"><span class="dot ${stateMap[m.mo]}"></span>${labelMap[m.mo]}</td>
+      <td><span class="dot ${stateMap[m.ca]}"></span>${labelMap[m.ca]}</td>
+      <td><span class="dot ${stateMap[m.ny]}"></span>${labelMap[m.ny]}</td>
+      <td><span class="dot ${stateMap[m.tx]}"></span>${labelMap[m.tx]}</td>
+      <td><span class="dot ${stateMap[m.il]}"></span>${labelMap[m.il]}</td>
+      <td><span class="dot ${stateMap[m.fl]}"></span>${labelMap[m.fl]}</td>
+    </tr>
+  `).join('');
+}
+
+// =========================================================
+// DRAWER
+// =========================================================
+function openDrawer(roleId, metricId) {
+  const r = ROLES.find(x => x.id === roleId);
+  const m = r.metrics.find(x => x.id === metricId);
+  const meth = methodologyFor(metricId);
+  document.getElementById('drawer-tag').textContent =
+    `METRIC · TIER ${m.tier} · ${m.status.toUpperCase()}`;
+  document.getElementById('drawer-title').textContent = m.name;
+  document.getElementById('drawer-body').innerHTML = `
+    <div class="drawer-section">
+      <h4>Role Context</h4>
+      <p><strong>${r.name}</strong> — ${m.desc}</p>
+    </div>
+
+    <div class="drawer-section">
+      <h4>Operational Definition</h4>
+      <div class="definition-block">${meth.definition}</div>
+    </div>
+
+    <div class="drawer-section">
+      <h4>Computation</h4>
+      <div class="kv-row"><span class="k">Numerator</span><span>${meth.numerator}</span></div>
+      <div class="kv-row"><span class="k">Denominator</span><span>${meth.denominator}</span></div>
+      <div class="kv-row"><span class="k">Period</span><span>${meth.period}</span></div>
+      <div class="kv-row"><span class="k">Refresh</span><span>${meth.refresh}</span></div>
+    </div>
+
+    <div class="drawer-section">
+      <h4>Data Source</h4>
+      <p>${meth.source}</p>
+    </div>
+
+    <div class="drawer-section">
+      <h4>Scope</h4>
+      <div class="kv-row"><span class="k">Inclusion</span><span>${meth.inclusion}</span></div>
+      <div class="kv-row"><span class="k">Exclusion</span><span>${meth.exclusion}</span></div>
+      <div class="kv-row"><span class="k">Confounders</span><span>${meth.confounders}</span></div>
+    </div>
+
+    <div class="drawer-section">
+      <h4>Statistical Floor</h4>
+      <p>${meth.minSample}</p>
+    </div>
+
+    <div class="drawer-section">
+      <h4>Privacy Posture · Tier ${m.tier}</h4>
+      <p>${meth.privacy}</p>
+    </div>
+
+    <div class="drawer-section">
+      <h4>Reform Implication</h4>
+      <p>${meth.reformValue}</p>
+    </div>
+
+    <div class="drawer-section">
+      <h4>Disclosure Tier Reference</h4>
+      <ul>
+        <li><strong>Tier A · Public</strong> — aggregate, de-identified, publishable to general audience.</li>
+        <li><strong>Tier B · Oversight / DUA</strong> — de-identified but gated; researchers, regulators, judicial self-assessment.</li>
+        <li><strong>Tier C · User-Owned</strong> — raw data stays with user; only aggregates leave after opt-in.</li>
+        <li><strong>Tier D · Never Disclosed</strong> — protected by statute or irreversible harm potential.</li>
+      </ul>
+    </div>`;
+
+  const drawerEl = document.getElementById('drawer');
+  drawerEl.classList.add('open');
+  drawerEl.setAttribute('aria-hidden', 'false');
+  document.getElementById('drawer-backdrop').classList.add('open');
+  // Store the element that had focus before drawer opened, so we can restore it
+  drawerEl._lastFocused = document.activeElement;
+  // Move focus to the close button
+  setTimeout(() => document.getElementById('drawer-close').focus(), 100);
+}
+
+function closeDrawer() {
+  const drawerEl = document.getElementById('drawer');
+  drawerEl.classList.remove('open');
+  drawerEl.setAttribute('aria-hidden', 'true');
+  document.getElementById('drawer-backdrop').classList.remove('open');
+  // Restore focus to the element that opened the drawer
+  if (drawerEl._lastFocused && typeof drawerEl._lastFocused.focus === 'function') {
+    drawerEl._lastFocused.focus();
+  }
+}
+document.getElementById('drawer-close').addEventListener('click', closeDrawer);
+document.getElementById('drawer-backdrop').addEventListener('click', closeDrawer);
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && document.getElementById('drawer').classList.contains('open')) {
+    closeDrawer();
+  }
+});
+
+// =========================================================
+// VIEW NAV
+// =========================================================
+const viewTabs = document.querySelectorAll('.view-tab');
+viewTabs.forEach((tab, idx) => {
+  tab.addEventListener('click', () => activateTab(tab));
+  tab.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
+      e.preventDefault();
+      const dir = e.key === 'ArrowRight' ? 1 : -1;
+      const next = viewTabs[(idx + dir + viewTabs.length) % viewTabs.length];
+      next.focus();
+      activateTab(next);
+    } else if (e.key === 'Home') {
+      e.preventDefault();
+      viewTabs[0].focus();
+      activateTab(viewTabs[0]);
+    } else if (e.key === 'End') {
+      e.preventDefault();
+      viewTabs[viewTabs.length - 1].focus();
+      activateTab(viewTabs[viewTabs.length - 1]);
+    }
+  });
+});
+
+function activateTab(tab) {
+  const target = tab.dataset.view;
+  state.activeView = target;
+  viewTabs.forEach(t => {
+    t.classList.remove('active');
+    t.setAttribute('aria-selected', 'false');
+    t.setAttribute('tabindex', '-1');
+  });
+  tab.classList.add('active');
+  tab.setAttribute('aria-selected', 'true');
+  tab.setAttribute('tabindex', '0');
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+  document.getElementById(`view-${target}`).classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+
+// =========================================================
+// EXPORT / SHARE
+// =========================================================
+function exportEndorsements() {
+  const payload = {
+    exported_at: new Date().toISOString(),
+    framework: 'Family Court Metric Catalog v0.3',
+    endorsed_metrics: [...state.endorsed].map(key => {
+      const [roleId, metricId] = key.split('::');
+      const r = ROLES.find(x => x.id === roleId);
+      const m = r?.metrics.find(x => x.id === metricId);
+      return {
+        role: r?.name, metric: m?.name, status: m?.status, tier: m?.tier,
+        role_id: roleId, metric_id: metricId
+      };
+    })
+  };
+  const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = 'metric-catalog-endorsements.json'; a.click();
+  URL.revokeObjectURL(url);
+  showToast('Endorsements exported');
+}
+function shareLink() {
+  const params = new URLSearchParams();
+  params.set('e', [...state.endorsed].join('|'));
+  const link = window.location.origin + window.location.pathname + '?' + params.toString();
+  navigator.clipboard?.writeText(link).then(
+    () => showToast('Link copied'),
+    () => showToast('Copy failed')
+  );
+}
+function resetAll() {
+  if (!confirm('Clear all endorsements?')) return;
+  state.endorsed = new Set(); saveState();
+  renderRoleDetail(); renderAdoptionStats();
+  showToast('Cleared');
+}
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(showToast._t);
+  showToast._t = setTimeout(() => t.classList.remove('show'), 1800);
+}
+
+// Hydrate
+(function hydrateFromURL() {
+  const p = new URLSearchParams(window.location.search);
+  const e = p.get('e');
+  if (e) { e.split('|').filter(Boolean).forEach(k => state.endorsed.add(k)); saveState(); }
+})();
+
+loadState();
+renderCounts();
+renderRoleButtons();
+renderRoleDetail();
+renderAdoptionStats();
+renderCompare();
+</script>
+
+</body>
+</html>
