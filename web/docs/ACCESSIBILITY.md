@@ -9,6 +9,14 @@ walked through before any production launch.
 
 - `eslint-plugin-jsx-a11y` runs in `npm run lint` and in CI. Violates
   the build if any a11y rule fires.
+- `npm run e2e` boots a production build under Playwright (mobile
+  viewport) and runs `@axe-core/playwright` against every locale-
+  prefixed page (Home, Find Help, Resources, Intake, Privacy, Terms,
+  Accessibility) in both `en` and `es`. Fails CI on any violation with
+  impact `serious` or `critical` tagged `wcag2a|wcag2aa|wcag21a|wcag21aa`.
+- Smoke e2e (`e2e/smoke.spec.ts`) exercises the critical path — home →
+  find-help (ZIP filter) → intake (fillable, not submitted) → language
+  switcher — on the same mobile viewport.
 - Semantic landmarks present on every page: `<header>` (TopBar),
   `<main id="main">`, `<nav aria-label="Primary">` (BottomNav),
   `<footer>` with a descriptive `aria-label` on the internal `<nav>`.
@@ -134,7 +142,6 @@ Noted on `/accessibility` so users know:
 
 ## Follow-ups that strengthen this baseline
 
-- Automated axe-core checks run in CI via Playwright (next batch).
 - Plain-language review of Resources and Intake copy with a
   legal-aid editor.
 - Third-party audit + VPAT once the site has real content and users.
