@@ -79,6 +79,7 @@
     "submit": "Enviar solicitud",
     "submitting": "Enviando…",
     "formError": "No pudimos guardar tu solicitud. Inténtalo de nuevo.",
+    "privacyAck": "Al enviar, aceptas nuestra <privacy>Política de privacidad</privacy> y nuestros <terms>Términos del servicio</terms>. No incluyas información que no quieras compartir con un socio de ayuda legal.",
     "issues": {
       "housing": "Vivienda / Desalojo",
       "family": "Familia",
@@ -109,5 +110,157 @@
     "title": "Estás sin conexión",
     "body": "Esta página aún no está en caché, así que no podemos mostrarla sin conexión. Las páginas que ya has visitado (Inicio, Buscar ayuda, Recursos, Solicitud) seguirán funcionando sin conexión.",
     "cta": "Ir al inicio"
+  },
+  "Footer": {
+    "legal": "Legal",
+    "privacy": "Privacidad",
+    "terms": "Términos",
+    "notLegalAdvice": "Este sitio no es asesoría legal. Usarlo no crea una relación abogado–cliente."
+  },
+  "LegalReview": {
+    "title": "REVISIÓN LEGAL REQUERIDA",
+    "body": "Esta página contiene contenido de marcador de posición que no ha sido revisado por un abogado. No la publiques en producción hasta que un abogado revise y edite el texto para tu jurisdicción."
+  },
+  "Privacy": {
+    "title": "Política de privacidad",
+    "effectiveDate": "Fecha de vigencia: por definir — actualiza antes del lanzamiento.",
+    "intro": "Esta política describe qué información recopilamos cuando usas este sitio, cómo la usamos y tus opciones. Solo recopilamos la información necesaria para conectarte con una organización de ayuda legal.",
+    "sections": {
+      "collected": {
+        "heading": "Información que recopilamos",
+        "paragraphs": [
+          "Cuando envías el formulario de solicitud, recopilamos el nombre, teléfono, correo electrónico, código postal, tipo de problema y la descripción que proporcionas. Todos estos campos son opcionales excepto el tipo de problema, más al menos un teléfono o correo para que podamos comunicarnos contigo.",
+          "No pedimos números de identificación gubernamental, información de pago ni estatus migratorio. Por favor, no los incluyas en el campo de descripción.",
+          "Recibimos automáticamente información técnica de tu navegador (dirección IP, user agent, hora de la solicitud) por motivos de seguridad y confiabilidad. Esta información no se combina con tu solicitud."
+        ]
+      },
+      "usage": {
+        "heading": "Cómo usamos tu información",
+        "paragraphs": [
+          "Usamos tu solicitud únicamente para dirigirla a una organización de ayuda legal que coincida con tu código postal y tipo de problema. Esa organización puede comunicarse contigo usando el teléfono o correo que proporcionaste.",
+          "No vendemos tu información. No la usamos para publicidad."
+        ]
+      },
+      "sharing": {
+        "heading": "Cómo compartimos tu información",
+        "paragraphs": [
+          "Tu solicitud se comparte con la(s) organización(es) socia(s) de ayuda legal mejor preparadas para ayudarte con tu problema. Esas organizaciones están sujetas a sus propias reglas de privacidad y confidencialidad.",
+          "También podemos compartir información cuando la ley lo exija, para proteger la seguridad de una persona, o en respuesta a un proceso legal válido."
+        ]
+      },
+      "retention": {
+        "heading": "Cuánto tiempo conservamos tu información",
+        "paragraphs": [
+          "Por definir — conservaremos tu solicitud durante no más de [PERIODO DE RETENCIÓN] después de que tu asunto se cierre o no se espere más seguimiento, lo que ocurra primero.",
+          "Podemos conservar estadísticas agregadas y anonimizadas por más tiempo para mejorar el servicio."
+        ]
+      },
+      "rights": {
+        "heading": "Tus opciones y derechos",
+        "paragraphs": [
+          "Puedes solicitar una copia de la información que tenemos sobre ti, pedirnos que la corrijamos o pedirnos que la eliminemos. Contáctanos en la dirección abajo.",
+          "Las leyes de privacidad de California, Colorado y otros estados de EE. UU. pueden darte derechos adicionales. Respetaremos esos derechos cuando apliquen."
+        ]
+      },
+      "security": {
+        "heading": "Cómo protegemos tu información",
+        "paragraphs": [
+          "Transmitimos las solicitudes por HTTPS y las almacenamos con cifrado en reposo. El acceso se limita a las personas que lo necesitan para dirigir tu solicitud."
+        ]
+      },
+      "children": {
+        "heading": "Privacidad de menores",
+        "paragraphs": [
+          "Este sitio está destinado a adultos que buscan ayuda legal para sí mismos o para alguien bajo su cuidado. No recopilamos intencionalmente información de menores de 13 años."
+        ]
+      },
+      "changes": {
+        "heading": "Cambios a esta política",
+        "paragraphs": [
+          "Podemos actualizar esta política. Si hacemos cambios importantes, actualizaremos la fecha de vigencia arriba y, cuando corresponda, te notificaremos."
+        ]
+      },
+      "contact": {
+        "heading": "Contáctanos",
+        "paragraphs": [
+          "Preguntas o solicitudes de privacidad: por definir — establece una bandeja de entrada monitoreada antes del lanzamiento."
+        ]
+      }
+    }
+  },
+  "Terms": {
+    "title": "Términos del servicio",
+    "effectiveDate": "Fecha de vigencia: por definir — actualiza antes del lanzamiento.",
+    "intro": "Estos términos rigen tu uso de este sitio. Léelos con atención. Si no estás de acuerdo, no uses el sitio.",
+    "sections": {
+      "acceptance": {
+        "heading": "Aceptación",
+        "paragraphs": [
+          "Al usar este sitio aceptas estos Términos y la Política de privacidad."
+        ]
+      },
+      "notLegalAdvice": {
+        "heading": "No es asesoría legal",
+        "paragraphs": [
+          "Este sitio ofrece información general y te ayuda a conectar con organizaciones de ayuda legal. No ofrece asesoría legal. No confíes en la información de este sitio como sustituto de consultar con un abogado calificado sobre tu situación.",
+          "No ignores una fecha límite judicial, un aviso de desalojo u otro documento con plazos por nada que leas aquí."
+        ]
+      },
+      "noAttorneyClient": {
+        "heading": "Sin relación abogado–cliente",
+        "paragraphs": [
+          "Usar este sitio, incluyendo enviar un formulario de solicitud, no crea una relación abogado–cliente entre tú y los operadores de este sitio. Una relación abogado–cliente solo se forma cuando un abogado acepta por escrito representarte.",
+          "La información que envías no está protegida por el secreto profesional hasta que un abogado acepte tu caso."
+        ]
+      },
+      "eligibility": {
+        "heading": "Elegibilidad",
+        "paragraphs": [
+          "Debes tener al menos 18 años para enviar una solicitud, o estar enviándola en nombre de alguien bajo tu cuidado."
+        ]
+      },
+      "userObligations": {
+        "heading": "Tus responsabilidades",
+        "paragraphs": [
+          "Aceptas proporcionar información veraz y precisa, y usar este sitio para su propósito previsto. No envíes solicitudes en nombre de otros sin su consentimiento."
+        ]
+      },
+      "ourRole": {
+        "heading": "Nuestro rol",
+        "paragraphs": [
+          "Somos un servicio de referencia e información. No te representamos, no garantizamos que una organización de ayuda legal acepte tu caso y no somos responsables de las acciones o consejos de ninguna organización referida."
+        ]
+      },
+      "limitation": {
+        "heading": "Limitación de responsabilidad",
+        "paragraphs": [
+          "Hasta el máximo permitido por la ley, no somos responsables de daños indirectos, incidentales o consecuentes que surjan del uso de este sitio. Nuestra responsabilidad total no excederá el monto que pagaste por usar el sitio, que es cero."
+        ]
+      },
+      "warranty": {
+        "heading": "Sin garantía",
+        "paragraphs": [
+          "Este sitio se proporciona tal cual, sin garantías de ningún tipo, expresas o implícitas. No garantizamos que el sitio esté disponible en todo momento ni que la información sea completa o actual."
+        ]
+      },
+      "governingLaw": {
+        "heading": "Ley aplicable",
+        "paragraphs": [
+          "Por definir — establece el estado aplicable y el foro de resolución de disputas según dónde opere este sitio."
+        ]
+      },
+      "changes": {
+        "heading": "Cambios a estos términos",
+        "paragraphs": [
+          "Podemos actualizar estos términos. El uso continuo del sitio tras una actualización implica que aceptas los términos actualizados."
+        ]
+      },
+      "contact": {
+        "heading": "Contacto",
+        "paragraphs": [
+          "Preguntas sobre estos términos: por definir — establece una bandeja de entrada monitoreada antes del lanzamiento."
+        ]
+      }
+    }
   }
 }

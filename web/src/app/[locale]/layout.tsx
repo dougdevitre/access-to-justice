@@ -5,6 +5,7 @@ import { routing, type Locale } from "@/i18n/routing";
 import { TopBar } from "../components/TopBar";
 import { BottomNav } from "../components/BottomNav";
 import { RegisterSW } from "../components/RegisterSW";
+import { Footer } from "../components/Footer";
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
@@ -42,6 +43,7 @@ export default async function LocaleLayout({
             className="flex-1 w-full max-w-screen-sm mx-auto px-4 pt-4 pb-24"
           >
             {children}
+            <Footer />
           </main>
           <BottomNav />
           <RegisterSW />

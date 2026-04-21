@@ -3,6 +3,7 @@
 import { useActionState } from "react";
 import { useFormStatus } from "react-dom";
 import { useLocale, useTranslations } from "next-intl";
+import { Link } from "@/i18n/navigation";
 import { ISSUE_TYPES } from "@/lib/intake";
 import { submitIntake, type IntakeFormState } from "./actions";
 
@@ -108,8 +109,29 @@ export function IntakeForm() {
         />
       </Field>
 
+      <PrivacyAcknowledgment />
       <SubmitButton />
     </form>
+  );
+}
+
+function PrivacyAcknowledgment() {
+  const t = useTranslations("Intake");
+  return (
+    <p className="text-xs text-slate-600">
+      {t.rich("privacyAck", {
+        privacy: (chunks) => (
+          <Link href="/privacy" className="underline text-brand">
+            {chunks}
+          </Link>
+        ),
+        terms: (chunks) => (
+          <Link href="/terms" className="underline text-brand">
+            {chunks}
+          </Link>
+        ),
+      })}
+    </p>
   );
 }
 

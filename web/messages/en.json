@@ -79,6 +79,7 @@
     "submit": "Submit intake",
     "submitting": "Submitting…",
     "formError": "We couldn't save your request. Please try again.",
+    "privacyAck": "By submitting, you agree to our <privacy>Privacy Policy</privacy> and <terms>Terms of Service</terms>. Do not include information you do not want shared with a legal aid partner.",
     "issues": {
       "housing": "Housing / Eviction",
       "family": "Family",
@@ -109,5 +110,157 @@
     "title": "You're offline",
     "body": "This page isn't cached yet, so we can't show it without a connection. Pages you've already visited (Home, Find Legal Help, Resources, Intake) will still work offline.",
     "cta": "Go home"
+  },
+  "Footer": {
+    "legal": "Legal",
+    "privacy": "Privacy",
+    "terms": "Terms",
+    "notLegalAdvice": "This site is not legal advice. Using it does not create an attorney–client relationship."
+  },
+  "LegalReview": {
+    "title": "LEGAL REVIEW REQUIRED",
+    "body": "This page contains placeholder content that has not been reviewed by counsel. Do not ship to production until a lawyer has reviewed and edited the text for your jurisdiction."
+  },
+  "Privacy": {
+    "title": "Privacy Policy",
+    "effectiveDate": "Effective date: TBD — update before launch.",
+    "intro": "This policy describes what information we collect when you use this site, how we use it, and your choices. We only collect the information needed to connect you with a legal aid organization.",
+    "sections": {
+      "collected": {
+        "heading": "Information we collect",
+        "paragraphs": [
+          "When you submit the intake form, we collect the name, phone, email, ZIP code, issue type, and description you provide. All of these fields are optional except issue type, plus at least one of phone or email so we can reach you.",
+          "We do not ask for government ID numbers, payment information, or immigration status. Please do not include them in the description field.",
+          "We automatically receive technical information from your browser (IP address, user agent, time of request) for security and reliability. This information is not combined with your intake submission."
+        ]
+      },
+      "usage": {
+        "heading": "How we use your information",
+        "paragraphs": [
+          "We use your intake submission only to route your request to a legal aid organization that matches your ZIP and issue type. That organization may contact you using the phone or email you provided.",
+          "We do not sell your information. We do not use it for advertising."
+        ]
+      },
+      "sharing": {
+        "heading": "How we share your information",
+        "paragraphs": [
+          "Your submission is shared with the legal aid partner(s) best suited to help with your issue. Those partners are bound by their own privacy and confidentiality rules.",
+          "We may also share information when required by law, to protect the safety of a person, or in response to a valid legal process."
+        ]
+      },
+      "retention": {
+        "heading": "How long we keep your information",
+        "paragraphs": [
+          "TBD — we will keep your intake submission for no longer than [RETENTION WINDOW] after your matter is closed or no further follow-up is expected, whichever is sooner.",
+          "Aggregate, de-identified statistics may be kept longer for service improvement."
+        ]
+      },
+      "rights": {
+        "heading": "Your choices and rights",
+        "paragraphs": [
+          "You can request a copy of the information we have about you, ask us to correct it, or ask us to delete it. Contact us at the address below.",
+          "California, Colorado, and other U.S. state privacy laws may give you additional rights. We will honor those rights where they apply."
+        ]
+      },
+      "security": {
+        "heading": "How we protect your information",
+        "paragraphs": [
+          "We transmit submissions over HTTPS and store them with encryption at rest. Access is limited to people who need it to route your request."
+        ]
+      },
+      "children": {
+        "heading": "Children's privacy",
+        "paragraphs": [
+          "This site is intended for adults seeking legal help for themselves or someone in their care. We do not knowingly collect information from children under 13."
+        ]
+      },
+      "changes": {
+        "heading": "Changes to this policy",
+        "paragraphs": [
+          "We may update this policy. If we make material changes, we will update the effective date above and, when appropriate, notify you."
+        ]
+      },
+      "contact": {
+        "heading": "Contact us",
+        "paragraphs": [
+          "Questions or privacy requests: TBD — set a monitored inbox before launch."
+        ]
+      }
+    }
+  },
+  "Terms": {
+    "title": "Terms of Service",
+    "effectiveDate": "Effective date: TBD — update before launch.",
+    "intro": "These terms govern your use of this site. Please read them carefully. If you do not agree, do not use the site.",
+    "sections": {
+      "acceptance": {
+        "heading": "Acceptance",
+        "paragraphs": [
+          "By using this site you agree to these Terms and to the Privacy Policy."
+        ]
+      },
+      "notLegalAdvice": {
+        "heading": "Not legal advice",
+        "paragraphs": [
+          "This site provides general information and helps connect you with legal aid organizations. It does not provide legal advice. Do not rely on information on this site as a substitute for consulting a qualified lawyer about your situation.",
+          "Do not ignore a court deadline, eviction notice, or other time-sensitive document because of anything you read here."
+        ]
+      },
+      "noAttorneyClient": {
+        "heading": "No attorney–client relationship",
+        "paragraphs": [
+          "Using this site, including submitting an intake form, does not create an attorney–client relationship between you and the operators of this site. An attorney–client relationship is only formed when a lawyer agrees in writing to represent you.",
+          "Information you submit is not protected by attorney–client privilege until a lawyer accepts your case."
+        ]
+      },
+      "eligibility": {
+        "heading": "Eligibility",
+        "paragraphs": [
+          "You must be at least 18 years old to submit an intake request, or be submitting on behalf of someone in your care."
+        ]
+      },
+      "userObligations": {
+        "heading": "Your responsibilities",
+        "paragraphs": [
+          "You agree to provide truthful, accurate information, and to use this site for its intended purpose. Do not submit requests on behalf of others without their consent."
+        ]
+      },
+      "ourRole": {
+        "heading": "Our role",
+        "paragraphs": [
+          "We are a referral and information service. We do not represent you, do not guarantee that a legal aid organization will accept your case, and are not responsible for the actions or advice of any referred organization."
+        ]
+      },
+      "limitation": {
+        "heading": "Limitation of liability",
+        "paragraphs": [
+          "To the maximum extent allowed by law, we are not liable for any indirect, incidental, or consequential damages arising out of your use of this site. Our total liability will not exceed the amount you paid to use the site, which is zero."
+        ]
+      },
+      "warranty": {
+        "heading": "No warranty",
+        "paragraphs": [
+          "This site is provided as-is, without warranties of any kind, express or implied. We do not warrant that the site will be available at any particular time or that the information is complete or current."
+        ]
+      },
+      "governingLaw": {
+        "heading": "Governing law",
+        "paragraphs": [
+          "TBD — set the governing state and dispute-resolution forum based on where this site is operated."
+        ]
+      },
+      "changes": {
+        "heading": "Changes to these terms",
+        "paragraphs": [
+          "We may update these terms. Continued use of the site after an update means you accept the updated terms."
+        ]
+      },
+      "contact": {
+        "heading": "Contact",
+        "paragraphs": [
+          "Questions about these terms: TBD — set a monitored inbox before launch."
+        ]
+      }
+    }
   }
 }

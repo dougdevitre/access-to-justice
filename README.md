@@ -40,6 +40,10 @@ switcher.
   and notes on sourcing real data.
 - **Translations**: see [`web/messages/TRANSLATIONS.md`](web/messages/TRANSLATIONS.md)
   for which strings need a legal-aid translator review before launch.
+- **Legal review**: see [`web/docs/LEGAL_REVIEW.md`](web/docs/LEGAL_REVIEW.md)
+  for the Privacy / Terms punch list a lawyer must sign off on before
+  launch. The live site shows a yellow banner on those pages until the
+  placeholder copy is replaced.
 
 ## MCP server (`mcp-server/`)
 
