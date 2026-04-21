@@ -1,9 +1,8 @@
 "use server";
 
-import { promises as fs } from "node:fs";
-import path from "node:path";
 import { redirect } from "@/i18n/navigation";
 import { IntakeSubmissionSchema } from "@/lib/intake";
+import { saveIntake, IntakeSinkError } from "@/lib/intake-sink";
 import { routing } from "@/i18n/routing";
 
 export type IntakeFormState = {
@@ -11,11 +10,6 @@ export type IntakeFormState = {
   errors?: Partial<Record<"name" | "phone" | "email" | "zip" | "issue" | "details" | "form", string>>;
   values?: Record<string, string>;
 };
-
-// Placeholder storage: append a JSON line to .data/intake-submissions.jsonl.
-// Swap for a DB/email/queue in production.
-const DATA_DIR = path.join(process.cwd(), ".data");
-const LOG_FILE = path.join(DATA_DIR, "intake-submissions.jsonl");
 
 function pickLocale(input: FormDataEntryValue | null): (typeof routing.locales)[number] {
   const s = typeof input === "string" ? input : "";
@@ -49,18 +43,19 @@ export async function submitIntake(
     return { ok: false, errors, values: raw };
   }
 
-  const record = {
-    id: crypto.randomUUID(),
-    submittedAt: new Date().toISOString(),
-    locale,
-    ...parsed.data,
-  };
-
   try {
-    await fs.mkdir(DATA_DIR, { recursive: true });
-    await fs.appendFile(LOG_FILE, JSON.stringify(record) + "\n", "utf8");
+    await saveIntake({
+      id: crypto.randomUUID(),
+      submittedAt: new Date().toISOString(),
+      locale,
+      ...parsed.data,
+    });
   } catch (err) {
-    console.error("intake: failed to persist submission", err);
+    if (err instanceof IntakeSinkError) {
+      console.error("intake:", err.message, err.cause);
+    } else {
+      console.error("intake: unexpected error", err);
+    }
     return {
       ok: false,
       errors: { form: "We couldn't save your request. Please try again." },
