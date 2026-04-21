@@ -25,7 +25,7 @@ export function validateOrg(raw: unknown, ctx: string = "org"): Org {
   if (!isRecord(raw)) {
     throw new OrgValidationError(`${ctx}: expected object, got ${typeof raw}`);
   }
-  const { id, name, practiceAreas, phone, zip } = raw;
+  const { id, name, practiceAreas, phone, zip, email } = raw;
 
   if (typeof id !== "string" || id.length === 0) {
     throw new OrgValidationError(`${ctx}: "id" must be a non-empty string`);
@@ -51,14 +51,23 @@ export function validateOrg(raw: unknown, ctx: string = "org"): Org {
   if (typeof zip !== "string" || !/^[0-9]{5}$/.test(zip)) {
     throw new OrgValidationError(`${ctx}: "zip" must be a 5-digit string`);
   }
+  if (email !== undefined) {
+    if (typeof email !== "string" || !/.+@.+\..+/.test(email)) {
+      throw new OrgValidationError(
+        `${ctx}: "email" must be a valid email address when provided`,
+      );
+    }
+  }
 
-  return {
+  const result: Org = {
     id,
     name,
     practiceAreas: practiceAreas as PracticeArea[],
     phone,
     zip,
   };
+  if (typeof email === "string") result.email = email;
+  return result;
 }
 
 /** Validate an array of records; throws on any invalid entry or duplicate id. */

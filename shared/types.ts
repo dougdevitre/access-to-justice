@@ -43,6 +43,9 @@ export type Org = {
   practiceAreas: PracticeArea[];
   phone: string;
   zip: string;
+  /** Optional intake-notification address. Orgs without this address
+   *  cannot receive routed intake emails. */
+  email?: string;
 };
 
 // Pure search helpers — safe to unit-test and to share between the web

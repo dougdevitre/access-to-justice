@@ -47,6 +47,9 @@ switcher.
 - **Intake confirmation email**: see [`web/docs/INTAKE_EMAIL.md`](web/docs/INTAKE_EMAIL.md)
   for the AWS SES sender-identity verification, sandbox → production
   flow, and the extra IAM statement.
+- **Intake → org routing**: see [`web/docs/ROUTING.md`](web/docs/ROUTING.md)
+  for the v1 rules (ZIP+practice → practice-only → triage), the
+  `Org.email` field, and the `TRIAGE_EMAIL` env var.
 - **Error monitoring**: see [`web/docs/SENTRY.md`](web/docs/SENTRY.md)
   for the Sentry setup, PII scrubber, and Vercel env vars. No-op
   until a DSN is set.

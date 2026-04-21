@@ -2,13 +2,18 @@ import { describe, expect, it } from "vitest";
 import { SendEmailCommand } from "@aws-sdk/client-sesv2";
 import {
   buildConfirmationMessage,
+  buildOrgNotification,
   createSesEmailSender,
   EmailSenderError,
   escapeHtml,
+  selectRoutingForIntake,
   sendIntakeConfirmation,
+  sendOrgNotifications,
+  type EmailMessage,
   type IntakeEmailTranslator,
 } from "./intake-email";
 import type { StoredIntake } from "./intake-sink";
+import type { Org } from "@shared/types";
 
 const baseRecord: StoredIntake = {
   id: "00000000-0000-0000-0000-000000000001",
@@ -177,5 +182,156 @@ describe("escapeHtml", () => {
     expect(escapeHtml(`<a href="x">Tom & "Jerry"'s</a>`)).toBe(
       "&lt;a href=&quot;x&quot;&gt;Tom &amp; &quot;Jerry&quot;&#39;s&lt;/a&gt;",
     );
+  });
+});
+
+const sampleOrg = (overrides: Partial<Org> & Pick<Org, "id">): Org => ({
+  name: `${overrides.id} (test)`,
+  practiceAreas: ["housing"],
+  phone: "(555) 000-0000",
+  zip: "10001",
+  email: `intake+${overrides.id}@example.org`,
+  ...overrides,
+});
+
+describe("buildOrgNotification", () => {
+  it("renders the intake fields and the routing reason label", () => {
+    const payload = buildOrgNotification({
+      intake: baseRecord,
+      reason: "zip+practice",
+    });
+    expect(payload.subject).toContain("housing");
+    expect(payload.subject).toContain("10001");
+    expect(payload.textBody).toContain("ZIP and practice area match");
+    expect(payload.textBody).toContain(baseRecord.id);
+    expect(payload.textBody).toContain("Jane Doe");
+    expect(payload.textBody).toContain("I received an eviction notice.");
+    expect(payload.htmlBody).toContain("Jane Doe");
+  });
+
+  it("HTML-escapes user-supplied text", () => {
+    const payload = buildOrgNotification({
+      intake: { ...baseRecord, details: "<script>alert(1)</script>" },
+      reason: "practice",
+    });
+    expect(payload.htmlBody).not.toContain("<script>alert(1)</script>");
+    expect(payload.htmlBody).toContain("&lt;script&gt;");
+  });
+
+  it("shows '(not provided)' placeholders for blank fields", () => {
+    const payload = buildOrgNotification({
+      intake: {
+        ...baseRecord,
+        name: "",
+        phone: "",
+        email: "",
+        zip: "",
+        details: "",
+      },
+      reason: "practice",
+    });
+    // Each blank field renders with the placeholder.
+    expect(payload.textBody.match(/\(not provided\)/g)?.length).toBe(5);
+  });
+});
+
+describe("sendOrgNotifications", () => {
+  function recordingSender() {
+    const calls: EmailMessage[] = [];
+    return {
+      sender: {
+        async send(msg: EmailMessage) {
+          calls.push(msg);
+        },
+      },
+      calls,
+    };
+  }
+
+  it("sends one email per matched org", async () => {
+    const orgs: Org[] = [
+      sampleOrg({ id: "a", practiceAreas: ["housing"], zip: "10001" }),
+      sampleOrg({ id: "b", practiceAreas: ["housing"], zip: "10001" }),
+    ];
+    const decision = selectRoutingForIntake(baseRecord, orgs);
+    const { sender, calls } = recordingSender();
+    const report = await sendOrgNotifications({
+      intake: baseRecord,
+      decision,
+      sender,
+    });
+    expect(calls.map((m) => m.to).sort()).toEqual([
+      "intake+a@example.org",
+      "intake+b@example.org",
+    ]);
+    expect(report.sent).toHaveLength(2);
+    expect(report.failed).toEqual([]);
+  });
+
+  it("falls back to the triage email when no orgs match", async () => {
+    const orgs: Org[] = [
+      sampleOrg({ id: "a", practiceAreas: ["family"], zip: "99999" }),
+    ];
+    const decision = selectRoutingForIntake(
+      { ...baseRecord, issue: "immigration", zip: "10001" },
+      orgs,
+    );
+    const { sender, calls } = recordingSender();
+    const report = await sendOrgNotifications({
+      intake: baseRecord,
+      decision,
+      triageEmail: "triage@example.org",
+      sender,
+    });
+    expect(calls.map((m) => m.to)).toEqual(["triage@example.org"]);
+    expect(report.sent).toEqual(["triage@example.org"]);
+  });
+
+  it("no-ops (empty report) when there's no match and no triage", async () => {
+    const decision = selectRoutingForIntake(
+      { ...baseRecord, issue: "immigration" },
+      [sampleOrg({ id: "x", practiceAreas: ["family"], zip: "10001" })],
+    );
+    const { sender, calls } = recordingSender();
+    const report = await sendOrgNotifications({
+      intake: baseRecord,
+      decision,
+      sender,
+    });
+    expect(calls).toEqual([]);
+    expect(report.sent).toEqual([]);
+  });
+
+  it("records failed recipients without blocking the batch", async () => {
+    const orgs: Org[] = [
+      sampleOrg({ id: "ok", practiceAreas: ["housing"], zip: "10001" }),
+      sampleOrg({ id: "bad", practiceAreas: ["housing"], zip: "10001" }),
+    ];
+    const decision = selectRoutingForIntake(baseRecord, orgs);
+    const sender = {
+      async send(msg: EmailMessage) {
+        if (msg.to.includes("bad")) throw new Error("Throttled");
+      },
+    };
+    const report = await sendOrgNotifications({
+      intake: baseRecord,
+      decision,
+      sender,
+    });
+    expect(report.sent).toEqual(["intake+ok@example.org"]);
+    expect(report.failed).toEqual(["intake+bad@example.org"]);
+  });
+
+  it("no-ops when the sender is null (not configured)", async () => {
+    const orgs: Org[] = [
+      sampleOrg({ id: "a", practiceAreas: ["housing"], zip: "10001" }),
+    ];
+    const decision = selectRoutingForIntake(baseRecord, orgs);
+    const report = await sendOrgNotifications({
+      intake: baseRecord,
+      decision,
+      sender: null,
+    });
+    expect(report.sent).toEqual([]);
   });
 });

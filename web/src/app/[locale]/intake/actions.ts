@@ -6,7 +6,12 @@ import * as Sentry from "@sentry/nextjs";
 import { redirect } from "@/i18n/navigation";
 import { IntakeSubmissionSchema } from "@/lib/intake";
 import { saveIntake, IntakeSinkError } from "@/lib/intake-sink";
-import { sendIntakeConfirmation } from "@/lib/intake-email";
+import {
+  selectRoutingForIntake,
+  sendIntakeConfirmation,
+  sendOrgNotifications,
+} from "@/lib/intake-email";
+import { getOrgs } from "@/lib/orgs-source";
 import { checkRateLimit } from "@/lib/rate-limit";
 import { routing } from "@/i18n/routing";
 
@@ -116,6 +121,25 @@ export async function submitIntake(
   } catch (err) {
     console.error("intake-email: send failed (non-fatal):", err);
     Sentry.captureException(err, { tags: { component: "intake-email" } });
+  }
+
+  // Route the intake to partner org(s). Non-fatal on the whole batch —
+  // the user is redirected to /thanks regardless. Per-recipient failures
+  // are logged by sendOrgNotifications and surfaced in the report below.
+  try {
+    const orgs = await getOrgs();
+    const decision = selectRoutingForIntake(record, orgs);
+    const report = await sendOrgNotifications({
+      intake: record,
+      decision,
+      triageEmail: process.env.TRIAGE_EMAIL,
+    });
+    console.info(
+      `intake-routing: id=${record.id} reason=${decision.reason} sent=${report.sent.length} failed=${report.failed.length}`,
+    );
+  } catch (err) {
+    console.error("intake-routing: unexpected error (non-fatal):", err);
+    Sentry.captureException(err, { tags: { component: "intake-routing" } });
   }
 
   redirect({ href: "/intake/thanks", locale });
