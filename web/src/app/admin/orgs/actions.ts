@@ -3,6 +3,7 @@
 import { cookies } from "next/headers";
 import { revalidateTag } from "next/cache";
 import { redirect } from "next/navigation";
+import * as Sentry from "@sentry/nextjs";
 import {
   ADMIN_SESSION_COOKIE,
   DEFAULT_SESSION_TTL_SECONDS,
@@ -123,6 +124,7 @@ export async function uploadOrgsAction(
   } catch (err) {
     if (err instanceof OrgsS3Error) {
       console.error("orgs-s3:", err.message, err.cause);
+      Sentry.captureException(err, { tags: { component: "orgs-s3" } });
       return { error: err.message };
     }
     throw err;

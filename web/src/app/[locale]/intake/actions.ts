@@ -2,6 +2,7 @@
 
 import { headers } from "next/headers";
 import { getTranslations } from "next-intl/server";
+import * as Sentry from "@sentry/nextjs";
 import { redirect } from "@/i18n/navigation";
 import { IntakeSubmissionSchema } from "@/lib/intake";
 import { saveIntake, IntakeSinkError } from "@/lib/intake-sink";
@@ -96,6 +97,7 @@ export async function submitIntake(
     } else {
       console.error("intake: unexpected error", err);
     }
+    Sentry.captureException(err, { tags: { component: "intake-sink" } });
     return {
       ok: false,
       errors: { form: t("formError") },
@@ -113,6 +115,7 @@ export async function submitIntake(
     });
   } catch (err) {
     console.error("intake-email: send failed (non-fatal):", err);
+    Sentry.captureException(err, { tags: { component: "intake-email" } });
   }
 
   redirect({ href: "/intake/thanks", locale });

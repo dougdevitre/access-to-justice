@@ -1,5 +1,6 @@
 import type { NextConfig } from "next";
 import createNextIntlPlugin from "next-intl/plugin";
+import { withSentryConfig } from "@sentry/nextjs";
 
 const withNextIntl = createNextIntlPlugin("./src/i18n/request.ts");
 
@@ -8,13 +9,17 @@ const withNextIntl = createNextIntlPlugin("./src/i18n/request.ts");
 // Tailwind's generated styles. Tighten to nonces in a later batch.
 // 'unsafe-eval' is only needed in dev for React Refresh.
 const isDev = process.env.NODE_ENV !== "production";
+const sentryDsnSet = Boolean(
+  process.env.NEXT_PUBLIC_SENTRY_DSN || process.env.SENTRY_DSN,
+);
+const sentryConnectSrc = sentryDsnSet ? " https://*.sentry.io" : "";
 const csp = [
   "default-src 'self'",
   `script-src 'self' 'unsafe-inline'${isDev ? " 'unsafe-eval'" : ""}`,
   "style-src 'self' 'unsafe-inline'",
   "img-src 'self' data:",
   "font-src 'self' data:",
-  "connect-src 'self'",
+  `connect-src 'self'${sentryConnectSrc}`,
   "frame-ancestors 'none'",
   "base-uri 'self'",
   "form-action 'self'",
@@ -60,4 +65,17 @@ const nextConfig: NextConfig = {
   },
 };
 
-export default withNextIntl(nextConfig);
+// Sentry wrap is always present so `instrumentation.ts` and the runtime
+// config files link correctly. Source-map upload only kicks in when
+// SENTRY_AUTH_TOKEN is present; all other Sentry-specific work is a
+// no-op when DSN / auth token are unset.
+const sentryBuildOptions = {
+  org: process.env.SENTRY_ORG,
+  project: process.env.SENTRY_PROJECT,
+  silent: !process.env.SENTRY_AUTH_TOKEN,
+  // Hide source maps from client bundles (Sentry still uploads them).
+  hideSourceMaps: true,
+  disableLogger: true,
+};
+
+export default withSentryConfig(withNextIntl(nextConfig), sentryBuildOptions);
