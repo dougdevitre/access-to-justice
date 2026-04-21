@@ -2,7 +2,9 @@ import { promises as fs } from "node:fs";
 import os from "node:os";
 import path from "node:path";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
+import { PutCommand } from "@aws-sdk/lib-dynamodb";
 import {
+  createDynamoSink,
   createFileSink,
   createNoopSink,
   IntakeSinkError,
@@ -97,5 +99,51 @@ describe("createNoopSink", () => {
   it("silently accepts records", async () => {
     const sink = createNoopSink();
     await expect(sink.save(sampleRecord)).resolves.toBeUndefined();
+  });
+});
+
+describe("createDynamoSink", () => {
+  it("sends a PutCommand with the record to the configured table", async () => {
+    const sends: PutCommand[] = [];
+    const fakeClient = {
+      send: async (cmd: PutCommand) => {
+        sends.push(cmd);
+        return {};
+      },
+    };
+    const sink = createDynamoSink({
+      client: fakeClient as unknown as Parameters<
+        typeof createDynamoSink
+      >[0]["client"],
+      tableName: "IntakeSubmissions",
+    });
+
+    await sink.save(sampleRecord);
+
+    expect(sends).toHaveLength(1);
+    expect(sends[0]).toBeInstanceOf(PutCommand);
+    expect(sends[0].input.TableName).toBe("IntakeSubmissions");
+    expect(sends[0].input.Item).toEqual(sampleRecord);
+    expect(sends[0].input.ConditionExpression).toBe(
+      "attribute_not_exists(id)",
+    );
+  });
+
+  it("wraps send() failures in IntakeSinkError", async () => {
+    const fakeClient = {
+      send: async () => {
+        throw new Error("ProvisionedThroughputExceededException");
+      },
+    };
+    const sink = createDynamoSink({
+      client: fakeClient as unknown as Parameters<
+        typeof createDynamoSink
+      >[0]["client"],
+      tableName: "IntakeSubmissions",
+    });
+
+    await expect(sink.save(sampleRecord)).rejects.toBeInstanceOf(
+      IntakeSinkError,
+    );
   });
 });
