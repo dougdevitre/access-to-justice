@@ -27,6 +27,7 @@ export default async function IntakeThanksPage({
       <h1 className="text-xl font-bold">{t("title")}</h1>
       <Card>
         <p>{t("body")}</p>
+        <p className="text-sm text-slate-600 mt-2">{t("emailNote")}</p>
       </Card>
       <div className="grid grid-cols-1 gap-3">
         <Link

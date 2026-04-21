@@ -94,8 +94,19 @@
   "IntakeThanks": {
     "title": "Thanks — we got your request.",
     "body": "A legal aid volunteer will reach out using the contact info you provided. In the meantime, take a look at our plain-language resources.",
+    "emailNote": "If you gave us an email, you'll receive a confirmation shortly — check your spam folder if it doesn't arrive.",
     "resourcesCta": "Browse resources",
     "homeCta": "Back to home"
+  },
+  "IntakeEmail": {
+    "subject": "We received your request — Access to Justice",
+    "greeting": "Hi {name},",
+    "greetingNoName": "Hi,",
+    "bodyIntro": "Thanks for submitting an intake request on {at} (UTC). Your reference ID is {id}. Keep this email in case you need to follow up.",
+    "nextSteps": "A legal aid volunteer will reach out using the contact info you provided. In the meantime, you can read our plain-language resources:",
+    "resourcesLabel": "Browse resources",
+    "disclaimer": "This email confirms we received your request. It does not create an attorney–client relationship and is not legal advice.",
+    "footerAddress": "Access to Justice · admin@cotrackpro.com"
   },
   "Error": {
     "title": "Something went wrong",

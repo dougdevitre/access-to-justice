@@ -43,6 +43,8 @@ blocks launch.
 | `Terms.sections.contact.paragraphs` | Monitored inbox. |
 | `Accessibility.lastUpdated` | Date the accessibility page was last reviewed. |
 | `Accessibility.sections.feedback.paragraphs` | Monitored accessibility inbox (e.g. `accessibility@yourdomain.org`). |
+| `IntakeEmail.disclaimer` | Confirmation email disclaimer. Must match the `/terms` "not legal advice" language. |
+| `IntakeEmail.footerAddress` | Sender org name + contact address in the email footer. |
 
 ## Items counsel should specifically review
 

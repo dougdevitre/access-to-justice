@@ -44,6 +44,9 @@ switcher.
 - **Admin panel** (`/admin/orgs`): see [`web/docs/ADMIN.md`](web/docs/ADMIN.md)
   for the shared-password setup, S3 bucket + IAM policy, and the
   upgrade path to SSO.
+- **Intake confirmation email**: see [`web/docs/INTAKE_EMAIL.md`](web/docs/INTAKE_EMAIL.md)
+  for the AWS SES sender-identity verification, sandbox → production
+  flow, and the extra IAM statement.
 - **Translations**: see [`web/messages/TRANSLATIONS.md`](web/messages/TRANSLATIONS.md)
   for which strings need a legal-aid translator review before launch.
 - **Legal review**: see [`web/docs/LEGAL_REVIEW.md`](web/docs/LEGAL_REVIEW.md)

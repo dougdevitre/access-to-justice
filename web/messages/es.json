@@ -94,8 +94,19 @@
   "IntakeThanks": {
     "title": "Gracias, recibimos tu solicitud.",
     "body": "Un voluntario de ayuda legal se comunicará contigo usando la información que proporcionaste. Mientras tanto, revisa nuestros recursos en lenguaje sencillo.",
+    "emailNote": "Si nos diste un correo, recibirás una confirmación pronto — revisa tu carpeta de spam si no llega.",
     "resourcesCta": "Ver recursos",
     "homeCta": "Volver al inicio"
+  },
+  "IntakeEmail": {
+    "subject": "Recibimos tu solicitud — Acceso a la Justicia",
+    "greeting": "Hola {name}:",
+    "greetingNoName": "Hola:",
+    "bodyIntro": "Gracias por enviar tu solicitud el {at} (UTC). Tu número de referencia es {id}. Guarda este correo por si necesitas dar seguimiento.",
+    "nextSteps": "Un voluntario de ayuda legal se comunicará contigo con los datos que proporcionaste. Mientras tanto, puedes leer nuestros recursos en lenguaje sencillo:",
+    "resourcesLabel": "Ver recursos",
+    "disclaimer": "Este correo confirma que recibimos tu solicitud. No crea una relación abogado–cliente y no es asesoría legal.",
+    "footerAddress": "Acceso a la Justicia · admin@cotrackpro.com"
   },
   "Error": {
     "title": "Algo salió mal",

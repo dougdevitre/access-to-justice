@@ -5,6 +5,7 @@ import { getTranslations } from "next-intl/server";
 import { redirect } from "@/i18n/navigation";
 import { IntakeSubmissionSchema } from "@/lib/intake";
 import { saveIntake, IntakeSinkError } from "@/lib/intake-sink";
+import { sendIntakeConfirmation } from "@/lib/intake-email";
 import { checkRateLimit } from "@/lib/rate-limit";
 import { routing } from "@/i18n/routing";
 
@@ -80,13 +81,15 @@ export async function submitIntake(
     return { ok: false, errors, values: raw };
   }
 
+  const record = {
+    id: crypto.randomUUID(),
+    submittedAt: new Date().toISOString(),
+    locale,
+    ...parsed.data,
+  };
+
   try {
-    await saveIntake({
-      id: crypto.randomUUID(),
-      submittedAt: new Date().toISOString(),
-      locale,
-      ...parsed.data,
-    });
+    await saveIntake(record);
   } catch (err) {
     if (err instanceof IntakeSinkError) {
       console.error("intake:", err.message, err.cause);
@@ -98,6 +101,18 @@ export async function submitIntake(
       errors: { form: t("formError") },
       values: raw,
     };
+  }
+
+  // Best-effort confirmation email. Non-fatal: the intake is already saved,
+  // so a transient SES error must not block the user from reaching /thanks.
+  try {
+    await sendIntakeConfirmation({
+      to: record.email,
+      locale,
+      record,
+    });
+  } catch (err) {
+    console.error("intake-email: send failed (non-fatal):", err);
   }
 
   redirect({ href: "/intake/thanks", locale });

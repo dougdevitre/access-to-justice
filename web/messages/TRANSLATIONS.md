@@ -22,6 +22,7 @@ are the strings most likely to affect a user's decisions.
 | `Intake.issues`  | all keys            | Practice-area labels; ensure terms match the ones used by partner organizations in each locale. |
 | `Intake.intro`   | —                   | Sets expectations about follow-up. |
 | `IntakeThanks.body` | —                | Sets expectations after submission. |
+| `IntakeEmail`    | all keys            | Confirmation email sent via SES. `disclaimer` must match `/terms` "not legal advice" language; `bodyIntro` carries the intake ID and timestamp the user will quote back when following up. |
 
 ## Working with the catalogs
 
