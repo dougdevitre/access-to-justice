@@ -84,3 +84,22 @@ test("accessibility statement page renders without the review banner", async ({
     page.getByRole("heading", { name: /legal review required/i }),
   ).toHaveCount(0);
 });
+
+test("GET /api/health returns ok and a release identifier", async ({
+  request,
+}) => {
+  const res = await request.get("/api/health");
+  expect(res.status()).toBe(200);
+  expect(res.headers()["cache-control"]).toContain("no-store");
+  const body = await res.json();
+  expect(body.ok).toBe(true);
+  expect(typeof body.environment).toBe("string");
+  expect(typeof body.release).toBe("string");
+  expect(typeof body.time).toBe("string");
+  expect(typeof body.uptimeSeconds).toBe("number");
+});
+
+test("every response carries an X-Release-SHA header", async ({ request }) => {
+  const res = await request.get("/en");
+  expect(res.headers()["x-release-sha"]).toBeTruthy();
+});

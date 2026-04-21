@@ -26,6 +26,9 @@ const csp = [
   "object-src 'none'",
 ].join("; ");
 
+const releaseSha =
+  process.env.VERCEL_GIT_COMMIT_SHA ?? process.env.SENTRY_RELEASE ?? "local";
+
 const securityHeaders = [
   { key: "Content-Security-Policy", value: csp },
   { key: "X-Frame-Options", value: "DENY" },
@@ -41,6 +44,10 @@ const securityHeaders = [
     key: "Strict-Transport-Security",
     value: "max-age=31536000; includeSubDomains",
   },
+  // Surface the deployed commit on every response — speeds up debugging
+  // cache/CDN issues ("which version rendered this?") without leaking
+  // anything sensitive.
+  { key: "X-Release-SHA", value: releaseSha },
 ];
 
 const nextConfig: NextConfig = {

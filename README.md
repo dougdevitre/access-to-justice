@@ -53,6 +53,11 @@ switcher.
 - **Error monitoring**: see [`web/docs/SENTRY.md`](web/docs/SENTRY.md)
   for the Sentry setup, PII scrubber, and Vercel env vars. No-op
   until a DSN is set.
+- **Deploy + staging**: see [`web/docs/DEPLOY.md`](web/docs/DEPLOY.md)
+  for the Vercel GitHub integration, Production vs Preview env
+  scoping, resource naming, branch protection, and rollback
+  procedure. `/api/health` returns the deployed environment + release
+  for uptime monitors.
 - **Translations**: see [`web/messages/TRANSLATIONS.md`](web/messages/TRANSLATIONS.md)
   for which strings need a legal-aid translator review before launch.
 - **Legal review**: see [`web/docs/LEGAL_REVIEW.md`](web/docs/LEGAL_REVIEW.md)
