@@ -59,7 +59,10 @@ switcher.
   procedure. `/api/health` returns the deployed environment + release
   for uptime monitors.
 - **Translations**: see [`web/messages/TRANSLATIONS.md`](web/messages/TRANSLATIONS.md)
-  for which strings need a legal-aid translator review before launch.
+  for the review workflow. CI enforces key + placeholder parity
+  between `en.json` and `es.json`. Run `npm run translations:review`
+  in `web/` for a side-by-side Markdown report a translator can mark
+  up.
 - **Legal review**: see [`web/docs/LEGAL_REVIEW.md`](web/docs/LEGAL_REVIEW.md)
   for the Privacy / Terms punch list a lawyer must sign off on before
   launch. The live site shows a yellow banner on those pages until the

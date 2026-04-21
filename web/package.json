@@ -10,7 +10,8 @@
     "test": "vitest run",
     "pree2e": "next build",
     "e2e": "playwright test",
-    "e2e:install": "playwright install --with-deps chromium"
+    "e2e:install": "playwright install --with-deps chromium",
+    "translations:review": "node scripts/translations-review.mjs"
   },
   "dependencies": {
     "@aws-sdk/client-dynamodb": "^3.645.0",
