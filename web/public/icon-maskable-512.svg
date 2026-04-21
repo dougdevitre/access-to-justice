@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <!-- Full-bleed background so Android/iOS can crop safely for adaptive icons. -->
+  <rect width="512" height="512" fill="#1f4e79"/>
+  <!-- Keep foreground inside the safe zone (~80% of canvas). -->
+  <g transform="translate(104 104)">
+    <path d="M152 0 L280 80 V240 L152 320 L24 240 V80 Z" fill="#e7effa"/>
+    <path d="M88 128 h128 v32 h-128 z M88 176 h128 v32 h-128 z" fill="#1f4e79"/>
+  </g>
+</svg>

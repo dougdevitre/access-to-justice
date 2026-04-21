@@ -10,7 +10,16 @@ export const metadata: Metadata = {
   },
   description:
     "Find free legal help, plain-language resources, and start an intake request — from your phone.",
-  icons: { icon: "/favicon.svg" },
+  applicationName: "Access to Justice",
+  appleWebApp: {
+    capable: true,
+    title: "A2J",
+    statusBarStyle: "default",
+  },
+  icons: {
+    icon: "/favicon.svg",
+    apple: "/icon-192.svg",
+  },
 };
 
 export const viewport: Viewport = {
