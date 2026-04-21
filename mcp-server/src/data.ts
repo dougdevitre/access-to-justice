@@ -1,21 +1,7 @@
-export const PRACTICE_AREAS = [
-  "housing",
-  "family",
-  "benefits",
-  "immigration",
-  "employment",
-  "consumer",
-] as const;
+import type { Org } from "../../shared/types.js";
 
-export type PracticeArea = (typeof PRACTICE_AREAS)[number];
-
-export type Org = {
-  id: string;
-  name: string;
-  practiceAreas: PracticeArea[];
-  phone: string;
-  zip: string;
-};
+export { PRACTICE_AREAS, searchOrgs, findOrgsByZip } from "../../shared/types.js";
+export type { Org, PracticeArea } from "../../shared/types.js";
 
 // Seed data — swap for a real data source later.
 export const ORGS: Org[] = [

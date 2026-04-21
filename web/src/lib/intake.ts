@@ -1,26 +1,9 @@
 import { z } from "zod";
+import { ISSUE_TYPES, type IntakeSubmission } from "@shared/types";
 
-export const ISSUE_TYPES = [
-  "housing",
-  "family",
-  "benefits",
-  "immigration",
-  "employment",
-  "consumer",
-  "other",
-] as const;
-
-export type IssueType = (typeof ISSUE_TYPES)[number];
-
-export const ISSUE_LABELS: Record<IssueType, string> = {
-  housing: "Housing / Eviction",
-  family: "Family",
-  benefits: "Public Benefits",
-  immigration: "Immigration",
-  employment: "Employment",
-  consumer: "Consumer / Debt",
-  other: "Other",
-};
+// Re-export the shared types/constants so existing `@/lib/intake` imports keep
+// working and new callers don't need to know about @shared.
+export * from "@shared/types";
 
 const emailOrBlank = z
   .string()
@@ -34,7 +17,7 @@ const zipOrBlank = z
   .max(10)
   .refine(
     (v) => v === "" || /^[0-9]{5}(-[0-9]{4})?$/.test(v),
-    "Invalid ZIP code"
+    "Invalid ZIP code",
   );
 
 export const IntakeSubmissionSchema = z
@@ -53,4 +36,8 @@ export const IntakeSubmissionSchema = z
     path: ["phone"],
   });
 
-export type IntakeSubmission = z.infer<typeof IntakeSubmissionSchema>;
+// Ensure the zod-parsed shape matches the shared IntakeSubmission type.
+// If someone drifts one, TypeScript flags it here.
+export type ParsedIntake = z.infer<typeof IntakeSubmissionSchema>;
+const _typeCheck: IntakeSubmission = {} as ParsedIntake;
+void _typeCheck;

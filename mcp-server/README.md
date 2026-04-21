@@ -24,7 +24,7 @@ Add an entry like the following to your client's MCP config (e.g.,
   "mcpServers": {
     "access-to-justice": {
       "command": "node",
-      "args": ["/absolute/path/to/access-to-justice/mcp-server/dist/index.js"]
+      "args": ["/absolute/path/to/access-to-justice/mcp-server/dist/mcp-server/src/index.js"]
     }
   }
 }

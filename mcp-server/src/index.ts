@@ -8,7 +8,7 @@
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import { z } from "zod";
-import { ORGS, PRACTICE_AREAS, type Org, type PracticeArea } from "./data.js";
+import { ORGS, PRACTICE_AREAS, searchOrgs, findOrgsByZip } from "./data.js";
 
 const SERVICE_NAME = "access-to-justice-mcp";
 const SERVICE_VERSION = "0.1.0";
@@ -58,13 +58,7 @@ server.tool(
       .describe("Restrict results to orgs that handle this practice area."),
   },
   async ({ query, practiceArea }) => {
-    const q = query?.trim().toLowerCase() ?? "";
-    const results: Org[] = ORGS.filter((org) => {
-      const matchesQuery = q === "" || org.name.toLowerCase().includes(q);
-      const matchesArea =
-        !practiceArea || org.practiceAreas.includes(practiceArea as PracticeArea);
-      return matchesQuery && matchesArea;
-    });
+    const results = searchOrgs(ORGS, { query, practiceArea });
     return asJson({ count: results.length, results });
   }
 );
@@ -79,9 +73,8 @@ server.tool(
       .describe("US ZIP code, e.g. 10001 or 10001-1234."),
   },
   async ({ zip }) => {
-    const zip5 = zip.slice(0, 5);
-    const results = ORGS.filter((org) => org.zip === zip5);
-    return asJson({ zip: zip5, count: results.length, results });
+    const results = findOrgsByZip(ORGS, zip);
+    return asJson({ zip: zip.slice(0, 5), count: results.length, results });
   }
 );
 
