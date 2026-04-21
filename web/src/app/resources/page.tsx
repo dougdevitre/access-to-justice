@@ -1,4 +1,11 @@
+import type { Metadata } from "next";
 import { Card } from "../components/Card";
+
+export const metadata: Metadata = {
+  title: "Resources",
+  description:
+    "Plain-language answers to common legal questions for renters, families, and consumers.",
+};
 
 const faqs = [
   {

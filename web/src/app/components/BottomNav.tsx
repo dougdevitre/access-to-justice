@@ -2,12 +2,15 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { Home, Search, BookOpen, FileText, type LucideIcon } from "lucide-react";
 
-const items = [
-  { href: "/", label: "Home" },
-  { href: "/find-help", label: "Find Help" },
-  { href: "/resources", label: "Resources" },
-  { href: "/intake", label: "Intake" },
+type Item = { href: string; label: string; Icon: LucideIcon };
+
+const items: Item[] = [
+  { href: "/", label: "Home", Icon: Home },
+  { href: "/find-help", label: "Find Help", Icon: Search },
+  { href: "/resources", label: "Resources", Icon: BookOpen },
+  { href: "/intake", label: "Intake", Icon: FileText },
 ];
 
 export function BottomNav() {
@@ -18,20 +21,20 @@ export function BottomNav() {
       className="fixed inset-x-0 bottom-0 z-20 bg-white border-t border-slate-200 pb-[env(safe-area-inset-bottom)]"
     >
       <ul className="max-w-screen-sm mx-auto grid grid-cols-4">
-        {items.map((item) => {
+        {items.map(({ href, label, Icon }) => {
           const active =
-            item.href === "/"
-              ? pathname === "/"
-              : pathname.startsWith(item.href);
+            href === "/" ? pathname === "/" : pathname.startsWith(href);
           return (
-            <li key={item.href}>
+            <li key={href}>
               <Link
-                href={item.href}
-                className={`flex items-center justify-center min-h-14 text-sm font-medium ${
+                href={href}
+                aria-current={active ? "page" : undefined}
+                className={`flex flex-col items-center justify-center gap-0.5 min-h-14 text-xs font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 ${
                   active ? "text-brand" : "text-slate-600"
                 }`}
               >
-                {item.label}
+                <Icon aria-hidden="true" className="w-5 h-5" />
+                <span>{label}</span>
               </Link>
             </li>
           );

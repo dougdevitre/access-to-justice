@@ -1,4 +1,11 @@
+import type { Metadata } from "next";
 import { Card } from "../components/Card";
+
+export const metadata: Metadata = {
+  title: "Find Legal Help",
+  description:
+    "Search free and low-cost legal aid organizations near you by ZIP code.",
+};
 
 const sampleOrgs = [
   {

@@ -45,9 +45,13 @@ During development you can point at `tsx` instead:
 
 ## Tools
 
-| Tool   | Purpose                                                     |
-| ------ | ----------------------------------------------------------- |
-| `ping` | Health check; returns `{ ok, service, time, echo }` as JSON |
+| Tool                     | Purpose                                                               |
+| ------------------------ | --------------------------------------------------------------------- |
+| `ping`                   | Health check; returns service name, version, and server time.         |
+| `list_practice_areas`    | List supported practice areas (housing, family, benefits, …).         |
+| `search_legal_aid_orgs`  | Search organizations by name query and/or practice area.              |
+| `find_by_zip`            | Find organizations in a specific ZIP code (5-digit match).            |
+| `get_intake_form_schema` | Return the JSON shape of the web app's intake form for pre-fill/validation. |
 
-Future tools will be added to `src/index.ts` — see the comment block at the
-top of that file.
+Seed data lives in `src/data.ts` — swap for a real data source (DB, Airtable,
+API) when ready.
