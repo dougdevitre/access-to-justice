@@ -1,8 +1,9 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
-import { TopBar } from "./components/TopBar";
-import { BottomNav } from "./components/BottomNav";
-import { RegisterSW } from "./components/RegisterSW";
+
+// Root layout: the `<html>` / `<body>` are rendered by the [locale] layout so
+// the `lang` attribute matches the active locale. This root layout just
+// forwards children so non-locale routes (the root not-found) still render.
 
 export const metadata: Metadata = {
   title: {
@@ -35,25 +36,5 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return (
-    <html lang="en">
-      <body className="min-h-dvh flex flex-col">
-        <a
-          href="#main"
-          className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-50 focus:rounded-md focus:bg-white focus:px-3 focus:py-2 focus:text-brand focus:shadow"
-        >
-          Skip to main content
-        </a>
-        <TopBar />
-        <main
-          id="main"
-          className="flex-1 w-full max-w-screen-sm mx-auto px-4 pt-4 pb-24"
-        >
-          {children}
-        </main>
-        <BottomNav />
-        <RegisterSW />
-      </body>
-    </html>
-  );
+  return children;
 }

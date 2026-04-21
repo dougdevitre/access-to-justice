@@ -10,13 +10,18 @@
 // Cache key is versioned. Bump CACHE_V on every deploy that ships new
 // precached assets; stale caches get purged in `activate`.
 
-const CACHE_V = "a2j-v1";
+const CACHE_V = "a2j-v2";
 const PRECACHE = [
-  "/",
-  "/find-help",
-  "/resources",
-  "/intake",
-  "/offline",
+  "/en",
+  "/en/find-help",
+  "/en/resources",
+  "/en/intake",
+  "/en/offline",
+  "/es",
+  "/es/find-help",
+  "/es/resources",
+  "/es/intake",
+  "/es/offline",
   "/manifest.webmanifest",
   "/favicon.svg",
   "/icon-192.svg",
@@ -64,7 +69,12 @@ self.addEventListener("fetch", (event) => {
         .catch(async () => {
           const cached = await caches.match(req);
           if (cached) return cached;
-          const offline = await caches.match("/offline");
+          // Infer locale from URL path (e.g. "/es/...") to pick the right
+          // offline fallback; default to "/en/offline".
+          const pathLocale = url.pathname.split("/")[1];
+          const offlinePath =
+            pathLocale === "es" ? "/es/offline" : "/en/offline";
+          const offline = await caches.match(offlinePath);
           return offline ?? new Response("Offline", { status: 503 });
         }),
     );

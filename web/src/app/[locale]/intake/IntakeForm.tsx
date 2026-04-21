@@ -2,28 +2,32 @@
 
 import { useActionState } from "react";
 import { useFormStatus } from "react-dom";
-import { ISSUE_TYPES, ISSUE_LABELS } from "@/lib/intake";
+import { useLocale, useTranslations } from "next-intl";
+import { ISSUE_TYPES } from "@/lib/intake";
 import { submitIntake, type IntakeFormState } from "./actions";
 
 const initialState: IntakeFormState = { ok: false };
 
 export function IntakeForm() {
+  const t = useTranslations("Intake");
+  const locale = useLocale();
   const [state, formAction] = useActionState(submitIntake, initialState);
   const errors = state.errors ?? {};
   const values = state.values ?? {};
 
   return (
     <form action={formAction} className="space-y-3" noValidate>
+      <input type="hidden" name="__locale" value={locale} />
       {errors.form ? (
         <p
           role="alert"
           className="rounded-xl border border-red-200 bg-red-50 text-red-800 text-sm px-3 py-2"
         >
-          {errors.form}
+          {t("formError")}
         </p>
       ) : null}
 
-      <Field label="Full name" htmlFor="name" error={errors.name}>
+      <Field label={t("nameLabel")} htmlFor="name" error={errors.name}>
         <input
           id="name"
           name="name"
@@ -34,7 +38,7 @@ export function IntakeForm() {
         />
       </Field>
 
-      <Field label="Phone" htmlFor="phone" error={errors.phone}>
+      <Field label={t("phoneLabel")} htmlFor="phone" error={errors.phone}>
         <input
           id="phone"
           name="phone"
@@ -46,7 +50,7 @@ export function IntakeForm() {
         />
       </Field>
 
-      <Field label="Email" htmlFor="email" error={errors.email}>
+      <Field label={t("emailLabel")} htmlFor="email" error={errors.email}>
         <input
           id="email"
           name="email"
@@ -58,7 +62,7 @@ export function IntakeForm() {
         />
       </Field>
 
-      <Field label="ZIP code" htmlFor="zip" error={errors.zip}>
+      <Field label={t("zipLabel")} htmlFor="zip" error={errors.zip}>
         <input
           id="zip"
           name="zip"
@@ -71,7 +75,7 @@ export function IntakeForm() {
         />
       </Field>
 
-      <Field label="Issue type" htmlFor="issue" error={errors.issue} required>
+      <Field label={t("issueLabel")} htmlFor="issue" error={errors.issue} required>
         <select
           id="issue"
           name="issue"
@@ -80,18 +84,18 @@ export function IntakeForm() {
           className="w-full min-h-11 px-3 rounded-xl border border-slate-300 bg-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand"
         >
           <option value="" disabled>
-            Select one
+            {t("issuePlaceholder")}
           </option>
           {ISSUE_TYPES.map((key) => (
             <option key={key} value={key}>
-              {ISSUE_LABELS[key]}
+              {t(`issues.${key}`)}
             </option>
           ))}
         </select>
       </Field>
 
       <Field
-        label="Describe your situation"
+        label={t("detailsLabel")}
         htmlFor="details"
         error={errors.details}
       >
@@ -110,6 +114,7 @@ export function IntakeForm() {
 }
 
 function SubmitButton() {
+  const t = useTranslations("Intake");
   const { pending } = useFormStatus();
   return (
     <button
@@ -117,7 +122,7 @@ function SubmitButton() {
       disabled={pending}
       className="w-full min-h-12 rounded-xl bg-brand text-white font-semibold disabled:opacity-60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2"
     >
-      {pending ? "Submitting…" : "Submit intake"}
+      {pending ? t("submitting") : t("submit")}
     </button>
   );
 }

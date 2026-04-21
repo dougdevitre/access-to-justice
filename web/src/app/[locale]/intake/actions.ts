@@ -2,8 +2,9 @@
 
 import { promises as fs } from "node:fs";
 import path from "node:path";
-import { redirect } from "next/navigation";
+import { redirect } from "@/i18n/navigation";
 import { IntakeSubmissionSchema } from "@/lib/intake";
+import { routing } from "@/i18n/routing";
 
 export type IntakeFormState = {
   ok: boolean;
@@ -16,10 +17,19 @@ export type IntakeFormState = {
 const DATA_DIR = path.join(process.cwd(), ".data");
 const LOG_FILE = path.join(DATA_DIR, "intake-submissions.jsonl");
 
+function pickLocale(input: FormDataEntryValue | null): (typeof routing.locales)[number] {
+  const s = typeof input === "string" ? input : "";
+  return (routing.locales as readonly string[]).includes(s)
+    ? (s as (typeof routing.locales)[number])
+    : routing.defaultLocale;
+}
+
 export async function submitIntake(
   _prev: IntakeFormState,
-  formData: FormData
+  formData: FormData,
 ): Promise<IntakeFormState> {
+  const locale = pickLocale(formData.get("__locale"));
+
   const raw = {
     name: (formData.get("name") ?? "") as string,
     phone: (formData.get("phone") ?? "") as string,
@@ -42,6 +52,7 @@ export async function submitIntake(
   const record = {
     id: crypto.randomUUID(),
     submittedAt: new Date().toISOString(),
+    locale,
     ...parsed.data,
   };
 
@@ -57,5 +68,8 @@ export async function submitIntake(
     };
   }
 
-  redirect("/intake/thanks");
+  redirect({ href: "/intake/thanks", locale });
+  // Unreachable — redirect() throws a Next.js internal error. Keeps TS happy
+  // because next-intl's redirect() return type is `void`, not `never`.
+  return { ok: true };
 }

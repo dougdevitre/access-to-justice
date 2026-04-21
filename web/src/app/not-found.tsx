@@ -1,22 +1,18 @@
 import Link from "next/link";
-import { Card } from "./components/Card";
 
-export default function NotFound() {
+// Fallback not-found for requests that don't match a locale-prefixed route.
+// Locale-specific 404s live under /src/app/[locale]/not-found.tsx.
+export default function RootNotFound() {
   return (
-    <div className="space-y-4">
-      <h1 className="text-xl font-bold">Page not found</h1>
-      <Card>
-        <p>
-          The page you were looking for doesn&apos;t exist. Head back to the
-          home screen to continue.
-        </p>
-      </Card>
-      <Link
-        href="/"
-        className="inline-flex items-center justify-center w-full min-h-12 rounded-xl bg-brand text-white font-semibold"
-      >
-        Go home
-      </Link>
-    </div>
+    <html lang="en">
+      <body style={{ fontFamily: "system-ui", padding: "2rem" }}>
+        <main>
+          <h1>Page not found</h1>
+          <p>
+            <Link href="/">Go home</Link>
+          </p>
+        </main>
+      </body>
+    </html>
   );
 }

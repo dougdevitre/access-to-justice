@@ -1,19 +1,21 @@
 "use client";
 
-import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { useTranslations } from "next-intl";
+import { Link, usePathname } from "@/i18n/navigation";
 import { Home, Search, BookOpen, FileText, type LucideIcon } from "lucide-react";
 
-type Item = { href: string; label: string; Icon: LucideIcon };
+type ItemKey = "home" | "findHelp" | "resources" | "intake";
+type Item = { key: ItemKey; href: string; Icon: LucideIcon };
 
 const items: Item[] = [
-  { href: "/", label: "Home", Icon: Home },
-  { href: "/find-help", label: "Find Help", Icon: Search },
-  { href: "/resources", label: "Resources", Icon: BookOpen },
-  { href: "/intake", label: "Intake", Icon: FileText },
+  { key: "home", href: "/", Icon: Home },
+  { key: "findHelp", href: "/find-help", Icon: Search },
+  { key: "resources", href: "/resources", Icon: BookOpen },
+  { key: "intake", href: "/intake", Icon: FileText },
 ];
 
 export function BottomNav() {
+  const t = useTranslations("Nav");
   const pathname = usePathname();
   return (
     <nav
@@ -21,7 +23,7 @@ export function BottomNav() {
       className="fixed inset-x-0 bottom-0 z-20 bg-white border-t border-slate-200 pb-[env(safe-area-inset-bottom)]"
     >
       <ul className="max-w-screen-sm mx-auto grid grid-cols-4">
-        {items.map(({ href, label, Icon }) => {
+        {items.map(({ key, href, Icon }) => {
           const active =
             href === "/" ? pathname === "/" : pathname.startsWith(href);
           return (
@@ -34,7 +36,7 @@ export function BottomNav() {
                 }`}
               >
                 <Icon aria-hidden="true" className="w-5 h-5" />
-                <span>{label}</span>
+                <span>{t(key)}</span>
               </Link>
             </li>
           );

@@ -1,0 +1,101 @@
+{
+  "Nav": {
+    "brand": "Acceso a la Justicia",
+    "home": "Inicio",
+    "findHelp": "Buscar ayuda",
+    "resources": "Recursos",
+    "intake": "Solicitud",
+    "skipToMain": "Saltar al contenido principal",
+    "switchLanguage": "Cambiar idioma",
+    "languageEnglish": "Inglés",
+    "languageSpanish": "Español"
+  },
+  "Home": {
+    "title": "Ayuda legal gratuita, de forma sencilla.",
+    "subtitle": "Encuentra servicios cerca de ti, lee recursos en lenguaje sencillo o inicia una solicitud.",
+    "cta": "Buscar ayuda ahora",
+    "findHelpTitle": "Buscar ayuda legal",
+    "findHelpBody": "Busca organizaciones de ayuda legal gratuitas o de bajo costo cerca de ti.",
+    "findHelpLink": "Ver organizaciones →",
+    "resourcesTitle": "Recursos",
+    "resourcesBody": "Respuestas en lenguaje sencillo a preguntas legales comunes.",
+    "resourcesLink": "Leer recursos →",
+    "intakeTitle": "Iniciar solicitud",
+    "intakeBody": "Cuéntanos tu situación y te dirigiremos a la ayuda adecuada.",
+    "intakeLink": "Abrir formulario →"
+  },
+  "FindHelp": {
+    "title": "Buscar ayuda legal",
+    "zipLabel": "Código postal",
+    "zipPlaceholder": "Ingresa código postal",
+    "searchButton": "Buscar",
+    "practiceAreasLabel": "Áreas de práctica:",
+    "zipListLabel": "Código postal:",
+    "callButton": "Llamar al {phone}"
+  },
+  "Resources": {
+    "title": "Recursos",
+    "items": [
+      {
+        "q": "¿Qué hago si recibo un aviso de desalojo?",
+        "a": "No lo ignores. Anota la fecha límite, reúne tu contrato y comprobantes de pago, y contacta a una organización de ayuda legal lo antes posible."
+      },
+      {
+        "q": "¿Puedo recibir ayuda legal gratuita?",
+        "a": "Muchas organizaciones ofrecen ayuda gratuita según los ingresos. Usa Buscar ayuda legal para buscar por código postal."
+      },
+      {
+        "q": "¿Cómo me preparo para una fecha en la corte?",
+        "a": "Lleva una identificación con foto, todos los documentos relacionados y una cronología por escrito. Llega al menos 30 minutos antes."
+      },
+      {
+        "q": "¿Qué es una solicitud legal (intake)?",
+        "a": "Un breve conjunto de preguntas que ayuda a una organización a entender tu situación y decidir cómo ayudarte."
+      }
+    ]
+  },
+  "Intake": {
+    "title": "Iniciar solicitud",
+    "intro": "Responde algunas preguntas para dirigir tu solicitud a la organización adecuada. Necesitamos un teléfono o un correo para responderte.",
+    "nameLabel": "Nombre completo",
+    "phoneLabel": "Teléfono",
+    "emailLabel": "Correo electrónico",
+    "zipLabel": "Código postal",
+    "issueLabel": "Tipo de problema",
+    "issuePlaceholder": "Selecciona uno",
+    "detailsLabel": "Describe tu situación",
+    "submit": "Enviar solicitud",
+    "submitting": "Enviando…",
+    "formError": "No pudimos guardar tu solicitud. Inténtalo de nuevo.",
+    "issues": {
+      "housing": "Vivienda / Desalojo",
+      "family": "Familia",
+      "benefits": "Beneficios públicos",
+      "immigration": "Inmigración",
+      "employment": "Empleo",
+      "consumer": "Consumidor / Deudas",
+      "other": "Otro"
+    }
+  },
+  "IntakeThanks": {
+    "title": "Gracias, recibimos tu solicitud.",
+    "body": "Un voluntario de ayuda legal se comunicará contigo usando la información que proporcionaste. Mientras tanto, revisa nuestros recursos en lenguaje sencillo.",
+    "resourcesCta": "Ver recursos",
+    "homeCta": "Volver al inicio"
+  },
+  "Error": {
+    "title": "Algo salió mal",
+    "body": "No pudimos cargar esta página. Es culpa nuestra, no tuya. Inténtalo de nuevo o vuelve en un momento.",
+    "retry": "Reintentar"
+  },
+  "NotFound": {
+    "title": "Página no encontrada",
+    "body": "La página que buscabas no existe. Regresa a la pantalla de inicio para continuar.",
+    "cta": "Ir al inicio"
+  },
+  "Offline": {
+    "title": "Estás sin conexión",
+    "body": "Esta página aún no está en caché, así que no podemos mostrarla sin conexión. Las páginas que ya has visitado (Inicio, Buscar ayuda, Recursos, Solicitud) seguirán funcionando sin conexión.",
+    "cta": "Ir al inicio"
+  }
+}

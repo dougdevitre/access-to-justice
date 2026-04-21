@@ -1,0 +1,101 @@
+{
+  "Nav": {
+    "brand": "Access to Justice",
+    "home": "Home",
+    "findHelp": "Find Help",
+    "resources": "Resources",
+    "intake": "Intake",
+    "skipToMain": "Skip to main content",
+    "switchLanguage": "Switch language",
+    "languageEnglish": "English",
+    "languageSpanish": "Spanish"
+  },
+  "Home": {
+    "title": "Free legal help, made simple.",
+    "subtitle": "Find services near you, read plain-language resources, or start an intake request.",
+    "cta": "Find help now",
+    "findHelpTitle": "Find Legal Help",
+    "findHelpBody": "Search free and low-cost legal aid organizations near you.",
+    "findHelpLink": "Browse organizations →",
+    "resourcesTitle": "Resources",
+    "resourcesBody": "Plain-language answers to common legal questions.",
+    "resourcesLink": "Read resources →",
+    "intakeTitle": "Start an Intake",
+    "intakeBody": "Share your situation and we'll route you to the right help.",
+    "intakeLink": "Open intake form →"
+  },
+  "FindHelp": {
+    "title": "Find Legal Help",
+    "zipLabel": "ZIP code",
+    "zipPlaceholder": "Enter ZIP",
+    "searchButton": "Search",
+    "practiceAreasLabel": "Practice areas:",
+    "zipListLabel": "ZIP:",
+    "callButton": "Call {phone}"
+  },
+  "Resources": {
+    "title": "Resources",
+    "items": [
+      {
+        "q": "What do I do if I get an eviction notice?",
+        "a": "Do not ignore it. Note the deadline, gather your lease and payment records, and contact a legal aid organization as soon as possible."
+      },
+      {
+        "q": "Can I get free legal help?",
+        "a": "Many organizations offer free help based on income. Use Find Legal Help to search by ZIP."
+      },
+      {
+        "q": "How do I prepare for a court date?",
+        "a": "Bring a photo ID, all related documents, and a written timeline. Arrive at least 30 minutes early."
+      },
+      {
+        "q": "What is a legal intake?",
+        "a": "A short set of questions that helps an organization understand your situation and decide how to help."
+      }
+    ]
+  },
+  "Intake": {
+    "title": "Start an Intake",
+    "intro": "Answer a few questions so we can route your request to the right organization. We'll need either a phone number or an email to follow up.",
+    "nameLabel": "Full name",
+    "phoneLabel": "Phone",
+    "emailLabel": "Email",
+    "zipLabel": "ZIP code",
+    "issueLabel": "Issue type",
+    "issuePlaceholder": "Select one",
+    "detailsLabel": "Describe your situation",
+    "submit": "Submit intake",
+    "submitting": "Submitting…",
+    "formError": "We couldn't save your request. Please try again.",
+    "issues": {
+      "housing": "Housing / Eviction",
+      "family": "Family",
+      "benefits": "Public Benefits",
+      "immigration": "Immigration",
+      "employment": "Employment",
+      "consumer": "Consumer / Debt",
+      "other": "Other"
+    }
+  },
+  "IntakeThanks": {
+    "title": "Thanks — we got your request.",
+    "body": "A legal aid volunteer will reach out using the contact info you provided. In the meantime, take a look at our plain-language resources.",
+    "resourcesCta": "Browse resources",
+    "homeCta": "Back to home"
+  },
+  "Error": {
+    "title": "Something went wrong",
+    "body": "We couldn't load this page. This is on us, not you. Try again, or come back in a moment.",
+    "retry": "Try again"
+  },
+  "NotFound": {
+    "title": "Page not found",
+    "body": "The page you were looking for doesn't exist. Head back to the home screen to continue.",
+    "cta": "Go home"
+  },
+  "Offline": {
+    "title": "You're offline",
+    "body": "This page isn't cached yet, so we can't show it without a connection. Pages you've already visited (Home, Find Legal Help, Resources, Intake) will still work offline.",
+    "cta": "Go home"
+  }
+}
