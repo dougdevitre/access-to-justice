@@ -1,0 +1,72 @@
+[
+  {
+    "id": "legal-aid-society",
+    "name": "Legal Aid Society (SAMPLE)",
+    "practiceAreas": ["housing", "family", "benefits"],
+    "phone": "(555) 123-4567",
+    "zip": "10001"
+  },
+  {
+    "id": "community-law-center",
+    "name": "Community Law Center (SAMPLE)",
+    "practiceAreas": ["immigration", "employment"],
+    "phone": "(555) 987-6543",
+    "zip": "10002"
+  },
+  {
+    "id": "volunteer-lawyers-project",
+    "name": "Volunteer Lawyers Project (SAMPLE)",
+    "practiceAreas": ["consumer"],
+    "phone": "(555) 246-1357",
+    "zip": "10003"
+  },
+  {
+    "id": "tenants-rights-clinic",
+    "name": "Tenants' Rights Clinic (SAMPLE)",
+    "practiceAreas": ["housing"],
+    "phone": "(555) 321-6540",
+    "zip": "10004"
+  },
+  {
+    "id": "family-law-project",
+    "name": "Family Law Project (SAMPLE)",
+    "practiceAreas": ["family", "benefits"],
+    "phone": "(555) 555-0112",
+    "zip": "10005"
+  },
+  {
+    "id": "immigrant-defense-network",
+    "name": "Immigrant Defense Network (SAMPLE)",
+    "practiceAreas": ["immigration"],
+    "phone": "(555) 555-0148",
+    "zip": "10001"
+  },
+  {
+    "id": "workers-rights-coalition",
+    "name": "Workers' Rights Coalition (SAMPLE)",
+    "practiceAreas": ["employment"],
+    "phone": "(555) 555-0173",
+    "zip": "10002"
+  },
+  {
+    "id": "consumer-debt-help-line",
+    "name": "Consumer Debt Help Line (SAMPLE)",
+    "practiceAreas": ["consumer", "benefits"],
+    "phone": "(555) 555-0199",
+    "zip": "10003"
+  },
+  {
+    "id": "eviction-prevention-hotline",
+    "name": "Eviction Prevention Hotline (SAMPLE)",
+    "practiceAreas": ["housing"],
+    "phone": "(555) 555-0215",
+    "zip": "10006"
+  },
+  {
+    "id": "neighborhood-legal-services",
+    "name": "Neighborhood Legal Services (SAMPLE)",
+    "practiceAreas": ["housing", "family", "immigration", "employment"],
+    "phone": "(555) 555-0237",
+    "zip": "10007"
+  }
+]

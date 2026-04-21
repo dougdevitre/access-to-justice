@@ -31,7 +31,19 @@
     "searchButton": "Search",
     "practiceAreasLabel": "Practice areas:",
     "zipListLabel": "ZIP:",
-    "callButton": "Call {phone}"
+    "callButton": "Call {phone}",
+    "filterByPracticeArea": "Filter by practice area",
+    "allPracticeAreas": "All practice areas",
+    "noResults": "No organizations match your search. Try a different ZIP or clear the practice-area filter.",
+    "resultCount": "{count, plural, =0 {No organizations} one {# organization} other {# organizations}}"
+  },
+  "PracticeAreas": {
+    "housing": "Housing / Eviction",
+    "family": "Family",
+    "benefits": "Public Benefits",
+    "immigration": "Immigration",
+    "employment": "Employment",
+    "consumer": "Consumer / Debt"
   },
   "Resources": {
     "title": "Resources",

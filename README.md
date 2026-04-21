@@ -35,6 +35,9 @@ switcher.
 - **Intake storage**: see [`web/docs/INTAKE_DYNAMODB.md`](web/docs/INTAKE_DYNAMODB.md)
   for the DynamoDB table schema, IAM policy, and Vercel environment
   variables.
+- **Organization directory**: see [`shared/ORGS.md`](shared/ORGS.md) for
+  the JSON schema, how to point `ORGS_SOURCE_URL` at your own org list,
+  and notes on sourcing real data.
 - **Translations**: see [`web/messages/TRANSLATIONS.md`](web/messages/TRANSLATIONS.md)
   for which strings need a legal-aid translator review before launch.
 

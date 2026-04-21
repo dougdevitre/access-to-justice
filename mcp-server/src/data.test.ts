@@ -7,39 +7,63 @@ describe("searchOrgs", () => {
     expect(results).toHaveLength(ORGS.length);
   });
 
-  it("filters by practice area (housing → legal-aid-society)", () => {
+  it("returns only orgs whose practiceAreas include the filter", () => {
     const results = searchOrgs(ORGS, { practiceArea: "housing" });
-    expect(results.map((o) => o.id)).toEqual(["legal-aid-society"]);
+    expect(results.length).toBeGreaterThan(0);
+    for (const org of results) {
+      expect(org.practiceAreas).toContain("housing");
+    }
+    // And every org outside the results is missing that practice area.
+    const resultIds = new Set(results.map((o) => o.id));
+    for (const org of ORGS) {
+      if (!resultIds.has(org.id)) {
+        expect(org.practiceAreas).not.toContain("housing");
+      }
+    }
   });
 
-  it("filters by free-text query (case-insensitive)", () => {
-    const results = searchOrgs(ORGS, { query: "Community" });
-    expect(results.map((o) => o.id)).toEqual(["community-law-center"]);
+  it("filters by free-text query (case-insensitive substring of name)", () => {
+    const results = searchOrgs(ORGS, { query: "COMMUNITY" });
+    expect(results.length).toBeGreaterThan(0);
+    for (const org of results) {
+      expect(org.name.toLowerCase()).toContain("community");
+    }
   });
 
-  it("combines query and practice area", () => {
+  it("combines query and practice area (AND semantics)", () => {
     const results = searchOrgs(ORGS, {
       query: "law",
       practiceArea: "immigration",
     });
-    expect(results.map((o) => o.id)).toEqual(["community-law-center"]);
+    for (const org of results) {
+      expect(org.name.toLowerCase()).toContain("law");
+      expect(org.practiceAreas).toContain("immigration");
+    }
   });
 
   it("returns empty when nothing matches", () => {
-    const results = searchOrgs(ORGS, { query: "nonexistent" });
+    const results = searchOrgs(ORGS, { query: "zzzz-no-such-org-zzzz" });
     expect(results).toEqual([]);
   });
 });
 
 describe("findOrgsByZip", () => {
-  it("matches exact 5-digit ZIP", () => {
-    const results = findOrgsByZip(ORGS, "10002");
-    expect(results.map((o) => o.id)).toEqual(["community-law-center"]);
+  it("returns only orgs whose zip matches exactly", () => {
+    const sampleZip = ORGS[0].zip;
+    const results = findOrgsByZip(ORGS, sampleZip);
+    expect(results.length).toBeGreaterThan(0);
+    for (const org of results) {
+      expect(org.zip).toBe(sampleZip);
+    }
   });
 
-  it("accepts ZIP+4 and matches on the 5-digit prefix", () => {
-    const results = findOrgsByZip(ORGS, "10001-1234");
-    expect(results.map((o) => o.id)).toEqual(["legal-aid-society"]);
+  it("treats ZIP+4 as the 5-digit prefix", () => {
+    const sampleZip = ORGS[0].zip;
+    const results = findOrgsByZip(ORGS, `${sampleZip}-1234`);
+    expect(results.length).toBeGreaterThan(0);
+    for (const org of results) {
+      expect(org.zip).toBe(sampleZip);
+    }
   });
 
   it("returns empty for an unknown ZIP", () => {

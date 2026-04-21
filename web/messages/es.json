@@ -31,7 +31,19 @@
     "searchButton": "Buscar",
     "practiceAreasLabel": "Áreas de práctica:",
     "zipListLabel": "Código postal:",
-    "callButton": "Llamar al {phone}"
+    "callButton": "Llamar al {phone}",
+    "filterByPracticeArea": "Filtrar por área de práctica",
+    "allPracticeAreas": "Todas las áreas de práctica",
+    "noResults": "Ninguna organización coincide con tu búsqueda. Prueba con otro código postal o quita el filtro de área de práctica.",
+    "resultCount": "{count, plural, =0 {Sin organizaciones} one {# organización} other {# organizaciones}}"
+  },
+  "PracticeAreas": {
+    "housing": "Vivienda / Desalojo",
+    "family": "Familia",
+    "benefits": "Beneficios públicos",
+    "immigration": "Inmigración",
+    "employment": "Empleo",
+    "consumer": "Consumidor / Deudas"
   },
   "Resources": {
     "title": "Recursos",
