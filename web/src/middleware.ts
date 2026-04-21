@@ -8,6 +8,6 @@ export const config = {
   // static file, Next internals, or an API/service-worker/manifest asset.
   matcher: [
     "/",
-    "/((?!api|_next|_vercel|favicon.svg|icon-192.svg|icon-512.svg|icon-maskable-512.svg|manifest.webmanifest|sw.js|.*\\..*).*)",
+    "/((?!api|admin|_next|_vercel|favicon.svg|icon-192.svg|icon-512.svg|icon-maskable-512.svg|manifest.webmanifest|sw.js|robots.txt|sitemap.xml|.*\\..*).*)",
   ],
 };

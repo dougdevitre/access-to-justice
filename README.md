@@ -41,6 +41,9 @@ switcher.
 - **Organization directory**: see [`shared/ORGS.md`](shared/ORGS.md) for
   the JSON schema, how to point `ORGS_SOURCE_URL` at your own org list,
   and notes on sourcing real data.
+- **Admin panel** (`/admin/orgs`): see [`web/docs/ADMIN.md`](web/docs/ADMIN.md)
+  for the shared-password setup, S3 bucket + IAM policy, and the
+  upgrade path to SSO.
 - **Translations**: see [`web/messages/TRANSLATIONS.md`](web/messages/TRANSLATIONS.md)
   for which strings need a legal-aid translator review before launch.
 - **Legal review**: see [`web/docs/LEGAL_REVIEW.md`](web/docs/LEGAL_REVIEW.md)
