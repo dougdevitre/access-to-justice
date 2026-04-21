@@ -79,6 +79,7 @@
     "submit": "Enviar solicitud",
     "submitting": "Enviando…",
     "formError": "No pudimos guardar tu solicitud. Inténtalo de nuevo.",
+    "rateLimitError": "Demasiadas solicitudes. Espera {minutes, plural, one {# minuto} other {# minutos}} e inténtalo de nuevo.",
     "privacyAck": "Al enviar, aceptas nuestra <privacy>Política de privacidad</privacy> y nuestros <terms>Términos del servicio</terms>. No incluyas información que no quieras compartir con un socio de ayuda legal.",
     "issues": {
       "housing": "Vivienda / Desalojo",

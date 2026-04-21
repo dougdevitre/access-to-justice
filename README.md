@@ -35,6 +35,9 @@ switcher.
 - **Intake storage**: see [`web/docs/INTAKE_DYNAMODB.md`](web/docs/INTAKE_DYNAMODB.md)
   for the DynamoDB table schema, IAM policy, and Vercel environment
   variables.
+- **Intake rate limiting**: see [`web/docs/RATE_LIMIT.md`](web/docs/RATE_LIMIT.md)
+  for the second DynamoDB table (per-IP fixed window, TTL-evicted) and
+  the extra IAM statement.
 - **Organization directory**: see [`shared/ORGS.md`](shared/ORGS.md) for
   the JSON schema, how to point `ORGS_SOURCE_URL` at your own org list,
   and notes on sourcing real data.

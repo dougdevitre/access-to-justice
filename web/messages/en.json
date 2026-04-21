@@ -79,6 +79,7 @@
     "submit": "Submit intake",
     "submitting": "Submitting…",
     "formError": "We couldn't save your request. Please try again.",
+    "rateLimitError": "Too many requests. Please wait {minutes, plural, one {# minute} other {# minutes}} and try again.",
     "privacyAck": "By submitting, you agree to our <privacy>Privacy Policy</privacy> and <terms>Terms of Service</terms>. Do not include information you do not want shared with a legal aid partner.",
     "issues": {
       "housing": "Housing / Eviction",

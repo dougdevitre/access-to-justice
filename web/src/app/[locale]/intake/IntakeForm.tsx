@@ -24,7 +24,7 @@ export function IntakeForm() {
           role="alert"
           className="rounded-xl border border-red-200 bg-red-50 text-red-800 text-sm px-3 py-2"
         >
-          {t("formError")}
+          {errors.form}
         </p>
       ) : null}
 
