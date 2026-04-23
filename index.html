@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Access to Justice — Civic transparency infrastructure for Missouri family courts</title>
+<meta name="description" content="A proposed framework for publishing rigorous, governance-protected metrics about family court performance, outcomes, and system-induced harm.">
+<style>
+  :root {
+    --paper: #f5efe5;
+    --paper-deep: #ebe4d6;
+    --ink: #0d1220;
+    --ink-soft: #1f2744;
+    --muted: #555046;
+    --accent: #b8371f;
+    --amber-bg: #f6ecd4;
+    --amber-border: #c9a24a;
+    --max-width: 960px;
+    --focus: #0066cc;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-size: 17px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  *:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+  a { color: var(--accent); text-decoration: underline; text-underline-offset: 2px; }
+  a:hover { text-decoration-thickness: 2px; }
+  .wrap { max-width: var(--max-width); margin: 0 auto; padding: 48px 24px 64px; }
+  header.site { border-bottom: 2px solid var(--ink); padding-bottom: 28px; margin-bottom: 32px; }
+  .eyebrow { font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
+  h1 { font-size: clamp(28px, 4vw, 40px); line-height: 1.15; margin-bottom: 12px; color: var(--ink); }
+  .tagline { font-size: clamp(17px, 2vw, 20px); color: var(--ink-soft); max-width: 52ch; }
+  .status {
+    background: var(--amber-bg);
+    border-left: 4px solid var(--amber-border);
+    padding: 16px 20px;
+    margin-bottom: 40px;
+    font-size: 15px;
+    border-radius: 2px;
+  }
+  .status strong { color: var(--ink); }
+  .status p + p { margin-top: 8px; }
+  h2 { font-size: 22px; margin-bottom: 16px; color: var(--ink); }
+  .intro { margin-bottom: 40px; color: var(--ink-soft); max-width: 60ch; }
+  .intro p + p { margin-top: 12px; }
+  .projects { display: grid; gap: 20px; grid-template-columns: 1fr; margin-bottom: 48px; }
+  @media (min-width: 720px) { .projects { grid-template-columns: 1fr 1fr; } }
+  .card {
+    background: var(--paper-deep);
+    border: 1px solid rgba(13, 18, 32, 0.12);
+    border-radius: 4px;
+    padding: 20px 22px;
+    display: flex;
+    flex-direction: column;
+  }
+  .card h3 { font-size: 18px; margin-bottom: 4px; color: var(--ink); }
+  .card .sub { font-size: 13px; color: var(--muted); margin-bottom: 10px; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+  .card p { font-size: 15px; color: var(--ink-soft); margin-bottom: 12px; flex-grow: 1; }
+  .card .draft-note { font-size: 13px; color: var(--accent); margin-bottom: 12px; font-weight: 600; }
+  .card ul { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: 8px 16px; }
+  .card li { font-size: 14px; }
+  footer.site {
+    border-top: 1px solid rgba(13, 18, 32, 0.15);
+    padding-top: 24px;
+    font-size: 14px;
+    color: var(--muted);
+  }
+  footer.site p + p { margin-top: 8px; }
+  .skip-link {
+    position: absolute; top: -40px; left: 0;
+    background: var(--ink); color: var(--paper);
+    padding: 10px 16px; text-decoration: none; font-weight: 700; z-index: 999;
+  }
+  .skip-link:focus { top: 0; }
+</style>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to main content</a>
+<div class="wrap">
+
+<header class="site">
+  <div class="eyebrow">Access to Justice</div>
+  <h1>Civic transparency infrastructure for Missouri family courts</h1>
+  <p class="tagline">A proposed framework for publishing rigorous, governance-protected metrics about family court performance, outcomes, and system-induced harm — designed for defensibility, survivor safety, and judicial independence.</p>
+</header>
+
+<section class="status" aria-label="Project status">
+  <p><strong>Phase:</strong> Pre-pilot — proposal and outreach. &nbsp; <strong>Version:</strong> v0.3 (2026). &nbsp; <strong>Maintainer:</strong> <a href="https://github.com/dougdevitre">Doug Devitre</a>, founder of <a href="https://cotrackpro.com">CoTrackPro</a>, St. Louis, Missouri.</p>
+  <p><strong>Read before use.</strong> This repository contains two kinds of material: <em>reviewed framework documents</em> (the main 22-document OSCA binder) ready for stakeholder distribution, and <em>draft-for-expert-review documents</em> (the 8-document coercive-control mini-binder) that require review by survivor-advocacy partners, coercive-control clinicians, and a survivor-led review panel before operational adoption. The distinction matters — please respect it when sharing.</p>
+</section>
+
+<main id="main">
+
+<section class="intro">
+  <h2>About this repository</h2>
+  <p>This site publishes four companion collections that together form a complete civic-transparency framework for Missouri family courts: a core metric catalog of 72 metrics across 14 stakeholder roles, a 22-document outreach binder for the Office of State Courts Administrator, a roadmap-and-specifications kit for adoption, and a draft expansion covering coercive control.</p>
+  <p>The flagship interactive artifact is the metric catalog viewer, linked below. The remaining three collections are currently distributed as Word documents; links open the folder view on GitHub where each document can be previewed or downloaded.</p>
+</section>
+
+<section aria-labelledby="projects-heading">
+  <h2 id="projects-heading">Projects</h2>
+  <div class="projects">
+
+    <article class="card">
+      <h3>Family Court Metric Catalog</h3>
+      <div class="sub">family-court-metric-catalog/</div>
+      <p>The core framework: 72 metrics across 14 stakeholder roles, organized into a four-tier disclosure architecture. Includes governance documents, proposed statutory language, operational specifications, pilot budget, and adoption roadmap.</p>
+      <ul>
+        <li><a href="family-court-metric-catalog/platform/web/metric-catalog.html">Interactive catalog viewer →</a></li>
+        <li><a href="https://github.com/dougdevitre/access-to-justice/tree/main/family-court-metric-catalog">Source on GitHub</a></li>
+      </ul>
+    </article>
+
+    <article class="card">
+      <h3>OSCA Outreach Binder</h3>
+      <div class="sub">osca-outreach-binder/</div>
+      <p>A 22-document binder for the Missouri Office of State Courts Administrator: framework overview, proposed RSMo statute, pilot county selection memo, data-sharing MOU, methodology and ethics charters, budget, risk register, privacy pipeline, and stakeholder materials.</p>
+      <ul>
+        <li><a href="https://github.com/dougdevitre/access-to-justice/tree/main/osca-outreach-binder">Browse documents on GitHub →</a></li>
+      </ul>
+    </article>
+
+    <article class="card">
+      <h3>Adoption Roadmap Kit</h3>
+      <div class="sub">adoption-roadmap-kit/</div>
+      <p>Roadmap, judicial bench card, and three technical specifications: the case-planning calculator, the judicial dashboard UX, and the attorney CLE module. Designed for the organizations that will implement the framework downstream of OSCA.</p>
+      <ul>
+        <li><a href="https://github.com/dougdevitre/access-to-justice/tree/main/adoption-roadmap-kit">Browse documents on GitHub →</a></li>
+      </ul>
+    </article>
+
+    <article class="card">
+      <h3>Coercive-Control Mini-Binder</h3>
+      <div class="sub">coercive-control-mini-binder/</div>
+      <p class="draft-note">Draft for expert review — not for operational adoption.</p>
+      <p>An 8-document expansion addressing the phenomenon most family-court data systems fail to handle safely: the asymmetry principle, literature and instruments, screening protocol, metric additions, platform design, stakeholder training, and the expert-review convening plan.</p>
+      <ul>
+        <li><a href="https://github.com/dougdevitre/access-to-justice/tree/main/coercive-control-mini-binder">Browse documents on GitHub →</a></li>
+      </ul>
+    </article>
+
+  </div>
+</section>
+
+</main>
+
+<footer class="site">
+  <p>Documentation licensed <a href="https://creativecommons.org/licenses/by/4.0/">CC-BY-4.0</a>. Code licensed <a href="https://opensource.org/licenses/MIT">MIT</a>.</p>
+  <p>Repository: <a href="https://github.com/dougdevitre/access-to-justice">github.com/dougdevitre/access-to-justice</a> &nbsp;·&nbsp; Maintainer: <a href="https://github.com/dougdevitre">@dougdevitre</a></p>
+</footer>
+
+</div>
+</body>
+</html>
