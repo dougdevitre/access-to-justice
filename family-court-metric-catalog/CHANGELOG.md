@@ -35,6 +35,16 @@ All notable changes to this repository are documented here. Format follows [Keep
   in a headless browser: zero external font requests, local fonts load, no
   console errors.
 
+- Fixed a WCAG AA contrast failure in the catalog viewer. The `--amber`
+  token (`#8f6a1e`) was used for small bold labels (`.status-tag`,
+  `.tier-label`, `.priority`) on the paper background at only 4.32:1 — below
+  the 4.5:1 AA threshold for normal text, despite a code comment claiming "AA
+  on paper." Darkened to `#7e5c17` (5.35:1 on paper, 4.84:1 on paper-deep).
+  Measured every text color token against every background; all other pairings
+  already passed (the `--accent` and `--focus` shortfalls are only on
+  `--paper-deeper`, which is never used as a background, and on focus outlines,
+  which are UI elements held to the 3:1 graphical threshold).
+
 ### Added
 - Top-level `README.md` and `LICENSE` for the `access-to-justice` repository root, describing all four collections and restating the dual (MIT + CC-BY-4.0) license.
 
