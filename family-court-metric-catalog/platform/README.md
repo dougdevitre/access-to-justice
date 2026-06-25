@@ -21,7 +21,7 @@ Contains [metric-catalog.html](./web/metric-catalog.html) — the interactive 5-
 
 ### `calculator/` and `dashboard/`
 
-Empty. These directories are placeholders for the implementations of the corresponding specs in `../specs/`. See those specs for the intended behavior.
+Planned, not yet created. These directories will hold the reference implementations of the corresponding specs in `../specs/` (the Case Planning Calculator and the Private Judicial Dashboard). See those specs for the intended behavior, and the [CHANGELOG](../CHANGELOG.md) "Unreleased → Planned" section for status.
 
 ## Principles that govern platform code
 

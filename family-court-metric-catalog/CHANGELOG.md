@@ -20,6 +20,8 @@ All notable changes to this repository are documented here. Format follows [Keep
 - Web catalog masthead ticker now reads "72 METRICS" to match the actual catalog count (was "78 METRICS"). The underlying data was always 72 metrics; this corrects the display label only.
 - Visibility-layer counts in the Framework Overview corrected to match the canonical dataset (`_data.js` / `data/metrics.json`): **14 visible, 23 hidden, 35 missing** (was the stale "24 visible / 23 hidden / 25 missing"). The build script now derives these counts directly from the metric data so the prose can no longer drift from the source. The generated `docs/01-framework/01-framework-overview.docx` reflects the correction on the next `make build-main`.
 - Repository metadata corrected after the catalog moved into the `access-to-justice` monorepo: `package.json` `homepage`/`repository`/`bugs` URLs, and the `[org]` attribution placeholders in `LICENSE` and `docs/README.md`, now point to `dougdevitre/access-to-justice`.
+- `make metrics-json` is now idempotent: the generator emits the `_notes` block (including the "generated — do not edit directly" warning) that was previously hand-added to `data/metrics.json`, so regenerating no longer silently drops it. Verified the regenerated file is byte-identical to the committed one (modulo the `generated` timestamp).
+- `platform/README.md` no longer describes `calculator/` and `dashboard/` as existing empty directories; they are now correctly noted as planned and not yet created.
 
 ### Added
 - Top-level `README.md` and `LICENSE` for the `access-to-justice` repository root, describing all four collections and restating the dual (MIT + CC-BY-4.0) license.

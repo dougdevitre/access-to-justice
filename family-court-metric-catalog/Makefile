@@ -89,7 +89,12 @@ metrics-json:
 			total_metrics: metrics.length, \
 			roles: d.ROLES, \
 			tier_labels: d.TIER_LABEL, \
-			metrics \
+			metrics, \
+			_notes: [ \
+				'This file is generated from scripts/build/_data.js. Do not edit directly.', \
+				'Methodology changes require the Adoption Workflow (docs/02-governance/09-metric-adoption-workflow.docx).', \
+				'Coercive-control metrics from the mini-binder (docs/07-coercive-control/cc-04-metric-additions.docx) are NOT included in this export until the Expert Review Convening validates them.' \
+			] \
 		}, null, 2)); \
 		console.log('Wrote', metrics.length, 'metrics');"
 
