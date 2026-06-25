@@ -1,6 +1,6 @@
 // Two companion specs: Judicial Dashboard UX and Attorney CLE module outline.
 
-const S = require('/home/claude/binder/build/_styles');
+const S = require('./_styles');
 const { Paragraph, TextRun, Table, TableRow, WidthType } = S;
 
 function simpleTable(headerCells, dataRows, widths) {

@@ -2,7 +2,7 @@
 // Formalizes the 15-initiative adoption plan into a sequenced 36-month timeline
 // paralleling the technical rollout in Doc 11.
 
-const S = require('/home/claude/binder/build/_styles');
+const S = require('./_styles');
 const { Paragraph, TextRun, Table, TableRow, AlignmentType, WidthType } = S;
 
 function simpleTable(headerCells, dataRows, widths) {

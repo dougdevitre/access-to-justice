@@ -25,7 +25,7 @@
     "osca"
   ],
   "scripts": {
-    "install-deps": "cd scripts/build && npm install && pip install openpyxl --break-system-packages",
+    "install-deps": "npm install && pip install openpyxl --break-system-packages",
     "build": "make build",
     "build:main": "make build-main",
     "build:cc": "make build-cc",
@@ -37,5 +37,8 @@
   },
   "engines": {
     "node": ">=20"
+  },
+  "dependencies": {
+    "docx": "^9.7.1"
   }
 }

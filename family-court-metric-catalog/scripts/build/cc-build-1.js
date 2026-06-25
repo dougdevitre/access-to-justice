@@ -1,12 +1,13 @@
 // CC mini-binder Part 1: CC-01 (Asymmetry Principle) and CC-02 (Literature Review + Instruments)
 
-const S = require('/home/claude/binder/build/_styles');
+const S = require('./_styles');
 const fsX = require('fs');
 const pathX = require('path');
 const { Paragraph, TextRun, Table, TableRow, AlignmentType, HeadingLevel, WidthType, ShadingType, BorderStyle } = S;
 
 // Override writeDoc to write to the CC mini-binder output directory
-const CC_OUT = '/home/claude/coercive/out';
+const CC_OUT = pathX.join(__dirname, 'out');
+fsX.mkdirSync(CC_OUT, { recursive: true });
 S.writeDoc = async function (doc, filename) {
   const buffer = await S.Packer.toBuffer(doc);
   const outPath = pathX.join(CC_OUT, filename);

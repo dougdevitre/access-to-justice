@@ -85,12 +85,20 @@ Every document in the coercive-control mini-binder is labeled draft-for-expert-r
 
 ## Build and reproduce
 
-All Word documents are generated from source scripts in [`scripts/build/`](./scripts/build/).
+All Word documents are generated from source scripts in [`scripts/build/`](./scripts/build/). The fastest path, from this directory:
 
 ```bash
-# Prerequisites
-cd scripts/build
-npm install docx      # docx-js for document generation
+make install   # npm install (docx) + pip install openpyxl
+make build     # builds every document into scripts/build/out/
+```
+
+`make build` runs all of the steps below; the generated files land in the
+git-ignored `scripts/build/out/`, from which the committed copies under
+`docs/` and `specs/` are curated. To run the steps individually:
+
+```bash
+# Prerequisites (run from this directory)
+npm install           # docx-js for document generation
 pip install openpyxl  # for the budget workbook
 
 # Build the main OSCA binder (22 documents)

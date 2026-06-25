@@ -1,11 +1,12 @@
 // CC-04 — New Metric Additions for Coercive Control and Manufactured Conflict
 
-const S = require('/home/claude/binder/build/_styles');
+const S = require('./_styles');
 const fsX = require('fs');
 const pathX = require('path');
 const { Paragraph, TextRun, Table, TableRow, AlignmentType, HeadingLevel, WidthType, ShadingType, BorderStyle } = S;
 
-const CC_OUT = '/home/claude/coercive/out';
+const CC_OUT = pathX.join(__dirname, 'out');
+fsX.mkdirSync(CC_OUT, { recursive: true });
 S.writeDoc = async function (doc, filename) {
   const buffer = await S.Packer.toBuffer(doc);
   fsX.writeFileSync(pathX.join(CC_OUT, filename), buffer);

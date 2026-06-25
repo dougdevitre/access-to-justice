@@ -2,7 +2,7 @@
 // Rendered to .docx via the same style system for binder-pattern consistency,
 // but written as a standalone engineering spec per Doug's userPreferences.
 
-const S = require('/home/claude/binder/build/_styles');
+const S = require('./_styles');
 const { Paragraph, TextRun, Table, TableRow, WidthType } = S;
 
 function simpleTable(headerCells, dataRows, widths) {

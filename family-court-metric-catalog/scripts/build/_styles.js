@@ -341,7 +341,9 @@ function buildDoc({ docNumber, shortTitle, titleBlock, sections }) {
 // ----- Write helper -----
 async function writeDoc(doc, filename) {
   const buffer = await Packer.toBuffer(doc);
-  const outPath = path.join(__dirname, '..', 'out', filename);
+  const outDir = path.join(__dirname, 'out');
+  fs.mkdirSync(outDir, { recursive: true });
+  const outPath = path.join(outDir, filename);
   fs.writeFileSync(outPath, buffer);
   console.log(`✓ ${filename}`);
 }

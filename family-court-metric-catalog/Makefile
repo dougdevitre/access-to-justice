@@ -22,7 +22,7 @@ help:
 
 install:
 	@echo "Installing Node dependencies..."
-	@cd $(BUILD_DIR) && npm install docx@^9.6.1
+	@npm install
 	@echo "Installing Python dependencies..."
 	@pip install openpyxl --break-system-packages 2>/dev/null || pip install openpyxl
 
@@ -41,7 +41,7 @@ build-main:
 
 build-cc:
 	@echo "Building coercive-control mini-binder (8 documents)..."
-	@mkdir -p /home/claude/coercive/out 2>/dev/null || true
+	@mkdir -p $(OUT_DIR)
 	@cd $(BUILD_DIR) && node cc-build-1.js
 	@cd $(BUILD_DIR) && node cc-build-2.js
 	@cd $(BUILD_DIR) && node cc-build-3.js

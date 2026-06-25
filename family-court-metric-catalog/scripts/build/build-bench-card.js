@@ -2,7 +2,7 @@
 // to be printed and laminated. Designed to fit on a single landscape sheet when
 // duplexed, but built here as two pages.
 
-const S = require('/home/claude/binder/build/_styles');
+const S = require('./_styles');
 const {
   Document, Paragraph, TextRun, Table, TableRow, TableCell,
   AlignmentType, HeadingLevel, BorderStyle, WidthType, ShadingType, PageBreak,
@@ -237,7 +237,9 @@ async function build() {
   });
 
   const buffer = await Packer.toBuffer(doc);
-  fs.writeFileSync('/home/claude/binder/out/bench-card.docx', buffer);
+  const outDir = require('path').join(__dirname, 'out');
+  fs.mkdirSync(outDir, { recursive: true });
+  fs.writeFileSync(require('path').join(outDir, 'bench-card.docx'), buffer);
   console.log('✓ bench-card.docx');
 }
 

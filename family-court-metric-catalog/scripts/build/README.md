@@ -5,9 +5,9 @@ Source scripts for generating all documents in the repository. Every .docx, .xls
 ## Prerequisites
 
 ```bash
-# Node (for docx generation)
+# Node (for docx generation) — run from the family-court-metric-catalog/ root
 node --version   # 20.x or later
-npm install docx@^9.6.1
+npm install      # installs docx (declared in ../../package.json)
 
 # Python (for xlsx generation)
 python3 --version   # 3.11 or later
@@ -52,12 +52,9 @@ node cc-build-5.js  # CC-00 index
 
 ## Output directories
 
-Build scripts write to directories **outside** this repo. The generated documents are then copied into `docs/` and `specs/` by the release process.
+All build scripts write to `scripts/build/out/` (created automatically). The generated documents are then copied into `docs/` and `specs/` by the release process.
 
-- Main binder → `/home/claude/binder/out/` (in the dev environment)
-- Coercive control → `/home/claude/coercive/out/`
-
-This separation is deliberate: build artifacts can be regenerated cheaply and should not clutter version control except at release time.
+This `out/` directory is git-ignored: build artifacts can be regenerated cheaply with `make build` and should not clutter version control. Only the curated copies under `docs/` and `specs/` are committed.
 
 ## Shared modules
 
