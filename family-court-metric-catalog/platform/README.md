@@ -19,8 +19,6 @@ Contains [metric-catalog.html](./web/metric-catalog.html) — the interactive 5-
 
 **Status:** Functional prototype. Can be opened in any browser.
 
-**Known issue:** The masthead states "78 metrics" but the actual count is 72. Fix scheduled for v0.3.1 (see [CHANGELOG.md](../CHANGELOG.md)).
-
 ### `calculator/` and `dashboard/`
 
 Empty. These directories are placeholders for the implementations of the corresponding specs in `../specs/`. See those specs for the intended behavior.

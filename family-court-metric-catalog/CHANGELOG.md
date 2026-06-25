@@ -14,6 +14,13 @@ All notable changes to this repository are documented here. Format follows [Keep
 
 ---
 
+## [0.3.1] — 2026-06 — Corrections
+
+### Fixed
+- Web catalog masthead ticker now reads "72 METRICS" to match the actual catalog count (was "78 METRICS"). The underlying data was always 72 metrics; this corrects the display label only.
+
+---
+
 ## [0.3.0] — 2026-04 — Initial public release
 
 ### Added
@@ -35,7 +42,6 @@ All notable changes to this repository are documented here. Format follows [Keep
 - Build scripts for reproducible document generation from TypeScript/Node and Python sources.
 
 ### Known issues
-- The web catalog's masthead states "78 metrics"; the actual count is 72. Fix scheduled for v0.3.1.
 - Screening Protocol (CC-03) scoring thresholds are placeholders pending validation research.
 - Methodology Board and Data Ethics Review are not yet convened; governance is described but not operational.
 
