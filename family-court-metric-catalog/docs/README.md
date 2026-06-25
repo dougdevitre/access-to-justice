@@ -35,4 +35,4 @@ Every .docx in this directory is generated from source code in [../scripts/build
 
 When quoting or excerpting any document in this directory, please include the full attribution:
 
-> *Family Court Metric Catalog, v0.3 (2026), Document XX. https://github.com/[org]/family-court-metric-catalog*
+> *Family Court Metric Catalog, v0.3 (2026), Document XX. https://github.com/dougdevitre/access-to-justice*

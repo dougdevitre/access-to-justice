@@ -92,6 +92,12 @@ async function doc00() {
 // DOC 01 — Framework Overview
 // ============================================================
 async function doc01() {
+  // Visibility-layer counts derived from the canonical dataset so the prose
+  // can never drift from the data (see _data.js).
+  const allMetrics = Object.values(METRICS);
+  const visibleCount = allMetrics.filter(m => m.status === 'visible').length;
+  const hiddenCount = allMetrics.filter(m => m.status === 'hidden').length;
+  const missingCount = allMetrics.filter(m => m.status === 'missing').length;
   const content = [
     ...S.titlePage({
       docNumber: '01',
@@ -110,11 +116,11 @@ async function doc01() {
 
     S.eyebrow('§ 02'),
     S.h1('The Three Visibility Layers'),
-    S.h2('Visible (24 metrics)'),
+    S.h2(`Visible (${visibleCount} metrics)`),
     S.body('Publishable today. Aggregate, de-identified, low re-identification risk. Examples: case filings by type, clearance rate, median time-to-disposition, mediation referral counts. Most are already partially reported by Missouri OSCA.'),
-    S.h2('Hidden (23 metrics)'),
+    S.h2(`Hidden (${hiddenCount} metrics)`),
     S.body('Data exists but is fragmented, restricted, or institutionally withheld. Defensible to expose with proper governance. Examples: motion grant rates by type, GAL recommendation alignment, protective order grant rates, appeal reversal rates. These require standardization and a governance framework to publish.'),
-    S.h2('Missing (25 metrics)'),
+    S.h2(`Missing (${missingCount} metrics)`),
     S.body('Not tracked by any system. Requires new infrastructure, usually user-generated, to measure. Examples: parenting time compliance rate, child contact gap, conflict intensity trajectory, repair attempt rate. This is where user-generated data platforms like CoTrackPro become the only viable source.'),
 
     S.eyebrow('§ 03'),

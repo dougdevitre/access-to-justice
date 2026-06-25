@@ -41,7 +41,7 @@ This repository contains the complete framework: the governance documents, the p
 
 ## The framework in one paragraph
 
-Family courts make decisions that shape children's lives. They do so in a system whose performance is largely invisible even to the people operating it. The Family Court Metric Catalog organizes 72 metrics into three visibility layers (24 visible today, 23 hidden but data exists, 25 missing entirely) and four disclosure tiers (A: Public, B: Oversight/DUA, C: User-Owned, D: Never Disclosed). Publication is governed by an 11-seat Methodology Board with stakeholder-balanced seats and a separate 5-member Data Ethics Review. Missouri is proposed as the pilot jurisdiction — three counties (St. Louis, Greene, Boone), 36 months, $1.45M total budget, no new statutory authority required in Phase 1.
+Family courts make decisions that shape children's lives. They do so in a system whose performance is largely invisible even to the people operating it. The Family Court Metric Catalog organizes 72 metrics into three visibility layers (14 visible today, 23 hidden but data exists, 35 missing entirely) and four disclosure tiers (A: Public, B: Oversight/DUA, C: User-Owned, D: Never Disclosed). Publication is governed by an 11-seat Methodology Board with stakeholder-balanced seats and a separate 5-member Data Ethics Review. Missouri is proposed as the pilot jurisdiction — three counties (St. Louis, Greene, Boone), 36 months, $1.45M total budget, no new statutory authority required in Phase 1.
 
 ---
 
