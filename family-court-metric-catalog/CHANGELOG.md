@@ -25,6 +25,16 @@ All notable changes to this repository are documented here. Format follows [Keep
 - **Build is now reproducible on a fresh clone.** Previously the document build only ran in the original author's environment: seven scripts imported `_styles` via an absolute `/home/claude/binder/build/` path (`MODULE_NOT_FOUND` elsewhere), and output directories were inconsistent (`scripts/out` in `_styles.js` vs `scripts/build/out` in the Makefile vs hardcoded `/home/claude/...` paths in the coercive-control and bench-card scripts). All imports are now relative (`./_styles`) and every script writes to `scripts/build/out/` (created automatically). Verified by building all 34 documents end-to-end on a clean checkout. The regenerated `01-framework-overview.docx` (with the corrected 14/35 counts) is committed; its only text difference from the previous artifact is the two corrected numbers.
 - `docx` is now a declared dependency in `package.json` (with a committed `package-lock.json`); `make install` / `npm install` from the catalog root pulls it in. Added a repository `.gitignore` for `node_modules/` and the generated `out/` directory.
 
+- Catalog viewer no longer depends on Google Fonts. The Atkinson Hyperlegible
+  and Atkinson Hyperlegible Mono accessibility typefaces are now self-hosted
+  (`platform/web/fonts/`, SIL OFL 1.1) with inline `@font-face` rules. This
+  keeps the chosen low-vision font working **offline and behind firewalls**
+  (e.g. court networks), where the page previously fell back to system fonts,
+  and removes a third-party request that leaked visitor IP/referrer to Google —
+  inconsistent with the framework's privacy-by-architecture principle. Verified
+  in a headless browser: zero external font requests, local fonts load, no
+  console errors.
+
 ### Added
 - Top-level `README.md` and `LICENSE` for the `access-to-justice` repository root, describing all four collections and restating the dual (MIT + CC-BY-4.0) license.
 
