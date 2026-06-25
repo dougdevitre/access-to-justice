@@ -1,0 +1,43 @@
+# Deploy sites/justice (the access-to-justice submodule) to GitHub Pages
+# as justice.mattgrantforcongress.org.
+#
+# Copy to .github/workflows/deploy-justice.yml in the matt-grant-for-congress
+# repo. Requires: Settings → Pages → Source = GitHub Actions, and a CNAME file
+# at sites/justice/CNAME containing justice.mattgrantforcongress.org.
+#
+# NOTE: GitHub Pages serves one custom domain per repo. Use this only if the
+# subdomain is the repo's Pages site; otherwise give the subdomain its own repo.
+
+name: Deploy justice subdomain
+
+on:
+  push:
+    branches: [main]
+    paths: ['sites/justice/**', '.github/workflows/deploy-justice.yml']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages-justice
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: true          # fetch the access-to-justice submodule
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: sites/justice       # publish the site directory as-is (static)
+      - id: deployment
+        uses: actions/deploy-pages@v4
