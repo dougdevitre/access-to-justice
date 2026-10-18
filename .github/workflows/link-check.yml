@@ -88,9 +88,11 @@ jobs:
           echo "Broken links found. Fix each one with a confirmed replacement, or exclude the exact URL in .lycheeignore with a comment. Never delete legal, court or statute content."
           echo
           cat lychee/report.md
-          grep -E '^\* \[' lychee/report.md | while IFS= read -r line; do
-            echo "::error title=Broken link::${line}"
-          done || true
+          # One annotation with every broken link (GitHub shows at most 10
+          # annotations per step, so one per link would hide the rest).
+          count="$(grep -cE '^\* \[' lychee/report.md || true)"
+          list="$(grep -E '^\* \[' lychee/report.md | sed 's/%/%25/g' | awk '{printf "%s%%0A", $0}' || true)"
+          [ "$count" = "0" ] || echo "::error title=${count} broken links::${list}"
           exit 1
 
       - name: Open or update the "Broken links (monthly check)" issue
