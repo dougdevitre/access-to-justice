@@ -4,8 +4,8 @@ All notable changes to this repository are documented here. Format follows [Keep
 
 ## [Unreleased]
 
-### Changed
-- Web catalog now says plainly where endorsements go: they are saved only in the visitor's browser, are not sent anywhere, and can be exported as JSON to share with the Methodology Board. It previously said they were "aggregated and presented to the Methodology Board and state partners", which the page does not do. Guarded by `tests/endorsements.test.mjs`.
+### Removed
+- Web catalog no longer has endorsements: the Endorse button and the count on every metric card, the "Endorse Adoption" panel (its totals, JSON export, share link and reset), the related messages, and the browser storage behind them. The counts on the cards were generated from each metric's ID, not counted from anyone's endorsements. Metric cards keep their Methodology button. Guarded by `tests/endorsements.test.mjs`, which fails if any of it returns.
 
 ### Added
 - Web catalog shows a persistent disclaimer bar (educational only; 911 and 988 as tap-to-call links; link to the full disclaimer) and a one-time acknowledgment dialog before first use. Shared with the landing page via `assets/disclaimer.css` and `assets/disclaimer.js` at the repository root, and guarded by `tests/disclaimer.test.mjs`. Wording is interim pending attorney review.

@@ -10,7 +10,7 @@ permissions:
 
 jobs:
   endorsements:
-    name: Catalog is honest about where endorsements are saved
+    name: Catalog has no endorsement buttons, counts or storage
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
