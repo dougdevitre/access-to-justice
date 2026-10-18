@@ -9,6 +9,16 @@ permissions:
   contents: read
 
 jobs:
+  endorsements:
+    name: Catalog is honest about where endorsements are saved
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: node --test tests/endorsements.test.mjs
+
   notice:
     name: Every published page shows the disclaimer
     runs-on: ubuntu-latest
