@@ -1,0 +1,120 @@
+name: Link check
+
+# Checks every link people follow from this repository (the README, the
+# collection guides, the published pages, the metric data and any hyperlink
+# inside the .docx binders) with lychee, so a moved court page, statute or
+# legal-aid site is caught instead of being handed to a judge, a lawyer or a
+# parent who needs it.
+#   - pull requests that touch content: fail, listing each broken link
+#   - monthly schedule and manual runs: open or update ONE issue,
+#     "Broken links (monthly check)", instead of failing silently
+# Exclusions live in .lycheeignore, each with a comment saying why. Never
+# delete legal, court or statute content to get this green: exclude the exact
+# URL there with a comment and ask a human to find the replacement.
+on:
+  pull_request:
+    paths:
+      - "**/*.md"
+      - "**/*.html"
+      - "**/*.docx"
+      - "family-court-metric-catalog/data/**"
+      - ".lycheeignore"
+      - ".github/workflows/link-check.yml"
+  schedule:
+    - cron: "37 14 3 * *" # 14:37 UTC on the 3rd of each month
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: link-check-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  lychee:
+    name: Check links
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      issues: write
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
+
+      - name: Collect the content people see
+        id: collect
+        run: |
+          mkdir -p lychee
+          # Markdown, published HTML and the catalog data. Tests, build scripts,
+          # package metadata and changelogs are not content people read.
+          git ls-files '*.md' '*.html' 'family-court-metric-catalog/data/*.json' \
+            | grep -vE '(^|/)CHANGELOG\.md$|^tests/' > lychee/files.txt
+          # The binders are .docx, which lychee cannot read: pull out their
+          # hyperlinks and any typed-out http(s) URL into a text file it can.
+          git ls-files -z '*.docx' | while IFS= read -r -d '' f; do
+            { unzip -p "$f" 'word/_rels/*.rels' 2>/dev/null \
+                | grep -oE 'Target="https?://[^"]+"' | sed -E 's/^Target="//; s/"$//' || true; }
+            { unzip -p "$f" 'word/document.xml' 2>/dev/null \
+                | sed 's/<[^>]*>//g' | grep -oE 'https?://[^ <"]+' || true; }
+          done | sed 's/&amp;/\&/g' | sort -u > lychee/docx-links.txt
+          echo "lychee/docx-links.txt" >> lychee/files.txt
+          echo "Files: $(wc -l < lychee/files.txt), links pulled from .docx: $(wc -l < lychee/docx-links.txt)"
+          echo "files=$(tr '\n' ' ' < lychee/files.txt)" >> "$GITHUB_OUTPUT"
+
+      - name: Run lychee
+        id: lychee
+        uses: lycheeverse/lychee-action@e7477775783ea5526144ba13e8db5eec57747ce8 # v2.9.0
+        with:
+          # 403 and 429 are accepted: they are bot-blocking and rate limiting
+          # (common on court and .gov sites), not dead links. 404, 410,
+          # DNS/connection errors and repeated 5xx still fail.
+          args: >-
+            --no-progress
+            --max-concurrency 8
+            --max-retries 3
+            --timeout 20
+            --accept 200..=299,403,429
+            --exclude '^tel:'
+            --exclude '^mailto:'
+            --root-dir ${{ github.workspace }}
+            ${{ steps.collect.outputs.files }}
+          output: lychee/report.md
+          fail: false
+          jobSummary: true
+
+      - name: Fail the pull request on broken links
+        if: github.event_name == 'pull_request' && steps.lychee.outputs.exit_code != '0'
+        run: |
+          echo "Broken links found. Fix each one with a confirmed replacement, or exclude the exact URL in .lycheeignore with a comment. Never delete legal, court or statute content."
+          echo
+          cat lychee/report.md
+          # One annotation with every broken link (GitHub shows at most 10
+          # annotations per step, so one per link would hide the rest).
+          count="$(grep -cE '^\* \[' lychee/report.md || true)"
+          list="$(grep -E '^\* \[' lychee/report.md | sed 's/%/%25/g' | awk '{printf "%s%%0A", $0}' || true)"
+          [ "$count" = "0" ] || echo "::error title=${count} broken links::${list}"
+          exit 1
+
+      - name: Open or update the "Broken links (monthly check)" issue
+        if: github.event_name != 'pull_request' && steps.lychee.outputs.exit_code != '0'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          title="Broken links (monthly check)"
+          {
+            echo "The link check found broken links on $(date -u +%Y-%m-%d) ([run]($RUN_URL))."
+            echo
+            echo "Fix each link with a replacement you have confirmed loads the intended page. If none can be confirmed, exclude the exact URL in \`.lycheeignore\` with the comment \`BROKEN — needs a human\`. Never delete legal, court or statute content to make this pass."
+            echo
+            cat lychee/report.md
+          } > lychee/issue.md
+          number="$(gh issue list --state open --search "\"$title\" in:title" --json number,title \
+            --jq "map(select(.title == \"$title\")) | .[0].number // empty")"
+          if [ -n "$number" ]; then
+            gh issue edit "$number" --body-file lychee/issue.md
+            gh issue comment "$number" --body "Updated by the link check on $(date -u +%Y-%m-%d): $RUN_URL"
+          else
+            gh issue create --title "$title" --body-file lychee/issue.md
+          fi

@@ -146,7 +146,7 @@ Attribution requirement for documentation: *"Family Court Metric Catalog, v0.3 (
 
 **Doug Devitre** · Founder, CoTrackPro · St. Louis, Missouri
 Email: [contact TBD]
-Issues: [GitHub Issues](../../issues)
+Issues: [GitHub Issues](https://github.com/dougdevitre/access-to-justice/issues)
 Security: see [SECURITY.md](./SECURITY.md)
 
 Named inquiry welcome from:
