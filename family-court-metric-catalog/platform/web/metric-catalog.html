@@ -1508,7 +1508,7 @@
     <!-- Adoption dashboard -->
     <div class="adoption">
       <h3>Endorse Adoption</h3>
-      <p class="lede">The methodology is published for public review. Endorse the metrics you believe should be adopted. Endorsements are aggregated and presented to the Methodology Board and state partners.</p>
+      <p class="lede">The methodology is published for public review. Endorse the metrics you believe should be adopted. Your endorsements are saved only in this browser and are not sent anywhere. To share them with the Methodology Board, export them as JSON below.</p>
 
       <div class="adoption-stats">
         <div class="adoption-stat">
@@ -2908,7 +2908,7 @@ function renderRoleDetail() {
       e.stopPropagation();
       const key = btn.dataset.key;
       if (state.endorsed.has(key)) { state.endorsed.delete(key); showToast('Endorsement withdrawn'); }
-      else { state.endorsed.add(key); showToast('Endorsement recorded'); }
+      else { state.endorsed.add(key); showToast('Endorsement saved in this browser'); }
       saveState(); renderRoleDetail(); renderAdoptionStats();
     });
   });
@@ -3127,7 +3127,7 @@ function shareLink() {
   );
 }
 function resetAll() {
-  if (!confirm('Clear all endorsements?')) return;
+  if (!confirm('Clear all endorsements saved in this browser?')) return;
   state.endorsed = new Set(); saveState();
   renderRoleDetail(); renderAdoptionStats();
   showToast('Cleared');
