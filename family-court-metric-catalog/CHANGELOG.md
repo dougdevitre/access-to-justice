@@ -13,6 +13,15 @@ All notable changes to this repository are documented here. Format follows [Keep
 ### Fixed
 - Web catalog fits phone screens (320px and up) without sideways scrolling. The State Comparison and budget tables and the Technical Spec code blocks scroll inside their own labelled, keyboard-focusable regions instead. Guarded by `tests/mobile-layout.test.mjs`.
 - The "Skip to main content" link on the catalog and the landing page is fully hidden until focused; it no longer shows a strip over the disclaimer bar.
+- On phones and tablets (900px and narrower), the catalog's section tabs stay visible when you scroll. They used to stick 44px from the top, behind the ticker strip, which stacks to about 88px at that width. The strip now scrolls away and the tabs stick to the top. Focused controls and anchor targets also stop clear of the sticky bars.
+- The disclaimer notice and the one-time dialog stay light in dark mode, matching the light-only pages, instead of showing as a dark band.
+- Touch targets: the catalog's Methodology button and the landing page's card links are now at least 44px tall.
+- Both pages fit a 375px phone at 200% zoom without sideways scrolling.
+- The catalog's heading levels no longer skip (h2 to h4 or h5). Card titles in the legend, risk register, county, statute, MOU, call-sheet and timeline sections now use the next heading level, and they look the same.
+- The closed Methodology drawer is out of the tab order. The open drawer keeps keyboard focus inside it until it is closed.
+- The amber text color is darker (#80601b): 5.1:1 on the page background, up from 4.3:1.
+- With reduced motion, the ticker text stands still and stays visible. Before, it was parked off-screen.
+- All of the above is guarded by `tests/phone-check.test.mjs`.
 
 ### Planned
 - Expert Review Convening (CC-07) scheduling and execution.
