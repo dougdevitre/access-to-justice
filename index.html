@@ -73,12 +73,13 @@
     color: var(--muted);
   }
   footer.site p + p { margin-top: 8px; }
+  /* Off-screen by its own height until focused, so no strip shows over the notice. */
   .skip-link {
-    position: absolute; top: -40px; left: 0;
+    position: absolute; top: 0; left: 0; transform: translateY(-100%);
     background: var(--ink); color: var(--paper);
     padding: 10px 16px; text-decoration: none; font-weight: 700; z-index: 999;
   }
-  .skip-link:focus { top: 0; }
+  .skip-link:focus { transform: none; }
 </style>
 <link rel="stylesheet" href="assets/disclaimer.css">
 </head>
