@@ -18,7 +18,7 @@
     --accent:       #b8371f;     /* darker red - AA on paper */
     --accent-soft:  #e0c6a8;
     --green:        #3d5a2f;     /* darker green - AA on paper */
-    --amber:        #8f6a1e;     /* darker amber - AA on paper */
+    --amber:        #80601b;     /* 5.1:1 on paper, 4.6:1 on paper-deep (was #8f6a1e, 4.3:1) */
     --blue:         #264f77;
     --dark-red:     #6b2424;
     /* Type scale */
@@ -34,7 +34,7 @@
   }
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  html { scroll-behavior: smooth; }
+  html { scroll-behavior: smooth; scroll-padding-top: 112px; }
 
   /* Respect user motion preferences */
   @media (prefers-reduced-motion: reduce) {
@@ -80,6 +80,8 @@
     background-size: 4px 4px;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
+    /* Long words and URLs wrap instead of widening the page at large text sizes. */
+    overflow-wrap: break-word;
   }
 
   /* ========== Ticker ========== */
@@ -106,6 +108,11 @@
     padding-left: 100%;
   }
   @keyframes scroll { from { transform: translateX(0); } to { transform: translateX(-100%); } }
+  /* Reduced motion: the global rule above stops the ticker, which would leave
+     its text parked off-screen behind the 100% left padding. Show it still. */
+  @media (prefers-reduced-motion: reduce) {
+    .strip .ticker span { animation: none; padding-left: 0; }
+  }
 
   /* ========== Masthead ========== */
   .masthead {
@@ -177,6 +184,14 @@
     min-height: 52px;
   }
   .view-tab:hover { color: var(--ink); }
+  /* Phones and tablets: the ticker strip stacks into three rows (~88px), and
+     the tabs stuck at 44px slid underneath it. The strip is decorative, so it
+     scrolls away here and the tabs stick to the top of the screen instead. */
+  @media (max-width: 900px) {
+    html { scroll-padding-top: 72px; }
+    .strip { position: static; }
+    .view-nav { top: 0; }
+  }
   .view-tab.active {
     color: var(--ink);
     border-bottom-color: var(--accent);
@@ -279,6 +294,8 @@
     font-size: clamp(26px, 3.2vw, 40px);
     letter-spacing: -0.01em;
     line-height: 1.15;
+    min-width: 0;          /* a long word may wrap instead of widening the page */
+    hyphens: auto;
   }
   .section-head p {
     flex: 1;
@@ -313,13 +330,13 @@
   .legend-item.v::before { background: var(--green); }
   .legend-item.h::before { background: var(--amber); }
   .legend-item.m::before { background: var(--accent); }
-  .legend-item h4 { font-weight: 700; font-size: 20px; margin-bottom: 6px; line-height: 1.2; }
+  .legend-item h3 { font-weight: 700; font-size: 20px; margin-bottom: 6px; line-height: 1.2; }
   .legend-item p { font-size: 15px; color: var(--ink); line-height: 1.55; }
 
   /* ========== Roles ========== */
   .roles {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(min(180px, 100%), 1fr));
     border: 1px solid var(--ink);
     margin-bottom: 40px;
   }
@@ -423,6 +440,8 @@
     transition: background 0.15s ease;
   }
   .metric:hover { background: var(--paper-deep); }
+  /* 320px at 200% zoom leaves ~160px: trim the card's side padding so its button fits. */
+  @media (max-width: 360px) { .metric { padding-left: 20px; padding-right: 12px; } }
   .metric .status-bar {
     position: absolute;
     top: 0; left: 0;
@@ -473,6 +492,9 @@
     line-height: 1.55;
     margin-bottom: 14px;
   }
+  /* Card actions: 44px touch targets, and they wrap at large text sizes. */
+  .metric-actions { flex-wrap: wrap; }
+  .metric-actions button { min-height: 44px; }
   .metric .mfoot {
     display: flex;
     align-items: center;
@@ -840,7 +862,7 @@
   .risk-card.sev-high::before { background: var(--accent); }
   .risk-card.sev-med::before  { background: var(--amber); }
   .risk-card.sev-low::before  { background: var(--green); }
-  .risk-card h5 { font-weight: 700; font-size: 18px; margin-bottom: 6px; line-height: 1.3; }
+  .risk-card h3 { font-weight: 700; font-size: 18px; margin-bottom: 6px; line-height: 1.3; }
   .risk-card .mit {
     font-size: 15px;
     color: var(--ink-soft);
@@ -1062,7 +1084,7 @@
   }
   .county-card.tier-2 .tier-label { color: var(--amber); }
   .county-card.tier-3 .tier-label { color: var(--green); }
-  .county-card h4 {
+  .county-card h3 {
     font-weight: 700;
     font-size: 26px;
     margin-bottom: 4px;
@@ -1128,7 +1150,7 @@
     margin-bottom: 6px;
     text-transform: uppercase;
   }
-  .statute-block h4 {
+  .statute-block h3 {
     font-weight: 700;
     font-size: 22px;
     margin-bottom: 14px;
@@ -1180,7 +1202,7 @@
     border: 2px solid var(--accent);
     transform: rotate(6deg);
   }
-  .mou-doc h4 {
+  .mou-doc h3 {
     font-weight: 700;
     font-size: 22px;
     margin-bottom: 6px;
@@ -1207,7 +1229,7 @@
     text-transform: uppercase;
     margin-bottom: 6px;
   }
-  .mou-section h5 {
+  .mou-section h4 {
     font-weight: 700;
     font-size: 18px;
     margin-bottom: 8px;
@@ -1298,7 +1320,7 @@
   }
   .call-card.priority-high .priority { color: var(--accent); }
   .call-card.priority-med .priority { color: var(--amber); }
-  .call-card h5 {
+  .call-card h3 {
     font-weight: 700;
     font-size: 19px;
     margin-bottom: 4px;
@@ -1372,7 +1394,7 @@
     text-transform: uppercase;
     margin-bottom: 6px;
   }
-  .timeline-item h5 {
+  .timeline-item h3 {
     font-weight: 700;
     font-size: 18px;
     margin-bottom: 6px;
@@ -1386,10 +1408,10 @@
 
 
   @media (max-width: 900px) {
-    .argument { grid-template-columns: 1fr; }
+    .argument { grid-template-columns: minmax(0, 1fr); }
     .argument .col { border-right: none; border-bottom: 1px solid var(--ink); }
     .argument .col:last-child { border-bottom: none; }
-    .legend { grid-template-columns: 1fr; }
+    .legend { grid-template-columns: minmax(0, 1fr); }
     .role-header { grid-template-columns: 1fr; gap: 12px; }
     .role-header .stat { text-align: left; }
     .adoption-stats { grid-template-columns: 1fr 1fr; }
@@ -1398,7 +1420,7 @@
     .strip .ticker { margin: 0; }
     .view-nav { overflow-x: auto; justify-content: flex-start; }
     .spec-grid { grid-template-columns: 1fr; }
-    .flow { grid-template-columns: 1fr; }
+    .flow { grid-template-columns: minmax(0, 1fr); }
     .flow-step { border-right: 1px solid var(--ink); border-bottom: none; }
     .flow-step:last-child { border-bottom: 1px solid var(--ink); }
     .flow-step::after {
@@ -1406,15 +1428,15 @@
       top: auto; right: 50%;
       bottom: -10px; transform: translateX(50%);
     }
-    .risk-grid { grid-template-columns: 1fr; }
+    .risk-grid { grid-template-columns: minmax(0, 1fr); }
     .compare-table { font-size: 13px; }
     .compare-table th, .compare-table td { padding: 10px 12px; }
-    .county-grid { grid-template-columns: 1fr; }
-    .mo-hero .hero-stats { grid-template-columns: 1fr; }
+    .county-grid { grid-template-columns: minmax(0, 1fr); }
+    .mo-hero .hero-stats { grid-template-columns: minmax(0, 1fr); }
     .mo-hero .hero-stat { border-right: none; border-bottom: 1px solid var(--muted); padding: 16px 0; }
     .mo-hero .hero-stat:last-child { border-bottom: none; padding: 16px 0; }
     .mo-hero .hero-stat:nth-child(2) { padding-left: 0; }
-    .call-sheet { grid-template-columns: 1fr; }
+    .call-sheet { grid-template-columns: minmax(0, 1fr); }
     .budget-table { font-size: 13px; }
     .budget-table th, .budget-table td { padding: 10px 12px; }
     /* The strip stacks into a column here; without stretching, the ticker
@@ -1521,15 +1543,15 @@
 
     <div class="legend">
       <div class="legend-item v">
-        <h4>Visible</h4>
+        <h3>Visible</h3>
         <p>Published or publishable today. Aggregate, de-identified, low re-identification risk.</p>
       </div>
       <div class="legend-item h">
-        <h4>Hidden</h4>
+        <h3>Hidden</h3>
         <p>Data exists but is fragmented, restricted, or institutionally withheld. Defensible to expose with governance.</p>
       </div>
       <div class="legend-item m">
-        <h4>Missing</h4>
+        <h3>Missing</h3>
         <p>Not tracked by any system. Requires new infrastructure — often user-generated — to measure.</p>
       </div>
     </div>
@@ -1920,49 +1942,49 @@ export const handler: APIGatewayProxyHandler = async (evt) => {
     <div class="risk-grid">
       <div class="risk-card sev-high">
         <div class="sev-tag">Severity · High</div>
-        <h5>Judicial independence challenge</h5>
+        <h3>Judicial independence challenge</h3>
         <p class="mit">Courts may challenge judge-level metrics as infringing judicial independence doctrines.</p>
         <p class="mit"><strong>Mitigation:</strong> Start with court-level aggregates only. Judge-level metrics require methodology board sign-off and state judicial conference coordination before publication.</p>
       </div>
       <div class="risk-card sev-high">
         <div class="sev-tag">Severity · Critical</div>
-        <h5>DV survivor re-identification</h5>
+        <h3>DV survivor re-identification</h3>
         <p class="mit">Protective order data published at small-county level could expose protected persons.</p>
         <p class="mit"><strong>Mitigation:</strong> VAWA-aware pipeline. Suppress counties with fewer than 25 PO cases/quarter. Differential privacy noise mandatory. Never publish location granularity.</p>
       </div>
       <div class="risk-card sev-high">
         <div class="sev-tag">Severity · High</div>
-        <h5>Adversarial use by high-conflict litigants</h5>
+        <h3>Adversarial use by high-conflict litigants</h3>
         <p class="mit">Metrics weaponized to harass judges, attorneys, or opposing parties.</p>
         <p class="mit"><strong>Mitigation:</strong> No individual-name rankings. Rate-limit API. Terms of use prohibit use in pending litigation without disclosure. Dispute process for every data point.</p>
       </div>
       <div class="risk-card sev-med">
         <div class="sev-tag">Severity · Medium</div>
-        <h5>Media misinterpretation</h5>
+        <h3>Media misinterpretation</h3>
         <p class="mit">Journalists report numbers without methodology context, creating misleading stories.</p>
         <p class="mit"><strong>Mitigation:</strong> Methodology link published with every metric. Confidence intervals mandatory on every visualization. Press kit explains limitations.</p>
       </div>
       <div class="risk-card sev-med">
         <div class="sev-tag">Severity · Medium</div>
-        <h5>State bar complaint on attorney data</h5>
+        <h3>State bar complaint on attorney data</h3>
         <p class="mit">Attorney-level performance metrics draw ethics complaints.</p>
         <p class="mit"><strong>Mitigation:</strong> Attorney-level data lives only in Tier B with DUA. No public attorney rankings. Peer benchmarks return only to the attorney themselves.</p>
       </div>
       <div class="risk-card sev-med">
         <div class="sev-tag">Severity · Medium</div>
-        <h5>Funding capture</h5>
+        <h3>Funding capture</h3>
         <p class="mit">A single funder or interest group influences metric selection.</p>
         <p class="mit"><strong>Mitigation:</strong> Governance charter caps any funder at 20%. Public funding disclosure. Two-thirds board supermajority for metric adoption.</p>
       </div>
       <div class="risk-card sev-low">
         <div class="sev-tag">Severity · Low</div>
-        <h5>Perceived CoTrackPro bias</h5>
+        <h3>Perceived CoTrackPro bias</h3>
         <p class="mit">Catalog seen as favoring one parent type due to platform origin.</p>
         <p class="mit"><strong>Mitigation:</strong> Every compliance metric is bilateral — measured in both directions. Neutrality audit annually. Spin out to JTA or nonprofit at scale.</p>
       </div>
       <div class="risk-card sev-low">
         <div class="sev-tag">Severity · Low</div>
-        <h5>Data drift</h5>
+        <h3>Data drift</h3>
         <p class="mit">State data schemas change, breaking comparability over time.</p>
         <p class="mit"><strong>Mitigation:</strong> Versioned schemas. Every published metric carries its schema version. Break notifications sent to subscribers of affected metrics.</p>
       </div>
@@ -2006,7 +2028,7 @@ export const handler: APIGatewayProxyHandler = async (evt) => {
     <div class="county-grid">
       <div class="county-card">
         <div class="tier-label">Tier 1 · Urban High-Volume</div>
-        <h4>St. Louis County</h4>
+        <h3>St. Louis County</h3>
         <div class="pop">Population: ~1.0M · 21st Judicial Circuit</div>
         <div class="rationale">Highest family court volume in the state. Diverse demographics across north/central/south St. Louis County. Proximity to Wash U and SLU enables active research partnership. Tests the framework at scale.</div>
         <div class="facts">
@@ -2018,7 +2040,7 @@ export const handler: APIGatewayProxyHandler = async (evt) => {
       </div>
       <div class="county-card tier-2">
         <div class="tier-label">Tier 2 · Mid-Size Regional</div>
-        <h4>Greene County</h4>
+        <h3>Greene County</h3>
         <div class="pop">Population: ~300K · 31st Judicial Circuit</div>
         <div class="rationale">Springfield anchor. Represents Ozarks region and mid-Missouri population patterns. Regional court hub for surrounding rural counties. Mid-volume docket tests the framework without urban complexity.</div>
         <div class="facts">
@@ -2030,7 +2052,7 @@ export const handler: APIGatewayProxyHandler = async (evt) => {
       </div>
       <div class="county-card tier-3">
         <div class="tier-label">Tier 3 · University Town</div>
-        <h4>Boone County</h4>
+        <h3>Boone County</h3>
         <div class="pop">Population: ~180K · 13th Judicial Circuit</div>
         <div class="rationale">Columbia / University of Missouri home. Smaller docket supports rapid iteration on methodology. Mizzou Law and School of Social Work provide native research capacity. Ideal for methodology refinement before rollout.</div>
         <div class="facts">
@@ -2054,7 +2076,7 @@ export const handler: APIGatewayProxyHandler = async (evt) => {
 
     <div class="statute-block">
       <div class="cite">Proposed RSMo § 476.058 (new)</div>
-      <h4>Family Court Metric Reporting Authority</h4>
+      <h3>Family Court Metric Reporting Authority</h3>
       <div class="draft-text">
         The Office of State Courts Administrator shall develop, maintain, and publish annually a set of <em>standardized family court operational and outcome metrics</em> covering case flow, disposition, and enforcement. Published metrics shall be <em>aggregated at the circuit or county level</em>, shall employ de-identification standards consistent with applicable federal law, and shall include <em>methodology, confidence intervals, and known limitations</em> for each metric.
       </div>
@@ -2065,7 +2087,7 @@ export const handler: APIGatewayProxyHandler = async (evt) => {
 
     <div class="statute-block">
       <div class="cite">Proposed RSMo § 452.317 (new subsection)</div>
-      <h4>Parenting Plan Compliance Data · Voluntary Reporting</h4>
+      <h3>Parenting Plan Compliance Data · Voluntary Reporting</h3>
       <div class="draft-text">
         Parties to a dissolution, paternity, or modification action involving minor children <em>may voluntarily submit</em> documented parenting time compliance data to a platform designated by the Office of State Courts Administrator. Such data shall be <em>aggregated, de-identified, and published only at the county level</em>. Individual compliance data shall <em>not be admissible</em> as evidence in any proceeding without a party's express written consent and shall not create a rebuttable presumption of compliance or non-compliance.
       </div>
@@ -2076,7 +2098,7 @@ export const handler: APIGatewayProxyHandler = async (evt) => {
 
     <div class="statute-block">
       <div class="cite">Proposed RSMo § 476.059 (new)</div>
-      <h4>Research Data Use Agreement Authority</h4>
+      <h3>Research Data Use Agreement Authority</h3>
       <div class="draft-text">
         The Office of State Courts Administrator <em>may enter into data use agreements</em> with accredited academic institutions or nonprofit research organizations to provide access to <em>de-identified case-level data</em> for research purposes. All such agreements shall require <em>IRB approval, publication of methodology, and a prohibition on re-identification attempts</em>, with penalties for violation including permanent ineligibility for future data access.
       </div>
@@ -2087,7 +2109,7 @@ export const handler: APIGatewayProxyHandler = async (evt) => {
 
     <div class="statute-block">
       <div class="cite">Proposed RSMo § 455.085 (new subsection)</div>
-      <h4>Protective Order Data Confidentiality</h4>
+      <h3>Protective Order Data Confidentiality</h3>
       <div class="draft-text">
         Notwithstanding any other provision of this chapter, data concerning protective orders issued under this chapter <em>shall not be published</em> at any geographic granularity that would permit the re-identification of petitioners. The Office of State Courts Administrator shall apply a <em>minimum suppression threshold of twenty-five protective order petitions per reporting period per geographic unit</em>.
       </div>
@@ -2103,20 +2125,20 @@ export const handler: APIGatewayProxyHandler = async (evt) => {
     </div>
 
     <div class="mou-doc">
-      <h4>Memorandum of Understanding</h4>
+      <h3>Memorandum of Understanding</h3>
       <div class="mou-parties">
         Between the <strong>Missouri Office of State Courts Administrator</strong> ("OSCA") and <strong>[CoTrackPro LLC or designated 501(c)(3) fiscal agent]</strong> ("Platform Partner"), for the purpose of piloting the Family Court Metric Catalog in three Missouri judicial circuits.
       </div>
 
       <div class="mou-section">
         <div class="n">Article I</div>
-        <h5>Purpose and Scope</h5>
+        <h4>Purpose and Scope</h4>
         <p>This MOU establishes the terms under which OSCA will provide de-identified aggregate family court data to Platform Partner for publication in the public Metric Catalog, and under which Platform Partner will provide user-contributed compliance data back to OSCA for judicial administration research. Scope is limited to the 13th, 21st, and 31st Judicial Circuits for a 36-month pilot period.</p>
       </div>
 
       <div class="mou-section">
         <div class="n">Article II</div>
-        <h5>Data Elements Provided by OSCA</h5>
+        <h4>Data Elements Provided by OSCA</h4>
         <ul>
           <li>Quarterly aggregate case filings by case type, disaggregated by month and circuit</li>
           <li>Median and P90 time-to-disposition by case type and circuit</li>
@@ -2130,7 +2152,7 @@ export const handler: APIGatewayProxyHandler = async (evt) => {
 
       <div class="mou-section">
         <div class="n">Article III</div>
-        <h5>Data Elements Provided by Platform Partner</h5>
+        <h4>Data Elements Provided by Platform Partner</h4>
         <ul>
           <li>Aggregate parenting time compliance rates, county-level, opt-in user base only</li>
           <li>Aggregate child contact gap distributions</li>
@@ -2142,25 +2164,25 @@ export const handler: APIGatewayProxyHandler = async (evt) => {
 
       <div class="mou-section">
         <div class="n">Article IV</div>
-        <h5>Methodology and Governance</h5>
+        <h4>Methodology and Governance</h4>
         <p>All published metrics shall conform to methodology approved by the Methodology Board as constituted in the Catalog Governance Charter (§ 06). OSCA reserves the right to review and comment on any publication involving OSCA-provided data prior to release, with a 15-business-day review window. Changes to published methodology require 60-day public comment before adoption.</p>
       </div>
 
       <div class="mou-section">
         <div class="n">Article V</div>
-        <h5>Refresh Cadence</h5>
+        <h4>Refresh Cadence</h4>
         <p>OSCA shall provide quarterly data transfers within 45 days of quarter-end. Platform Partner shall publish aggregate user-contributed metrics on the same quarterly cadence with methodology, confidence intervals, and sample size disclosed for each cell.</p>
       </div>
 
       <div class="mou-section">
         <div class="n">Article VI</div>
-        <h5>Audit Rights</h5>
+        <h4>Audit Rights</h4>
         <p>OSCA may request an independent audit of Platform Partner's de-identification pipeline once per calendar year at Platform Partner's expense. Platform Partner may request an audit of OSCA data provenance on the same basis. Audit results shall be published publicly.</p>
       </div>
 
       <div class="mou-section">
         <div class="n">Article VII</div>
-        <h5>Prohibited Uses</h5>
+        <h4>Prohibited Uses</h4>
         <ul>
           <li>No published data may be used to rank or compare named individual judges, attorneys, or other court personnel</li>
           <li>No re-identification attempts are permitted; violations terminate this MOU immediately</li>
@@ -2171,13 +2193,13 @@ export const handler: APIGatewayProxyHandler = async (evt) => {
 
       <div class="mou-section">
         <div class="n">Article VIII</div>
-        <h5>Term and Termination</h5>
+        <h4>Term and Termination</h4>
         <p>Initial term of 36 months commencing on execution. Either party may terminate for cause with 90 days' notice, or without cause with 180 days' notice. Upon termination, Platform Partner shall cease new publication using OSCA data within 30 days; historical publications remain available with clear period-of-coverage labels. Renewal requires affirmative agreement by both parties.</p>
       </div>
 
       <div class="mou-section">
         <div class="n">Article IX</div>
-        <h5>Indemnification and Liability</h5>
+        <h4>Indemnification and Liability</h4>
         <p>Each party is responsible for its own acts and omissions. Platform Partner indemnifies OSCA against claims arising from Platform Partner's de-identification failures. OSCA retains sovereign immunity consistent with Missouri law. Neither party is liable for consequential or indirect damages.</p>
       </div>
     </div>
@@ -2337,7 +2359,7 @@ export const handler: APIGatewayProxyHandler = async (evt) => {
     <div class="call-sheet">
       <div class="call-card priority-high">
         <div class="priority">Priority · Highest · First 30 Days</div>
-        <h5>OSCA Statistical Research Staff</h5>
+        <h3>OSCA Statistical Research Staff</h3>
         <div class="who">Office of State Courts Administrator · Research &amp; Statistics Division</div>
         <div class="ask">Exploratory conversation. Do not propose. Ask what they already produce, what constraints they work under, and what would make their lives easier. Listen for 80% of the meeting.</div>
         <div class="talking-points">
@@ -2348,7 +2370,7 @@ export const handler: APIGatewayProxyHandler = async (evt) => {
 
       <div class="call-card priority-high">
         <div class="priority">Priority · High · First 60 Days</div>
-        <h5>Missouri Bar Family Law Section</h5>
+        <h3>Missouri Bar Family Law Section</h3>
         <div class="who">Section Council · Chairs of Continuing Legal Education &amp; Policy Committees</div>
         <div class="ask">Seek endorsement in principle and nomination of practitioner seats on the Methodology Board. Offer CLE presentations as a two-way information exchange.</div>
         <div class="talking-points">
@@ -2359,7 +2381,7 @@ export const handler: APIGatewayProxyHandler = async (evt) => {
 
       <div class="call-card priority-high">
         <div class="priority">Priority · High · First 60 Days</div>
-        <h5>Presiding Judges · Pilot Circuits</h5>
+        <h3>Presiding Judges · Pilot Circuits</h3>
         <div class="who">21st (St. Louis Co.), 13th (Boone), 31st (Greene)</div>
         <div class="ask">Circuit-level agreement to participate in the pilot. No judge-level publication for the pilot duration. Judicial self-assessment dashboards available privately to each jurist who opts in.</div>
         <div class="talking-points">
@@ -2370,7 +2392,7 @@ export const handler: APIGatewayProxyHandler = async (evt) => {
 
       <div class="call-card priority-med">
         <div class="priority">Priority · Medium · 90 Days</div>
-        <h5>Judiciary Committee Members</h5>
+        <h3>Judiciary Committee Members</h3>
         <div class="who">Missouri Senate &amp; House Judiciary Committees</div>
         <div class="ask">Informational visits. No bill introduction until pilot is live and generating data. Build relationships, share the Catalog, invite questions. Return in Year 2 with pilot findings and draft language.</div>
         <div class="talking-points">
@@ -2381,7 +2403,7 @@ export const handler: APIGatewayProxyHandler = async (evt) => {
 
       <div class="call-card priority-med">
         <div class="priority">Priority · Medium · 90 Days</div>
-        <h5>Missouri Coalition Against Domestic &amp; Sexual Violence</h5>
+        <h3>Missouri Coalition Against Domestic &amp; Sexual Violence</h3>
         <div class="who">MOCADSV Policy Director · Member Agency Leadership</div>
         <div class="ask">Review of all DV-adjacent metrics and protective order data handling. Offer a seat on the Methodology Board. Their endorsement is the single most important credibility signal for the framework.</div>
         <div class="talking-points">
@@ -2392,7 +2414,7 @@ export const handler: APIGatewayProxyHandler = async (evt) => {
 
       <div class="call-card priority-med">
         <div class="priority">Priority · Medium · 120 Days</div>
-        <h5>Mizzou Law · Family Violence Clinic</h5>
+        <h3>Mizzou Law · Family Violence Clinic</h3>
         <div class="who">Clinical Faculty · Research Partnership Lead</div>
         <div class="ask">Academic research partnership for Boone County pilot. IRB coordination, student researcher placement, first peer-reviewed publication target in Year 2.</div>
         <div class="talking-points">
@@ -2403,7 +2425,7 @@ export const handler: APIGatewayProxyHandler = async (evt) => {
 
       <div class="call-card priority-med">
         <div class="priority">Priority · Medium · 120 Days</div>
-        <h5>Wash U &amp; SLU Law Schools</h5>
+        <h3>Wash U &amp; SLU Law Schools</h3>
         <div class="who">Family Law Faculty · Clinical Program Directors</div>
         <div class="ask">Parallel partnership for St. Louis County pilot. Larger docket supports disparity analysis research. Joint submission for research funding to Arnold Ventures, Ewing Marion Kauffman Foundation, or similar.</div>
         <div class="talking-points">
@@ -2414,7 +2436,7 @@ export const handler: APIGatewayProxyHandler = async (evt) => {
 
       <div class="call-card">
         <div class="priority">Priority · Ongoing</div>
-        <h5>Missouri Fathers &amp; Families</h5>
+        <h3>Missouri Fathers &amp; Families</h3>
         <div class="who">Parent Advocacy Organizations · Multiple</div>
         <div class="ask">Proactive engagement with parent advocacy across the spectrum. Equal outreach to mother-led and father-led organizations ensures bilateral credibility from day one.</div>
         <div class="talking-points">
@@ -2433,42 +2455,42 @@ export const handler: APIGatewayProxyHandler = async (evt) => {
     <div class="timeline">
       <div class="timeline-item">
         <div class="month">Month 01 — 03</div>
-        <h5>Quiet Stakeholder Alignment</h5>
+        <h3>Quiet Stakeholder Alignment</h3>
         <p>No public announcements. All energy into OSCA conversations, bar section briefings, and presiding judge meetings. Draft methodology published for private stakeholder review only. Success metric: three signed circuit letters of participation.</p>
       </div>
       <div class="timeline-item">
         <div class="month">Month 04 — 06</div>
-        <h5>Methodology Board Convened</h5>
+        <h3>Methodology Board Convened</h3>
         <p>Public announcement of the board composition and charter. First board meeting publicly noticed. 60-day public comment window opens on draft methodology. Success metric: all 11 board seats filled, first methodology vote completed.</p>
       </div>
       <div class="timeline-item">
         <div class="month">Month 07 — 09</div>
-        <h5>Static Catalog Launch</h5>
+        <h3>Static Catalog Launch</h3>
         <p>The Catalog goes live as a read-only publication. No data yet — just the framework, the methodology, the governance, and the MOU template. Position as a civic infrastructure proposal, not a product. Success metric: endorsements from MOCADSV, state bar section, and at least two sitting legislators.</p>
       </div>
       <div class="timeline-item">
         <div class="month">Month 10 — 12</div>
-        <h5>First MOUs Signed</h5>
+        <h3>First MOUs Signed</h3>
         <p>OSCA and circuit MOUs executed. Data pipelines built. First internal-only dashboards for pilot circuits. Academic partnerships formalized with DUAs. Success metric: first OSCA data transfer received and processed.</p>
       </div>
       <div class="timeline-item">
         <div class="month">Month 13 — 18</div>
-        <h5>First Public Data Release</h5>
+        <h3>First Public Data Release</h3>
         <p>Tier A jurisdiction dashboards published. Accompanied by methodology papers, press kit, stakeholder testimonials, and interactive comparison with pre-existing public OSCA reports. Coordinated announcements across all three circuits on the same day. Success metric: coverage in St. Louis Post-Dispatch, Kansas City Star, and Missouri Lawyers Media.</p>
       </div>
       <div class="timeline-item">
         <div class="month">Month 19 — 24</div>
-        <h5>First User-Contributed Metrics</h5>
+        <h3>First User-Contributed Metrics</h3>
         <p>Tier C opt-in expands. Parenting time compliance rate becomes the first user-generated metric published at county aggregate. The truth-layer metric nobody else has. Expect national coverage. Success metric: 500+ opted-in participants contributing across the three circuits.</p>
       </div>
       <div class="timeline-item">
         <div class="month">Month 25 — 30</div>
-        <h5>Research Partnership Publications</h5>
+        <h3>Research Partnership Publications</h3>
         <p>First peer-reviewed papers from Mizzou and Wash U partnerships. Present at AFCC, National Conference on Courts and Technology, and Missouri Bar Annual Meeting. Begin conversations with Illinois, Kansas, and Iowa court administrators about schema adoption. Success metric: three peer-reviewed publications, two conference keynotes.</p>
       </div>
       <div class="timeline-item">
         <div class="month">Month 31 — 36</div>
-        <h5>Legislative Advancement</h5>
+        <h3>Legislative Advancement</h3>
         <p>With 30 months of operational data and published research, return to the Judiciary Committee. Introduce RSMo amendments through a carrying legislator. Simultaneous introduction in one neighboring state demonstrates the replication model. Success metric: bill introduced in Missouri, MOU signed in one additional state.</p>
       </div>
     </div>
@@ -2509,7 +2531,7 @@ export const handler: APIGatewayProxyHandler = async (evt) => {
 
 <!-- ========== Drawer ========== -->
 <div class="drawer-backdrop" id="drawer-backdrop" aria-hidden="true"></div>
-<aside class="drawer" id="drawer" role="dialog" aria-modal="true" aria-labelledby="drawer-title" aria-hidden="true">
+<aside class="drawer" id="drawer" role="dialog" aria-modal="true" aria-labelledby="drawer-title" aria-hidden="true" inert>
   <div class="drawer-header">
     <div>
       <div class="tag" id="drawer-tag">METRIC · TIER A · VISIBLE</div>
@@ -3064,6 +3086,7 @@ function openDrawer(roleId, metricId) {
   const drawerEl = document.getElementById('drawer');
   drawerEl.classList.add('open');
   drawerEl.setAttribute('aria-hidden', 'false');
+  drawerEl.removeAttribute('inert');
   document.getElementById('drawer-backdrop').classList.add('open');
   // Store the element that had focus before drawer opened, so we can restore it
   drawerEl._lastFocused = document.activeElement;
@@ -3075,6 +3098,8 @@ function closeDrawer() {
   const drawerEl = document.getElementById('drawer');
   drawerEl.classList.remove('open');
   drawerEl.setAttribute('aria-hidden', 'true');
+  // Closed, the drawer sits off-screen; inert keeps its close button out of the tab order.
+  drawerEl.setAttribute('inert', '');
   document.getElementById('drawer-backdrop').classList.remove('open');
   // Restore focus to the element that opened the drawer
   if (drawerEl._lastFocused && typeof drawerEl._lastFocused.focus === 'function') {
@@ -3084,8 +3109,17 @@ function closeDrawer() {
 document.getElementById('drawer-close').addEventListener('click', closeDrawer);
 document.getElementById('drawer-backdrop').addEventListener('click', closeDrawer);
 document.addEventListener('keydown', (e) => {
-  if (e.key === 'Escape' && document.getElementById('drawer').classList.contains('open')) {
+  const drawerEl = document.getElementById('drawer');
+  if (!drawerEl.classList.contains('open')) return;
+  if (e.key === 'Escape') {
     closeDrawer();
+  } else if (e.key === 'Tab') {
+    // The drawer is a modal dialog: keep Tab and Shift+Tab inside it.
+    const items = [...drawerEl.querySelectorAll('a[href], button, [tabindex]:not([tabindex="-1"])')];
+    const first = items[0], last = items[items.length - 1];
+    if (!drawerEl.contains(document.activeElement)) { e.preventDefault(); first.focus(); }
+    else if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
   }
 });
 

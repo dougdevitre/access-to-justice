@@ -7,7 +7,12 @@
  * shows a one-time acknowledgment dialog with the full text.
  *
  * Colors follow the site palette (paper / ink / accent). Every text pair
- * below meets WCAG AA (4.5:1) in both color schemes.
+ * below meets WCAG AA (4.5:1).
+ *
+ * Light only, like the pages that use it: neither the landing page nor the
+ * catalog has a dark theme, so a dark notice or dialog would sit as a dark
+ * band on a light page. If a page gains a dark theme, add the dark notice
+ * and dialog styles under the same condition that page uses.
  */
 
 .a2-disclaimer {
@@ -25,6 +30,7 @@
   padding: 8px 16px;
   position: relative;
   z-index: 60;
+  color-scheme: light;
 }
 .a2-disclaimer p {
   max-width: 1100px;
@@ -71,6 +77,7 @@
   font-family: inherit;
   font-size: 16px;
   line-height: 1.55;
+  color-scheme: light;     /* light scrollbar inside the dialog, like the page */
 }
 .a2-ack::backdrop { background: rgba(13, 18, 32, 0.6); }
 .a2-ack-inner {
@@ -114,29 +121,6 @@
 }
 @media (max-width: 480px) {
   .a2-ack-actions button { width: 100%; }
-}
-
-/* ---------- Dark mode ---------- */
-@media (prefers-color-scheme: dark) {
-  .a2-disclaimer {
-    --a2-bg: #1a1f2e;
-    --a2-fg: #f5efe5;      /* 14.4:1 */
-    --a2-link: #f2b8a6;    /* 9.5:1 */
-    --a2-rule: #8f6a1e;
-    --a2-focus: #7fb2ff;
-  }
-  .a2-ack {
-    --a2-bg: #141927;
-    --a2-fg: #f5efe5;      /* 15.3:1 */
-    --a2-muted: #d6cfc2;   /* 11.3:1 */
-    --a2-link: #f2b8a6;    /* 10.2:1 */
-    --a2-btn-bg: #f5efe5;
-    --a2-btn-fg: #141927;  /* 15.3:1 */
-    --a2-rule: rgba(245, 239, 229, 0.25);
-    --a2-focus: #7fb2ff;
-    border-color: #5a6075;
-  }
-  .a2-ack::backdrop { background: rgba(0, 0, 0, 0.7); }
 }
 
 /* No animation is used; this block keeps it that way if one is added. */
