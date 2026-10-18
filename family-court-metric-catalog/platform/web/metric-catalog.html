@@ -483,7 +483,7 @@
     border-top: 1px dashed var(--paper-deeper);
   }
   .metric-actions { display: flex; gap: 8px; align-items: center; }
-  .endorse-btn, .detail-btn {
+  .detail-btn {
     background: transparent;
     border: 1.5px solid var(--ink);
     color: var(--ink);
@@ -496,12 +496,8 @@
     transition: all 0.15s ease;
     min-height: 40px;
   }
-  .endorse-btn:hover, .detail-btn:hover { background: var(--ink); color: var(--paper); }
-  .endorse-btn.endorsed { background: var(--accent); border-color: var(--accent); color: var(--paper); }
-  .endorse-btn.endorsed::before { content: '✓ '; }
   .detail-btn { border-color: var(--ink-soft); color: var(--ink-soft); }
   .detail-btn:hover { background: var(--ink-soft); color: var(--paper); }
-  .endorse-count { font-family: 'Atkinson Hyperlegible Mono', 'Menlo', 'Consolas', monospace; font-size: 14px; font-weight: 600; color: var(--ink-soft); }
 
   /* ========== Methodology drawer ========== */
   .drawer-backdrop {
@@ -856,82 +852,6 @@
     color: var(--ink-soft);
   }
 
-  /* ========== Adoption dashboard ========== */
-  .adoption {
-    background: var(--ink);
-    color: var(--paper);
-    padding: 40px;
-    margin-top: 64px;
-    position: relative;
-    overflow: hidden;
-  }
-  .adoption::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 4px;
-    background: linear-gradient(90deg, var(--green) 0%, var(--green) 33%, var(--amber) 33%, var(--amber) 66%, var(--accent) 66%, var(--accent) 100%);
-  }
-  .adoption h3 {
-    font-weight: 700;
-    font-size: 32px;
-    margin-bottom: 10px;
-    letter-spacing: -0.01em;
-    line-height: 1.2;
-  }
-  .adoption p.lede {
-    font-size: 17px;
-    color: #f5efe5;
-    margin-bottom: 28px;
-    max-width: 720px;
-    line-height: 1.55;
-  }
-  .adoption-stats {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    border-top: 1px solid var(--muted);
-    border-bottom: 1px solid var(--muted);
-    padding: 24px 0;
-    margin-bottom: 28px;
-  }
-  .adoption-stat {
-    border-right: 1px solid var(--muted);
-    padding: 0 20px;
-  }
-  .adoption-stat:last-child { border-right: none; }
-  .adoption-stat .n {
-    font-family: 'Atkinson Hyperlegible Mono', 'Menlo', 'Consolas', monospace;
-    font-size: 44px;
-    font-weight: 700;
-    line-height: 1;
-  }
-  .adoption-stat .l {
-    font-family: 'Atkinson Hyperlegible Mono', 'Menlo', 'Consolas', monospace;
-    font-size: 12px;
-    font-weight: 700;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: #f5efe5;
-    margin-top: 8px;
-  }
-  .export-row { display: flex; gap: 12px; flex-wrap: wrap; }
-  .export-btn {
-    background: transparent;
-    border: 2px solid var(--paper);
-    color: var(--paper);
-    font-family: 'Atkinson Hyperlegible', 'Helvetica Neue', sans-serif;
-    font-size: 14px;
-    font-weight: 700;
-    letter-spacing: 0.02em;
-    padding: 12px 20px;
-    cursor: pointer;
-    transition: all 0.15s ease;
-    min-height: 44px;
-  }
-  .export-btn:hover { background: var(--paper); color: var(--ink); }
-  .export-btn.primary { background: var(--accent); border-color: var(--accent); }
-  .export-btn.primary:hover { background: var(--paper); color: var(--accent); border-color: var(--paper); }
-
   /* ========== Colophon ========== */
   .colophon {
     margin-top: 72px;
@@ -947,25 +867,6 @@
     flex-wrap: wrap;
     gap: 16px;
   }
-
-  /* ========== Toast ========== */
-  .toast {
-    position: fixed;
-    bottom: 24px;
-    right: 24px;
-    background: var(--ink);
-    color: var(--paper);
-    padding: 16px 24px;
-    font-family: 'Atkinson Hyperlegible', sans-serif;
-    font-size: 15px;
-    font-weight: 700;
-    letter-spacing: 0.02em;
-    border-left: 4px solid var(--accent);
-    transform: translateY(150%);
-    transition: transform 0.3s ease;
-    z-index: 200;
-  }
-  .toast.show { transform: translateY(0); }
 
   /* ========== Missouri Implementation ========== */
   .mo-hero {
@@ -1392,8 +1293,6 @@
     .legend { grid-template-columns: 1fr; }
     .role-header { grid-template-columns: 1fr; gap: 12px; }
     .role-header .stat { text-align: left; }
-    .adoption-stats { grid-template-columns: 1fr 1fr; }
-    .adoption-stat { border-bottom: 1px solid var(--muted); padding: 12px 20px; }
     .strip { flex-direction: column; gap: 4px; padding: 6px 16px; }
     .strip .ticker { margin: 0; }
     .view-nav { overflow-x: auto; justify-content: flex-start; }
@@ -1440,14 +1339,11 @@
     /* Method and access tier share the first line; the path gets the full width below. */
     .route { grid-template-columns: auto minmax(0, 1fr); row-gap: 6px; }
     .route .path { grid-column: 1 / -1; grid-row: 2; overflow-wrap: anywhere; }
-    .adoption, .mo-hero { padding: 28px 16px; }
-    .adoption-stats { grid-template-columns: minmax(0, 1fr); }
-    .adoption-stat { border-right: none; padding: 12px 0; }
+    .mo-hero { padding: 28px 16px; }
     .kv-row { grid-template-columns: minmax(0, 1fr); gap: 4px; }
     .drawer-header { padding: 20px 16px; }
     .drawer-body { padding: 24px 16px 40px; }
     .section-head p { text-align: left; margin-left: 0; }
-    .toast { left: 16px; right: 16px; bottom: 16px; }
   }
 </style>
 <link rel="stylesheet" href="../../../assets/disclaimer.css">
@@ -1543,36 +1439,6 @@
     <div class="roles" id="roles"></div>
     <div id="role-detail"></div>
 
-    <!-- Adoption dashboard -->
-    <div class="adoption">
-      <h3>Endorse Adoption</h3>
-      <p class="lede">The methodology is published for public review. Endorse the metrics you believe should be adopted. Your endorsements are saved only in this browser and are not sent anywhere. To share them with the Methodology Board, export them as JSON below.</p>
-
-      <div class="adoption-stats">
-        <div class="adoption-stat">
-          <div class="n" id="stat-endorsed">0</div>
-          <div class="l">Metrics Endorsed</div>
-        </div>
-        <div class="adoption-stat">
-          <div class="n" id="stat-roles">0</div>
-          <div class="l">Roles Covered</div>
-        </div>
-        <div class="adoption-stat">
-          <div class="n" id="stat-missing">0</div>
-          <div class="l">Missing Endorsed</div>
-        </div>
-        <div class="adoption-stat">
-          <div class="n" id="stat-pct">0%</div>
-          <div class="l">Catalog Complete</div>
-        </div>
-      </div>
-
-      <div class="export-row">
-        <button class="export-btn primary" onclick="exportEndorsements()">Export Endorsements · JSON</button>
-        <button class="export-btn" onclick="shareLink()">Copy Share Link</button>
-        <button class="export-btn" onclick="resetAll()">Reset</button>
-      </div>
-    </div>
   </section>
 
   <!-- ========== VIEW 2: STATE COMPARISON ========== -->
@@ -2520,8 +2386,6 @@ export const handler: APIGatewayProxyHandler = async (evt) => {
   <div class="drawer-body" id="drawer-body"></div>
 </aside>
 
-<div class="toast" id="toast">Saved</div>
-
 <script>
 // =========================================================
 // DATA
@@ -2841,19 +2705,8 @@ const COMPARE_METRICS = [
 // =========================================================
 const state = {
   activeRoleId: ROLES[0].id,
-  activeView: 'catalog',
-  endorsed: new Set()
+  activeView: 'catalog'
 };
-
-function loadState() {
-  try {
-    const raw = localStorage.getItem('mcc-endorsed-v2');
-    if (raw) state.endorsed = new Set(JSON.parse(raw));
-  } catch(e) { state.endorsed = new Set(); }
-}
-function saveState() {
-  try { localStorage.setItem('mcc-endorsed-v2', JSON.stringify([...state.endorsed])); } catch(e) {}
-}
 
 // =========================================================
 // RENDER
@@ -2886,15 +2739,6 @@ function renderRoleButtons() {
   });
 }
 
-function endorseKey(roleId, metricId) {
-  return `${roleId}::${metricId}`;
-}
-function hash(s) { let h=0; for (let i=0;i<s.length;i++) h=(h<<5)-h+s.charCodeAt(i), h|=0; return h; }
-function countForMetric(key) {
-  const base = Math.abs(hash(key)) % 180 + 12;
-  return base + (state.endorsed.has(key) ? 1 : 0);
-}
-
 function renderRoleDetail() {
   const r = ROLES.find(x => x.id === state.activeRoleId);
   const counts = {
@@ -2913,10 +2757,7 @@ function renderRoleDetail() {
       </div>
       <div class="role-summary">${r.summary}</div>
       <div class="metrics">
-        ${r.metrics.map(m => {
-          const key = endorseKey(r.id, m.id);
-          const endorsed = state.endorsed.has(key);
-          return `
+        ${r.metrics.map(m => `
           <div class="metric ${m.status}">
             <div class="status-bar"></div>
             <div class="topline">
@@ -2927,55 +2768,21 @@ function renderRoleDetail() {
             <div class="mdesc">${m.desc}</div>
             <div class="mfoot">
               <div class="metric-actions">
-                <button class="endorse-btn ${endorsed ? 'endorsed' : ''}" data-action="endorse" data-key="${key}">
-                  ${endorsed ? 'Endorsed' : 'Endorse'}
-                </button>
                 <button class="detail-btn" data-action="detail" data-role="${r.id}" data-metric="${m.id}">
                   Methodology
                 </button>
               </div>
-              <span class="endorse-count">${countForMetric(key).toLocaleString()}</span>
             </div>
-          </div>`;
-        }).join('')}
+          </div>`).join('')}
       </div>
     </div>`;
 
-  c.querySelectorAll('[data-action="endorse"]').forEach(btn => {
-    btn.addEventListener('click', (e) => {
-      e.stopPropagation();
-      const key = btn.dataset.key;
-      if (state.endorsed.has(key)) { state.endorsed.delete(key); showToast('Endorsement withdrawn'); }
-      else { state.endorsed.add(key); showToast('Endorsement saved in this browser'); }
-      saveState(); renderRoleDetail(); renderAdoptionStats();
-    });
-  });
   c.querySelectorAll('[data-action="detail"]').forEach(btn => {
     btn.addEventListener('click', (e) => {
       e.stopPropagation();
       openDrawer(btn.dataset.role, btn.dataset.metric);
     });
   });
-}
-
-function renderAdoptionStats() {
-  const total = ROLES.reduce((a, r) => a + r.metrics.length, 0);
-  const endorsed = state.endorsed.size;
-  const roleSet = new Set();
-  let missingEndorsed = 0;
-  state.endorsed.forEach(k => {
-    const [roleId, metricId] = k.split('::');
-    roleSet.add(roleId);
-    const r = ROLES.find(x => x.id === roleId);
-    if (r) {
-      const m = r.metrics.find(x => x.id === metricId);
-      if (m && m.status === 'missing') missingEndorsed++;
-    }
-  });
-  document.getElementById('stat-endorsed').textContent = endorsed;
-  document.getElementById('stat-roles').textContent = roleSet.size;
-  document.getElementById('stat-missing').textContent = missingEndorsed;
-  document.getElementById('stat-pct').textContent = Math.round((endorsed / total) * 100) + '%';
 }
 
 function renderCompare() {
@@ -3131,65 +2938,9 @@ function activateTab(tab) {
 }
 
 
-// =========================================================
-// EXPORT / SHARE
-// =========================================================
-function exportEndorsements() {
-  const payload = {
-    exported_at: new Date().toISOString(),
-    framework: 'Family Court Metric Catalog v0.3',
-    endorsed_metrics: [...state.endorsed].map(key => {
-      const [roleId, metricId] = key.split('::');
-      const r = ROLES.find(x => x.id === roleId);
-      const m = r?.metrics.find(x => x.id === metricId);
-      return {
-        role: r?.name, metric: m?.name, status: m?.status, tier: m?.tier,
-        role_id: roleId, metric_id: metricId
-      };
-    })
-  };
-  const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url; a.download = 'metric-catalog-endorsements.json'; a.click();
-  URL.revokeObjectURL(url);
-  showToast('Endorsements exported');
-}
-function shareLink() {
-  const params = new URLSearchParams();
-  params.set('e', [...state.endorsed].join('|'));
-  const link = window.location.origin + window.location.pathname + '?' + params.toString();
-  navigator.clipboard?.writeText(link).then(
-    () => showToast('Link copied'),
-    () => showToast('Copy failed')
-  );
-}
-function resetAll() {
-  if (!confirm('Clear all endorsements saved in this browser?')) return;
-  state.endorsed = new Set(); saveState();
-  renderRoleDetail(); renderAdoptionStats();
-  showToast('Cleared');
-}
-function showToast(msg) {
-  const t = document.getElementById('toast');
-  t.textContent = msg;
-  t.classList.add('show');
-  clearTimeout(showToast._t);
-  showToast._t = setTimeout(() => t.classList.remove('show'), 1800);
-}
-
-// Hydrate
-(function hydrateFromURL() {
-  const p = new URLSearchParams(window.location.search);
-  const e = p.get('e');
-  if (e) { e.split('|').filter(Boolean).forEach(k => state.endorsed.add(k)); saveState(); }
-})();
-
-loadState();
 renderCounts();
 renderRoleButtons();
 renderRoleDetail();
-renderAdoptionStats();
 renderCompare();
 </script>
 
