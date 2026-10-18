@@ -7,6 +7,10 @@ All notable changes to this repository are documented here. Format follows [Keep
 ### Added
 - Web catalog shows a persistent disclaimer bar (educational only; 911 and 988 as tap-to-call links; link to the full disclaimer) and a one-time acknowledgment dialog before first use. Shared with the landing page via `assets/disclaimer.css` and `assets/disclaimer.js` at the repository root, and guarded by `tests/disclaimer.test.mjs`. Wording is interim pending attorney review.
 
+### Fixed
+- Web catalog fits phone screens (320px and up) without sideways scrolling. The State Comparison and budget tables and the Technical Spec code blocks scroll inside their own labelled, keyboard-focusable regions instead. Guarded by `tests/mobile-layout.test.mjs`.
+- The "Skip to main content" link on the catalog and the landing page is fully hidden until focused; it no longer shows a strip over the disclaimer bar.
+
 ### Planned
 - Expert Review Convening (CC-07) scheduling and execution.
 - MOCADSV outreach one-pager.

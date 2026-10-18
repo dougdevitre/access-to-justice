@@ -18,3 +18,15 @@ jobs:
         with:
           node-version: 22
       - run: node --test tests/disclaimer.test.mjs
+
+  mobile:
+    name: Published pages fit phone screens
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm install --no-save --no-package-lock playwright@1.56.0
+      - run: npx playwright install --with-deps chromium
+      - run: node --test tests/mobile-layout.test.mjs
