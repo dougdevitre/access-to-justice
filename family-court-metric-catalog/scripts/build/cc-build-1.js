@@ -191,7 +191,7 @@ async function cc02() {
     S.body('Key Catalog implications: children\'s self-report data requires protections that go beyond standard research ethics; child-targeted control tactics are measurable but require direct assessment rather than parent proxy report; cross-household routine disruption (c-routine) can itself be a coercive tactic used against the non-controlling parent.'),
 
     S.h3('1.3 Post-Separation Coercive Control (Hardesty et al., 2015-2023)'),
-    S.body('Jennifer Hardesty\'s research program established empirically that coercive control frequently continues after separation and often uses the family court system as its instrument. Hardesty & Ganong (2006) and Hardesty et al. (2015) specifically document the use of custody and parenting-time proceedings as mechanisms of continued control.'),
+    S.body('Jennifer Hardesty\'s research program established empirically that coercive control frequently continues after separation and often uses the family court system as its instrument. Hardesty & Ganong (2006) and Hardesty et al. (2016) specifically document the use of custody and parenting-time proceedings as mechanisms of continued control.'),
     S.body('Key Catalog implications: the Manufactured Conflict metrics (CC-04) draw directly from Hardesty\'s framework; the platform design (CC-05) must handle cases where separation does not end the pattern; mediation metrics (md-settle) in coercive-control cases have a different meaning than in equivalently-situated cases — an apparent "agreement" can be a capitulation rather than a resolution.'),
 
     S.h3('1.4 Johnson\'s Typology (1995, 2008) and Its Critics'),
@@ -259,7 +259,7 @@ async function cc02() {
     S.bullet('Stark, E., & Hester, M. (2019). Coercive control: update and review. Violence Against Women.'),
     S.bullet('Katz, E. (2022). Coercive Control in Children\'s and Mothers\' Lives. Oxford University Press.'),
     S.bullet('Hardesty, J. L., & Ganong, L. H. (2006). How women make custody decisions and manage co-parenting with abusive former husbands. Journal of Social and Personal Relationships.'),
-    S.bullet('Hardesty, J. L., et al. (2015). Marital violence and coparenting quality after separation. Journal of Family Psychology.'),
+    S.bullet('Hardesty, J. L., et al. (2016). Marital violence and coparenting quality after separation. Journal of Family Psychology.'),
     S.bullet('Johnson, M. P. (2008). A Typology of Domestic Violence. Northeastern University Press.'),
     S.bullet('Kelly, J. B., & Johnson, M. P. (2008). Differentiation among types of intimate partner violence. Family Court Review.'),
     S.bullet('Douglas, H. (2018). Legal systems abuse and coercive control. Criminology & Criminal Justice.'),

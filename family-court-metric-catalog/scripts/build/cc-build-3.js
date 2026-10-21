@@ -283,7 +283,7 @@ const CC_METRICS = {
     name: 'Emergency Motion Pattern',
     tier: 'A', tierLabel: 'Public', status: 'hidden',
     desc: 'Jurisdiction-aggregate frequency of repeat emergency-ex-parte motions in family court cases, stratified by case type and filing-pattern repeater status.',
-    tierReasoning: 'Tier A with caveats. Emergency motion aggregate patterns are already effectively public (ca-emergency in Doc 19). This metric extends ca-emergency with filing-pattern-repeater stratification at jurisdiction aggregate. Considered Tier B because the repeater stratification adds sensitivity; decided Tier A with strict jurisdiction-aggregation and explicit labeling that repeater-count is institutional-pattern data, not individual-party data. The 25-petition floor from RSMo § 455.085 applies.',
+    tierReasoning: 'Tier A with caveats. Emergency motion aggregate patterns are already effectively public (ca-emergency in Doc 19). This metric extends ca-emergency with filing-pattern-repeater stratification at jurisdiction aggregate. Considered Tier B because the repeater stratification adds sensitivity; decided Tier A with strict jurisdiction-aggregation and explicit labeling that repeater-count is institutional-pattern data, not individual-party data. The 25-petition floor from draft RSMo § 455.085 applies.',
     definition: 'Rate of emergency or ex-parte motions per 100 active cases per month, stratified by whether the filing party has filed three or more emergency motions in the past 24 months in any Missouri family court case.',
     numerator: 'Emergency motions in the period, by repeater classification',
     denominator: 'Active cases × 100 / month',
