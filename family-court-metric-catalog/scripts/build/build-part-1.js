@@ -473,7 +473,7 @@ async function doc05() {
     S.pb(),
     S.eyebrow('Proposed § 476.058'),
     S.h1('Family Court Metric Reporting Authority'),
-    S.body('This section establishes OSCA authority to develop and publish standardized family court metrics without mandating judge-level or individual-case publication. The authority structure parallels RSMo § 476.055 on general OSCA authority.'),
+    S.body('This section establishes OSCA authority to develop and publish standardized family court metrics without mandating judge-level or individual-case publication. Numbering note: RSMo § 476.058 already exists (court personnel; state court administration revolving fund), so legislative counsel would assign the final section number.'),
     S.h3('Draft Language'),
     S.statuteQuote('The Office of State Courts Administrator shall develop, maintain, and publish annually a set of standardized family court operational and outcome metrics covering case flow, disposition, and enforcement. Published metrics shall be aggregated at the circuit or county level, shall employ de-identification standards consistent with applicable federal law, and shall include methodology, confidence intervals, and known limitations for each metric. The Office shall consult with the judicial conference and with a stakeholder advisory board regarding methodology and priorities.'),
     S.h3('Drafting Notes'),
@@ -489,7 +489,7 @@ async function doc05() {
     S.statuteQuote('Parties to a dissolution, paternity, or modification action involving minor children may voluntarily submit documented parenting time compliance data to a platform designated by the Office of State Courts Administrator. Such data shall be aggregated, de-identified, and published only at the county level. Individual compliance data shall not be admissible as evidence in any proceeding without a party\'s express written consent and shall not create a rebuttable presumption of compliance or non-compliance.'),
     S.h3('Drafting Notes'),
     S.bullet('The evidentiary shield is the critical protection. Without it, any tool that helps a parent document compliance could be subpoenaed and used against them.'),
-    S.bullet('The shield parallels the structure of RSMo § 452.375.5(1) protecting mediation communications.'),
+    S.bullet('Numbering note: RSMo § 452.317 already exists (termination of insurance prohibited), so legislative counsel would assign the final section number.'),
     S.bullet('"Express written consent" is a higher bar than verbal consent and requires specific identification of what data is being waived.'),
     S.bullet('The no-presumption clause prevents courts from drawing inferences from a party\'s participation or non-participation.'),
 
@@ -514,7 +514,7 @@ async function doc05() {
     S.bullet('The "notwithstanding any other provision" clause ensures this section controls over conflicting transparency provisions.'),
     S.bullet('The 25-petition floor is specifically calibrated for DV contexts where smaller thresholds could endanger survivors.'),
     S.bullet('"Geographic granularity" covers county, zip, and any other spatial aggregation.'),
-    S.bullet('Explicit statutory grounding for the suppression provides defensive posture against FOIA litigation seeking lower thresholds.'),
+    S.bullet('Explicit statutory grounding for the suppression provides defensive posture against public-records litigation seeking lower thresholds.'),
 
     S.eyebrow('Sequencing'),
     S.h1('When to Introduce These Sections'),

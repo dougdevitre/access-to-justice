@@ -434,7 +434,7 @@ async function doc14() {
     S.h3('Talking Points'),
     S.bullet('Emphasize peer benchmarks for attorneys as a professional self-improvement tool.'),
     S.bullet('Stress that no attorney-level public data is produced.'),
-    S.bullet('Address concerns about adversarial use with the evidentiary shield in RSMo § 452.317.'),
+    S.bullet('Address concerns about adversarial use with the evidentiary shield in draft RSMo § 452.317.'),
     S.bullet('Offer participation in the methodology review before first publication.'),
     S.h3('Leave-Behind'),
     S.body('Framework overview plus the Attorney role sections of the Methodology Handbook.'),

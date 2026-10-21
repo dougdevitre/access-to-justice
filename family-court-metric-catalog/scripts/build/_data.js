@@ -878,7 +878,7 @@ const METRICS = {
     inclusion: 'Adult abuse petitions',
     exclusion: 'Child abuse petitions (separate reporting), cases transferred to criminal court',
     confounders: 'Petition quality, representation, local procedural differences',
-    minSample: 'Circuit-level requires n ≥ 25 petitions per quarter per § 455.085 suppression threshold',
+    minSample: 'Circuit-level requires n ≥ 25 petitions per quarter per the draft § 455.085 suppression threshold',
     privacy: 'Suppression threshold of 25 petitions per reporting period per county (see Protective Order Data Confidentiality).',
     reformValue: 'Addresses long-standing public and advocacy interest in grant-rate variation while protecting survivor safety.',
     refresh: 'Quarterly',
