@@ -7,7 +7,7 @@
 
 > **Civic transparency infrastructure for Missouri family courts — designed for defensibility, survivor safety, and judicial independence.**
 
-> Part of **[Access To](https://dougdevitre.org)** — open-source tools for the access gaps that matter most. [See all projects →](https://dougdevitre.org/#pillars)
+> Part of **[Access To](https://dougdevitre.org)** — open-source tools for the access gaps that matter most. [See all projects →](https://dougdevitre.org/about.html#pillars)
 
 A proposed framework for publishing rigorous, governance-protected metrics about family court performance, outcomes, and system-induced harm. This repository collects the complete framework: a core catalog of **72 metrics across 14 stakeholder roles** organized into a four-tier disclosure architecture, an outreach binder for the Office of State Courts Administrator (OSCA), an adoption roadmap and engineering specifications, and a draft expansion addressing coercive control.
 
