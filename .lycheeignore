@@ -2,10 +2,6 @@
 # One regular expression per line, matched against the URL. Every entry says why.
 # tel: and mailto: are excluded in the workflow's lychee args.
 
-# temporary — remove when the domain is reattached (dougdevitre.org, the Access To
-# hub, has been down since its CNAME was deleted on 2026-04-07).
-^https?://(www\.)?dougdevitre\.org
-
 # Placeholder, not a link: the citation template in
 # family-court-metric-catalog/docs/README.md says "github.com/[org]/..." for the
 # reader to fill in.
